@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    app:cardCornerRadius="3dp"
+                                    app:cardElevation="3dp"
+                                    app:cardMaxElevation="5dp"
+                                    app:cardPreventCornerOverlap="true"
+                                    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:id="@id/root_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_job"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x3"
+            android:layout_marginLeft="@dimen/x20"
+            android:layout_marginRight="@dimen/x20"
+            android:layout_marginTop="@dimen/x20"
+            android:orientation="horizontal">
+
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:id="@+id/txt_jobNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/x8"
+                android:layout_marginStart="@dimen/x8"
+                android:text="@string/job"
+                android:textColor="@color/app_blue"
+                android:textSize="@dimen/x15"
+                app:typeface="Roboto-Regular.ttf"/>
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:id="@+id/txt_jobNoText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:textColor="@color/black"
+                android:textSize="@dimen/x15"
+                app:typeface="Roboto-Regular.ttf"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_jobCompleted"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x3"
+            android:layout_marginLeft="@dimen/x20"
+            android:layout_marginRight="@dimen/x20"
+            android:orientation="horizontal">
+
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:id="@+id/txt_jobCompleted"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/x8"
+                android:layout_marginStart="@dimen/x8"
+                android:text="@string/job_completed"
+                android:textColor="@color/app_blue"
+                android:textSize="@dimen/x15"
+                app:typeface="Roboto-Regular.ttf"/>
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:id="@+id/txt_jobCompletedText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:textColor="@color/black"
+                android:textSize="@dimen/x15"
+                app:typeface="Roboto-Regular.ttf"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_clientName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x3"
+            android:layout_marginLeft="@dimen/x20"
+            android:layout_marginRight="@dimen/x20"
+            android:orientation="horizontal">
+
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:id="@+id/txt_ClientName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/x8"
+                android:layout_marginStart="@dimen/x8"
+                android:text="@string/technician_name"
+                android:textColor="@color/app_blue"
+                android:textSize="@dimen/x15"
+                app:typeface="Roboto-Regular.ttf"/>
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:id="@+id/txt_clientNameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:textColor="@color/black"
+                android:textSize="@dimen/x15"
+                app:typeface="Roboto-Regular.ttf"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_JobTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x3"
+            android:layout_marginLeft="@dimen/x20"
+            android:layout_marginRight="@dimen/x20"
+            android:orientation="horizontal">
+
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:id="@+id/txt_JobTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/x8"
+                android:layout_marginStart="@dimen/x8"
+                android:text="@string/job_title"
+                android:textColor="@color/app_blue"
+                android:textSize="@dimen/x15"
+                app:typeface="Roboto-Regular.ttf"/>
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:id="@+id/txt_JobTitleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:textColor="@color/black"
+                android:textSize="@dimen/x15"
+                app:typeface="Roboto-Regular.ttf"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_Rating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x3"
+            android:layout_marginLeft="@dimen/x20"
+            android:layout_marginRight="@dimen/x20"
+            android:orientation="horizontal">
+
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:id="@+id/txt_Rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/x8"
+                android:layout_marginStart="@dimen/x8"
+                android:text="@string/technician_rating"
+                android:textColor="@color/app_blue"
+                android:textSize="@dimen/x15"
+                app:typeface="Roboto-Regular.ttf"/>
+
+            <com.ingic.saeedni.ui.views.CustomRatingBar
+                android:id="@+id/rbAddRating"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/x12"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/x10"
+                android:layout_marginRight="@dimen/x10"
+                android:isIndicator="true"
+                android:visibility="visible"
+                app:maxStars="5"
+                app:starOff="@drawable/star1"
+                app:starOn="@drawable/star2"
+                app:starPadding="@dimen/x2"
+                app:stars="0"/>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_Earning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x3"
+            android:layout_marginLeft="@dimen/x20"
+            android:layout_marginRight="@dimen/x20"
+            android:orientation="horizontal">
+
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:id="@+id/txt_Earning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/x8"
+                android:layout_marginStart="@dimen/x8"
+                android:text="@string/amount_paid"
+                android:textColor="@color/app_blue"
+                android:textSize="@dimen/x15"
+                app:typeface="Roboto-Regular.ttf"/>
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:id="@+id/txt_EarningText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:textColor="@color/price_color"
+                android:textSize="@dimen/x15"
+                app:typeface="Roboto-Regular.ttf"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x3"
+            android:layout_marginLeft="@dimen/x20"
+            android:layout_marginRight="@dimen/x20"
+            android:orientation="horizontal">
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:id="@+id/txt_description_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/x8"
+                android:layout_marginStart="@dimen/x8"
+                android:maxLines="3"
+                android:textColor="@color/black"
+                android:textSize="@dimen/x15"
+                app:typeface="Roboto-Regular.ttf"/>
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/txt_line"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x1"
+            android:layout_marginBottom="@dimen/x3"
+            android:layout_marginLeft="@dimen/x10"
+            android:layout_marginRight="@dimen/x10"
+            android:layout_marginTop="@dimen/x10"
+            android:alpha="0.6"
+            android:background="@drawable/seperator"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>

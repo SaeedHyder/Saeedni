@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:id="@+id/root_layout_child"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_AdditionalJob"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/x12"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+
+        <LinearLayout
+            android:id="@+id/ll_profileItems"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x20"
+            android:layout_marginRight="@dimen/x20"
+            android:orientation="horizontal">
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x5"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:text="@string/addtional_jobs"
+                android:textColor="@color/app_blue"
+                android:textSize="@dimen/x12"
+                app:typeface="Roboto-Regular.ttf"/>
+
+            <!-- <ImageView
+                 android:id="@+id/iv_editJobBtn"
+                 android:layout_width="0dp"
+                 android:layout_height="match_parent"
+                 android:layout_weight="0.1"
+                 android:gravity="end"
+                 android:src="@drawable/edit"/>-->
+
+        </LinearLayout>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="3dp"
+            app:cardElevation="3dp"
+            app:cardMaxElevation="5dp"
+            app:cardPreventCornerOverlap="true"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.ingic.saeedni.ui.views.AnyTextView
+                        android:id="@+id/txt_job1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/x3"
+                        android:layout_marginLeft="@dimen/x20"
+                        android:layout_marginTop="@dimen/x10"
+                        android:layout_weight="1"
+                        android:text="Total electricity failure"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/x15"
+                        android:visibility="visible"
+                        app:typeface="Roboto-Regular.ttf"/>
+
+                    <ImageView
+                        android:id="@+id/iv_editJobBtn"
+                        android:layout_width="@dimen/x20"
+                        android:layout_height="@dimen/x20"
+                        android:layout_marginEnd="@dimen/x5"
+                        android:layout_marginTop="@dimen/x10"
+                        android:gravity="end"
+                        android:src="@drawable/edit"/>
+                </LinearLayout>
+
+                <com.ingic.saeedni.ui.views.AnyTextView
+                    android:id="@+id/txt_job2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/x3"
+                    android:layout_marginLeft="@dimen/x20"
+                    android:layout_marginRight="@dimen/x20"
+                    android:text="No electricity in some rooms "
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/x15"
+                    android:visibility="gone"
+                    app:typeface="Roboto-Regular.ttf"/>
+
+                <com.ingic.saeedni.ui.views.AnyTextView
+                    android:id="@+id/txt_job3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/x3"
+                    android:layout_marginLeft="@dimen/x20"
+                    android:layout_marginRight="@dimen/x20"
+                    android:text="Repairing of fixed electrical fittings"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/x15"
+                    android:visibility="gone"
+                    app:typeface="Roboto-Regular.ttf"/>
+
+                <LinearLayout
+                    android:id="@+id/ll_AddEarning"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/x5"
+                    android:layout_marginLeft="@dimen/x12"
+                    android:layout_marginRight="@dimen/x20"
+                    android:orientation="horizontal">
+
+
+                    <com.ingic.saeedni.ui.views.AnyTextView
+                        android:id="@+id/txt_AddEarning"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/x8"
+                        android:layout_marginRight="@dimen/x8"
+                        android:text="@string/earning"
+                        android:textColor="@color/app_blue"
+                        android:textSize="@dimen/x15"
+                        app:typeface="Roboto-Regular.ttf"/>
+
+                    <com.ingic.saeedni.ui.views.AnyTextView
+                        android:id="@+id/txt_AddEarningText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="AED 100.00"
+                        android:textColor="@color/price_color"
+                        android:textSize="@dimen/x15"
+                        app:typeface="Roboto-Regular.ttf"/>
+
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/x1"
+
+                    android:layout_marginTop="@dimen/x10"
+                    android:alpha="0.6"
+                    android:background="@drawable/text"/>
+
+                <LinearLayout
+                    android:id="@+id/ll_BottomEarning"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/x15"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <LinearLayout
+                        android:id="@+id/ll_TotalEarning"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/x8"
+                        android:layout_marginLeft="@dimen/x12"
+                        android:layout_marginRight="@dimen/x20"
+                        android:orientation="horizontal">
+
+
+                        <com.ingic.saeedni.ui.views.AnyTextView
+                            android:id="@+id/txt_TotalEarning"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/x8"
+                            android:layout_marginRight="@dimen/x8"
+                            android:text="@string/Total_Earning"
+                            android:textColor="@color/app_blue"
+                            android:textSize="@dimen/x15"
+                            app:typeface="Roboto-Regular.ttf"/>
+
+                        <com.ingic.saeedni.ui.views.AnyTextView
+                            android:id="@+id/txt_TotalEarningText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="AED 155.00"
+                            android:textColor="@color/price_color"
+                            android:textSize="@dimen/x15"
+                            app:typeface="Roboto-Regular.ttf"/>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/x1"
+                        android:layout_marginTop="@dimen/x10"
+                        android:alpha="0.6"
+                        android:background="@drawable/text"/>
+
+                    <LinearLayout
+                        android:id="@+id/ll_Bottombuttons"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/x10"
+                        android:layout_marginRight="@dimen/x10"
+                        android:layout_marginTop="@dimen/x10"
+                        android:orientation="horizontal"
+                        android:paddingBottom="@dimen/x10">
+
+                        <Button
+                            android:id="@+id/btn_AddJobbottom"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/x35"
+                            android:layout_marginEnd="@dimen/x3"
+                            android:layout_weight="1"
+                            android:textSize="@dimen/x12"
+                            android:background="@drawable/yellow_button_background"
+                            android:text="@string/add_job"
+                            android:textColor="@color/white"/>
+
+                        <Button
+                            android:id="@+id/btn_markAsCompleteBottom"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/x35"
+                            android:layout_marginStart="@dimen/x3"
+                            android:layout_weight="1"
+                            android:textSize="@dimen/x12"
+                            android:background="@drawable/button_background"
+                            android:text="@string/mark_as_completed"
+                            android:textColor="@color/white"/>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+</LinearLayout>

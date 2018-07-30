@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:layout_gravity="center"
+    android:background="@drawable/roundshapelayout"
+    android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/textLayout"
+        android:layout_width="@dimen/x300"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        >
+
+        <ImageView
+            android:id="@+id/iv_logo"
+            android:layout_width="@dimen/x120"
+            android:layout_height="@dimen/x120"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/x10"
+            android:layout_marginTop="@dimen/x10"
+            android:src="@drawable/bluelogo"
+
+            />
+        <com.ingic.saeedni.ui.views.AnyTextView
+            android:id="@+id/txt_recive_req"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="@dimen/x20"
+            android:gravity="center"
+            android:text="@string/are_you_sure_you_want_to_cancel_the_job"
+            android:textColor="@color/s_font_color_blue"
+            android:textSize="20sp"
+            android:alpha="0.7"
+            app:typeface="Roboto-Regular.ttf" />
+
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@+id/textLayout"
+        >
+
+        <Button
+            android:id="@+id/btn_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/two_round_button"
+            android:textColor="@color/app_blue"
+            android:textSize="@dimen/x16"
+            android:text="@string/ok"
+            android:textAllCaps="false"
+            android:layout_weight="1"
+            />
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:alpha="0.6"
+            android:background="@drawable/line" />
+        <Button
+            android:id="@+id/btn_cancle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/two_round_button"
+            android:textColor="@color/app_blue"
+            android:textSize="@dimen/x16"
+            android:text="@string/cancle"
+            android:textAllCaps="false"
+            android:layout_weight="1"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

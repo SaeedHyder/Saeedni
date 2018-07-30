@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:padding="@dimen/x10">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/img_radioselect"
+            android:layout_width="@dimen/x20"
+            android:layout_height="@dimen/x20"
+            android:src="@drawable/radio_selected"
+            android:scaleType="fitXY"
+            android:layout_centerVertical="true"/>
+        <com.ingic.saeedni.ui.views.AnyTextView
+            android:id="@+id/txt_jobpaymentmethod"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:paddingBottom="@dimen/x10"
+            android:paddingTop="@dimen/x10"
+            android:paddingLeft="@dimen/x10"
+            android:text="@string/cc"
+            android:textColor="@color/black"
+            android:textSize="@dimen/x15"
+            android:textStyle="normal"
+            app:typeface="Roboto-Regular.ttf"
+            android:layout_toEndOf="@+id/img_radioselect" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/cc_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/x5"
+        android:orientation="vertical"
+     >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/img_cc_card"
+                android:layout_width="@dimen/x20"
+                android:layout_height="@dimen/x20"
+                android:layout_centerVertical="true"
+                android:src="@drawable/card"
+                android:visibility="visible" />
+
+            <com.ingic.saeedni.ui.views.AnyEditTextView
+                android:id="@+id/edt_cc_number"
+              android:textSize="@dimen/x12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/img_cc_card"
+                android:layout_toLeftOf="@+id/img_cc_mastercard"
+                android:layout_toRightOf="@+id/img_cc_card"
+                android:layout_toStartOf="@+id/img_cc_mastercard"
+                android:background="@null"
+                android:drawablePadding="@dimen/x10"
+                android:ems="10"
+                android:maxLength="16"
+                android:gravity="center_vertical"
+                android:hint="@string/cc_number"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:padding="@dimen/x10"
+
+                app:typeface="Roboto-Regular.ttf" />
+
+            <ImageView
+                android:id="@+id/img_cc_mastercard"
+                android:layout_width="@dimen/x25"
+                android:layout_height="@dimen/x20"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/mastercard"
+                android:visibility="visible" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x1"
+            android:layout_marginBottom="@dimen/x5"
+            android:background="@drawable/line" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/img_cc_calender"
+                android:layout_width="@dimen/x20"
+                android:layout_height="@dimen/x20"
+                android:layout_centerVertical="true"
+                android:src="@drawable/calendar" />
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:id="@+id/edt_cc_expiredate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/img_cc_calender"
+                android:layout_toRightOf="@+id/img_cc_calender"
+                android:background="@null"
+                android:drawablePadding="@dimen/x10"
+
+                android:ems="10"
+                android:gravity="center_vertical"
+                android:hint="@string/expiration_date"
+                android:padding="@dimen/x10"
+                android:textSize="@dimen/x12"
+                app:typeface="Roboto-Regular.ttf" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x1"
+            android:layout_marginBottom="@dimen/x5"
+            android:background="@drawable/line" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/img_cc_cvv"
+                android:layout_width="@dimen/x20"
+                android:layout_height="@dimen/x20"
+                android:layout_centerVertical="true"
+                android:src="@drawable/cvv" />
+
+            <com.ingic.saeedni.ui.views.AnyEditTextView
+                android:id="@+id/edt_cc_cvv"
+                android:textSize="@dimen/x12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/img_cc_cvv"
+                android:layout_toRightOf="@+id/img_cc_cvv"
+                android:background="@null"
+                android:drawablePadding="@dimen/x10"
+                android:ems="10"
+                android:gravity="center_vertical"
+                android:hint="@string/cvv"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLength="3"
+                android:padding="@dimen/x10"
+                app:typeface="Roboto-Regular.ttf" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x1"
+            android:layout_marginBottom="@dimen/x5"
+            android:background="@drawable/line" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/img_cc_name"
+                android:layout_width="@dimen/x20"
+                android:layout_height="@dimen/x20"
+                android:layout_centerVertical="true"
+                android:src="@drawable/profile" />
+
+            <com.ingic.saeedni.ui.views.AnyEditTextView
+                android:id="@+id/edt_cc_name"
+                android:textSize="@dimen/x12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/img_cc_name"
+
+                android:layout_toRightOf="@+id/img_cc_name"
+                android:background="@null"
+                android:drawablePadding="@dimen/x10"
+                android:ems="10"
+                android:gravity="center_vertical"
+                android:hint="@string/name_appearing_on_card"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:maxLines="1"
+
+                android:maxLength="30"
+                android:padding="@dimen/x10"
+                app:typeface="Roboto-Regular.ttf" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x1"
+            android:layout_marginBottom="@dimen/x5"
+            android:background="@drawable/line" />
+    </LinearLayout>
+    <Button
+        android:id="@+id/btn_update"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/x10"
+        android:background="@drawable/button_background"
+        android:drawablePadding="@dimen/x10"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="@string/update"
+
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/x20" />
+</LinearLayout>

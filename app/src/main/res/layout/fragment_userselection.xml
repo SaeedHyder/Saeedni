@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/img_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:adjustViewBounds="true"
+                android:src="@drawable/bluelogo"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.9">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/ll_selection"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/box_top"
+            android:gravity="center_vertical"
+            android:paddingBottom="@dimen/x5"
+            android:text="@string/iam_a"
+            android:textAlignment="center"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/x18"
+            android:textStyle="italic"
+            />
+
+        <LinearLayout
+            android:id="@+id/ll_selection"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x150"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/x20"
+            android:layout_marginRight="@dimen/x20"
+            android:layout_marginTop="@dimen/x7_"
+            android:orientation="horizontal"
+            android:weightSum="2"
+
+
+            >
+
+            <LinearLayout
+                android:id="@+id/usercontainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/box_backgrounds"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/x60"
+                    android:layout_height="@dimen/x60"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/x15"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/user"/>
+
+                <com.ingic.saeedni.ui.views.AnyTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom|center_horizontal"
+                    android:maxLines="1"
+                    android:paddingTop="@dimen/x5"
+                    android:text="@string/user"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="normal"
+                    app:typeface="Roboto-Regular.ttf"/>
+
+                <com.ingic.saeedni.ui.views.AnyTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/x5"
+                    android:layout_marginRight="@dimen/x5"
+                    android:gravity="center"
+                    android:maxLines="2"
+                    android:text="@string/user_message"
+                    android:textColor="@color/white"
+                    android:textSize="11sp"
+                    android:textStyle="normal"
+                    app:typeface="Roboto-Regular.ttf"/>
+                <!-- <ImageView
+                    android:layout_width="@dimen/x70"
+                    android:layout_height="@dimen/x70"
+                    android:src="@drawable/user"
+                    android:layout_gravity="center_horizontal"/>-->
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/techniciancontainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/box_backgrounds"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/x60"
+                    android:layout_height="@dimen/x60"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/x15"
+                    android:src="@drawable/technician"/>
+
+                <com.ingic.saeedni.ui.views.AnyTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom|center_horizontal"
+                    android:maxLines="1"
+                    android:paddingTop="@dimen/x5"
+                    android:text="@string/technician"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="normal"
+                    app:typeface="Roboto-Regular.ttf"/>
+
+                <com.ingic.saeedni.ui.views.AnyTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/x5"
+                    android:layout_marginRight="@dimen/x5"
+                    android:gravity="center"
+                    android:maxLines="2"
+                    android:text="@string/wants_to_provide_services"
+                    android:textColor="@color/white"
+                    android:textSize="11sp"
+                    android:textStyle="normal"
+                    app:typeface="Roboto-Regular.ttf"/>
+                <!-- <ImageView
+                     android:layout_width="@dimen/x70"
+                     android:layout_height="@dimen/x70"
+                     android:src="@drawable/user"
+                     android:layout_gravity="center_horizontal"/>-->
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_language"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/ll_selection"
+            android:layout_alignStart="@+id/ll_selection"
+            android:layout_below="@+id/ll_selection"
+            android:background="@drawable/box_backgrounds"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/x5"
+                android:orientation="horizontal"
+                >
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end">
+
+                    <RadioButton
+                        android:id="@+id/cb_english"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/x10"
+                        android:button="@drawable/selector_chkbox"
+                        android:checked="false"
+                        android:drawablePadding="@dimen/x10"
+                        android:gravity="center_vertical"
+                        android:paddingBottom="@dimen/x7"
+                        android:paddingLeft="@dimen/x7"
+                        android:paddingRight="@dimen/x7"
+                        android:paddingTop="@dimen/x7"
+                        android:text="@string/english"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/x14"/>
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="start">
+
+                    <RadioButton
+                        android:id="@+id/cb_arabic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/x15"
+                        android:layout_weight="1"
+                        android:button="@drawable/selector_chkbox"
+                        android:checked="false"
+                        android:drawablePadding="@dimen/x10"
+                        android:gravity="left|center_vertical"
+                        android:paddingBottom="@dimen/x7"
+                        android:paddingLeft="@dimen/x7"
+                        android:paddingRight="@dimen/x7"
+                        android:paddingTop="@dimen/x7"
+                        android:text="@string/arabic"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/x14"/>
+
+                </RelativeLayout>
+
+            </RadioGroup>
+
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="@dimen/x2"
+            android:layout_height="@dimen/x120"
+            android:layout_centerInParent="true"
+            android:background="@color/job_posted_background"
+            android:paddingTop="@dimen/x30"
+
+            />
+
+        <View
+            android:id="@+id/view1"
+            android:layout_width="@dimen/x2"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/ll_language"
+            android:layout_alignStart="@+id/view"
+            android:layout_below="@+id/view"
+            android:layout_marginBottom="@dimen/x10"
+            android:background="@color/job_posted_background"
+            android:paddingTop="@dimen/x30"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
+</LinearLayout>

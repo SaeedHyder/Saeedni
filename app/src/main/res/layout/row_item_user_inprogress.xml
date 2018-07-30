@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_layout"
+    android:layout_width="match_parent"
+
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_job"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/x3"
+        android:layout_marginEnd="@dimen/x20"
+        android:layout_marginStart="@dimen/x12"
+        android:layout_marginTop="@dimen/x20"
+        android:orientation="horizontal">
+
+
+        <com.ingic.saeedni.ui.views.AnyTextView
+            android:id="@+id/txt_tech_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/x8"
+            android:layout_marginStart="@dimen/x8"
+            android:layout_weight="0"
+            android:text="@string/technician_name"
+            android:textColor="@color/app_blue"
+            android:textSize="@dimen/x15"
+            android:textStyle="bold"
+            app:typeface="Roboto-Regular.ttf" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:id="@+id/txt_tech_name_Text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@+id/con"
+                android:layout_weight="1"
+                android:textAlignment="viewStart"
+                android:gravity="start"
+                android:text="@string/dummy_name"
+                android:textColor="@color/black"
+                android:textSize="@dimen/x15"
+                app:typeface="Roboto-Regular.ttf" />
+
+            <LinearLayout
+                android:id="@+id/con"
+                android:layout_width="@dimen/x15"
+                android:layout_height="@dimen/x15"
+                android:visibility="gone"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true">
+
+                <ImageView
+                    android:id="@+id/iv_editBtn"
+                    android:layout_width="@dimen/x15"
+                    android:layout_height="@dimen/x15"
+
+                    android:contentDescription="@string/edit_job"
+                    android:src="@drawable/edit"
+                    android:visibility="gone"/>
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_JobTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/x3"
+        android:layout_marginEnd="@dimen/x20"
+        android:layout_marginStart="@dimen/x12"
+        android:orientation="horizontal">
+
+
+        <com.ingic.saeedni.ui.views.AnyTextView
+            android:id="@+id/txt_JobTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/x8"
+            android:layout_marginStart="@dimen/x8"
+            android:text="@string/job_title"
+            android:textColor="@color/app_blue"
+            android:textSize="@dimen/x15"
+            android:textStyle="bold"
+            app:typeface="Roboto-Regular.ttf" />
+
+        <com.ingic.saeedni.ui.views.AnyTextView
+            android:id="@+id/txt_JobTitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ac_not_cooling_well"
+            android:textColor="@color/black"
+            android:textSize="@dimen/x15"
+            app:typeface="Roboto-Regular.ttf" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_Earning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/x3"
+        android:layout_marginEnd="@dimen/x10"
+        android:layout_marginStart="@dimen/x12"
+        android:orientation="horizontal">
+
+
+        <com.ingic.saeedni.ui.views.AnyTextView
+            android:id="@+id/txt_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/x8"
+            android:layout_marginStart="@dimen/x8"
+            android:text="@string/amount_quoted"
+            android:textColor="@color/app_blue"
+            android:textSize="@dimen/x15"
+            android:textStyle="bold"
+            app:typeface="Roboto-Regular.ttf" />
+
+        <com.ingic.saeedni.ui.views.AnyTextView
+            android:id="@+id/txt_amountText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AED 55.00"
+            android:textColor="@color/price_color"
+            android:textSize="@dimen/x15"
+            app:typeface="Roboto-Regular.ttf" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/x3"
+        android:layout_marginEnd="@dimen/x20"
+        android:layout_marginStart="@dimen/x12"
+        android:orientation="horizontal">
+
+
+        <com.ingic.saeedni.ui.views.AnyTextView
+            android:id="@+id/txt_tech_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/x8"
+            android:layout_marginStart="@dimen/x8"
+            android:text="@string/technician_number"
+            android:textColor="@color/app_blue"
+            android:textSize="@dimen/x15"
+            android:textStyle="bold"
+            app:typeface="Roboto-Regular.ttf" />
+
+        <com.ingic.saeedni.ui.views.AnyTextView
+            android:id="@+id/txt_number_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLength="16"
+            android:text="@string/dummy_number"
+            android:textColor="@color/black"
+            android:textSize="@dimen/x15"
+            app:typeface="Roboto-Regular.ttf" />
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginBottom="@dimen/x3"
+        android:layout_marginLeft="@dimen/x10"
+        android:layout_marginRight="@dimen/x10"
+        android:layout_marginTop="@dimen/x10"
+        android:alpha="0.6"
+        android:background="@color/black" />
+    <LinearLayout
+        android:id="@+id/ll_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/x10"
+        android:layout_marginRight="@dimen/x10"
+        android:layout_marginTop="@dimen/x10"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_callUser"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/x35"
+            android:layout_marginEnd="@dimen/x3"
+            android:layout_weight="1"
+            android:background="@drawable/yellow_button_background"
+            android:text="@string/call_technician"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/x14" />
+
+        <Button
+            android:id="@+id/btn_cancelJob"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/x35"
+            android:layout_marginStart="@dimen/x3"
+            android:layout_weight="1"
+            android:background="@drawable/button_background"
+            android:text="@string/cancel_job"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/x14" />
+
+    </LinearLayout>
+
+
+    <View
+        android:id="@+id/txt_line"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginBottom="@dimen/x3"
+        android:layout_marginLeft="@dimen/x10"
+        android:layout_marginRight="@dimen/x10"
+        android:layout_marginTop="@dimen/x20"
+        android:alpha="0.6"
+        android:background="@color/black" />
+
+
+</LinearLayout>

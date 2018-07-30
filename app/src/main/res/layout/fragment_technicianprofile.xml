@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mainFrame"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/x25">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/CircularImageSharePop"
+        android:layout_width="@dimen/x100"
+        android:layout_height="@dimen/x90"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/circle"
+        />
+
+    <LinearLayout
+        android:id="@+id/ll_profileDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/x45"
+        android:layout_marginLeft="@dimen/x10"
+        android:layout_marginRight="@dimen/x10"
+        android:layout_marginBottom="@dimen/x10"
+        android:background="@drawable/box_technicain"
+
+        android:orientation="vertical">
+
+
+
+        <LinearLayout
+            android:id="@+id/ll_profileItems"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/x70"
+            android:orientation="vertical">
+
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x3"
+                android:layout_marginStart="@dimen/x20"
+                android:gravity="start"
+                android:text="@string/first_name"
+                android:textColor="@color/s_font_color_blue"
+                android:textSize="@dimen/x12"
+                app:typeface="Roboto-Regular.ttf" />
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:id="@+id/edtFirstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x20"
+                android:layout_marginRight="@dimen/x20"
+                android:background="@android:color/transparent"
+                android:hint="Khalid"
+                android:gravity="left"
+                android:textAlignment="gravity"
+                android:singleLine="true"
+                android:textColor="@color/lightBlack"
+                android:textColorHint="@color/gray"
+                android:textSize="@dimen/x14"
+                app:typeface="Roboto-Regular.ttf"
+
+                />
+
+            <!--android:hint="@string/email_sample"-->
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x1"
+                android:layout_marginBottom="@dimen/x10"
+                android:layout_marginLeft="@dimen/x20"
+                android:layout_marginRight="@dimen/x20"
+                android:layout_marginTop="@dimen/x10"
+                android:alpha="0.6"
+                android:background="@drawable/text" />
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x3"
+                android:layout_marginStart="@dimen/x20"
+                android:gravity="start"
+
+                android:text="@string/last_name"
+                android:textColor="@color/s_font_color_blue"
+                android:textSize="@dimen/x12"
+                app:typeface="Roboto-Regular.ttf" />
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:id="@+id/edtLastName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x20"
+                android:layout_marginRight="@dimen/x20"
+                android:layout_marginTop="@dimen/x4"
+                android:background="@android:color/transparent"
+                android:hint="Howladar"
+                android:maxLength="50"
+                android:gravity="left"
+                android:textAlignment="gravity"
+                android:singleLine="true"
+                android:textColor="@color/dark_grey"
+                android:textColorHint="@color/lightBlack"
+                android:textSize="@dimen/x14"
+                app:emptyAllowed="false"
+                app:typeface="Roboto-Regular.ttf" />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x1"
+                android:layout_marginBottom="@dimen/x10"
+                android:layout_marginLeft="@dimen/x20"
+                android:layout_marginRight="@dimen/x20"
+                android:layout_marginTop="@dimen/x10"
+                android:alpha="0.6"
+                android:background="@drawable/text" />
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x3"
+                android:layout_marginStart="@dimen/x20"
+                android:gravity="start"
+                android:text="@string/email_id"
+                android:textColor="@color/s_font_color_blue"
+                android:textSize="@dimen/x12"
+                app:typeface="Roboto-Regular.ttf" />
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:id="@+id/edtEmailId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x20"
+                android:layout_marginRight="@dimen/x20"
+                android:layout_marginTop="@dimen/x4"
+                android:background="@android:color/transparent"
+                android:hint="khalidhowaldar@sample.com"
+                android:maxLength="50"
+                android:gravity="left"
+                android:textAlignment="gravity"
+                android:singleLine="true"
+                android:textColor="@color/dark_grey"
+                android:textColorHint="@color/lightBlack"
+                android:textSize="@dimen/x14"
+                app:emptyAllowed="false"
+                app:typeface="Roboto-Regular.ttf" />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x1"
+                android:layout_marginBottom="@dimen/x10"
+                android:layout_marginLeft="@dimen/x20"
+                android:layout_marginRight="@dimen/x20"
+                android:layout_marginTop="@dimen/x10"
+                android:alpha="0.6"
+                android:background="@drawable/text" />
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x3"
+                android:layout_marginStart="@dimen/x20"
+                android:gravity="start"
+                android:text="@string/phone_number"
+                android:textColor="@color/s_font_color_blue"
+                android:textSize="@dimen/x12"
+                app:typeface="Roboto-Regular.ttf" />
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:id="@+id/edtPhoneNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x20"
+                android:layout_marginRight="@dimen/x20"
+                android:layout_marginTop="@dimen/x4"
+                android:background="@android:color/transparent"
+                android:hint="+971 333221122"
+                android:maxLength="50"
+                android:gravity="left"
+                android:textAlignment="gravity"
+                android:singleLine="true"
+                android:textColor="@color/dark_grey"
+                android:textColorHint="@color/lightBlack"
+                android:textSize="@dimen/x14"
+                app:emptyAllowed="false"
+                app:typeface="Roboto-Regular.ttf" />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x1"
+                android:layout_marginBottom="@dimen/x10"
+                android:layout_marginLeft="@dimen/x20"
+                android:layout_marginRight="@dimen/x20"
+                android:layout_marginTop="@dimen/x10"
+                android:alpha="0.6"
+                android:background="@drawable/text" />
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x3"
+                android:layout_marginStart="@dimen/x20"
+                android:gravity="start"
+                android:text="@string/registration_type"
+                android:textColor="@color/s_font_color_blue"
+                android:textSize="@dimen/x12"
+                app:typeface="Roboto-Regular.ttf" />
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:id="@+id/edtRegistrationType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x20"
+                android:layout_marginRight="@dimen/x20"
+                android:layout_marginTop="@dimen/x4"
+                android:background="@android:color/transparent"
+                android:hint="Electrician"
+                android:textAlignment="gravity"
+                android:maxLength="50"
+                android:gravity="left"
+                android:singleLine="true"
+                android:textColor="@color/dark_grey"
+                android:textColorHint="@color/lightBlack"
+                android:textSize="@dimen/x14"
+                app:emptyAllowed="false"
+                app:typeface="Roboto-Regular.ttf" />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x1"
+                android:layout_marginBottom="@dimen/x10"
+                android:layout_marginLeft="@dimen/x20"
+                android:layout_marginRight="@dimen/x20"
+                android:layout_marginTop="@dimen/x10"
+                android:alpha="0.6"
+                android:background="@drawable/text" />
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x3"
+                android:layout_marginStart="@dimen/x20"
+                android:gravity="start"
+                android:text="@string/Registration_Date"
+                android:textColor="@color/s_font_color_blue"
+                android:textSize="@dimen/x12"
+                app:typeface="Roboto-Regular.ttf" />
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:id="@+id/edtRegDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x20"
+                android:layout_marginRight="@dimen/x20"
+                android:layout_marginTop="@dimen/x4"
+                android:gravity="left"
+                android:textAlignment="gravity"
+                android:background="@android:color/transparent"
+                android:hint="Dec 16,2017"
+                android:maxLength="50"
+                android:singleLine="true"
+                android:textColor="@color/dark_grey"
+                android:textColorHint="@color/lightBlack"
+                android:textSize="@dimen/x14"
+                app:emptyAllowed="false"
+                app:typeface="Roboto-Regular.ttf" />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x1"
+                android:layout_marginBottom="@dimen/x10"
+                android:layout_marginLeft="@dimen/x20"
+                android:layout_marginRight="@dimen/x20"
+                android:layout_marginTop="@dimen/x10"
+                android:alpha="0.6"
+                android:visibility="invisible"
+                android:background="@drawable/text" />
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+</RelativeLayout>
+
+
+</LinearLayout>

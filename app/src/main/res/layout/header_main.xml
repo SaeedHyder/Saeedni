@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/header_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/x50"
+                android:background="@color/app_blue">
+
+
+    <ImageView
+        android:id="@+id/btnLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/x10"
+        android:padding="@dimen/x10"
+
+        android:src="@drawable/ic_launcher"
+        android:visibility="visible"/>
+
+
+    <com.ingic.saeedni.ui.views.AnyTextView
+        android:id="@+id/txt_subHead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:maxLength="21"
+        android:maxLines="1"
+        android:text="Templadfgdfgdfgdfgsdfsdfte"
+        android:textColor="@color/white"
+        android:textSize="@dimen/x19"
+        app:typeface="Roboto-Regular.ttf"/>
+
+
+    <ImageView
+        android:id="@+id/btnRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/x10"
+        android:padding="@dimen/x10"
+        android:src="@drawable/ic_launcher"
+        android:visibility="visible"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/btnRight"
+        android:layout_alignEnd="@+id/btnRight"
+        android:layout_alignStart="@+id/btnRight"
+        android:layout_alignTop="@+id/btnRight">
+
+        <ImageView
+            android:id="@+id/img_badge"
+            android:layout_width="@dimen/x25"
+            android:layout_height="@dimen/x25"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_launcher"/>
+    </RelativeLayout>
+
+
+</RelativeLayout>

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/roundshapelayout"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/textLayout"
+        android:layout_width="@dimen/x300"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/x15">
+
+        <ImageView
+            android:id="@+id/iv_logo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/x10"
+            android:layout_marginBottom="@dimen/x15"
+            android:src="@drawable/bluelogo" />
+
+
+        <com.ingic.saeedni.ui.views.AnyTextView
+            android:id="@+id/txt_problem_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:alpha="0.7"
+            android:gravity="center"
+            android:text="@string/sink_broken"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:typeface="Roboto-Regular.ttf" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/x10"
+            android:orientation="horizontal">
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:id="@+id/ratename"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="@string/requested_by"
+                android:textColor="@color/dark_grey"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:visibility="visible"
+                app:typeface="Roboto-Regular.ttf" />
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:id="@+id/txt_personname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="@dimen/x4"
+                android:layout_weight="1"
+                android:alpha="0.7"
+                android:gravity="left"
+                android:text="@string/muhammad_ali"
+                android:textColor="@color/dark_grey"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:typeface="Roboto-Regular.ttf" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/txt_line1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x1"
+            android:layout_below="@+id/txtHeader"
+            android:layout_marginBottom="@dimen/x10"
+            android:layout_marginTop="@dimen/x10"
+            android:alpha="0.6"
+            android:background="@drawable/line" />
+
+        <com.ingic.saeedni.ui.views.AnyTextView
+            android:id="@+id/txt_arrval_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x15"
+            android:layout_marginRight="@dimen/x15"
+            android:layout_marginTop="@dimen/x5"
+            android:alpha="0.7"
+            android:gravity="center"
+            android:hint="@string/expected_time_of_arrival"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            app:typeface="Roboto-Regular.ttf" />
+
+        <View
+            android:id="@+id/txt_line2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x1"
+            android:layout_below="@+id/txtHeader"
+            android:layout_marginBottom="@dimen/x10"
+            android:layout_marginTop="@dimen/x10"
+            android:alpha="0.6"
+            android:background="@drawable/line" />
+
+        <com.ingic.saeedni.ui.views.AnyTextView
+            android:id="@+id/txt_complete_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x10"
+            android:layout_marginLeft="@dimen/x15"
+            android:layout_marginRight="@dimen/x15"
+            android:layout_marginTop="@dimen/x5"
+            android:alpha="0.7"
+            android:gravity="center"
+            android:hint="@string/expected_time_of_job_completion"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            app:typeface="Roboto-Regular.ttf" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/textLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/x5"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/x10"
+            android:background="@drawable/two_round_button"
+            android:text="Submit"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/x16" />
+
+    </LinearLayout>
+
+</LinearLayout>

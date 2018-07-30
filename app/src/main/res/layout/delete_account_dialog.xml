@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/roundshapelayout"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/textLayout"
+        android:layout_width="@dimen/x300"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:padding="@dimen/x12">
+
+
+        <ImageView
+            android:id="@+id/iv_logo"
+            android:layout_width="@dimen/x120"
+            android:layout_height="@dimen/x120"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/x10"
+            android:layout_marginTop="@dimen/x10"
+            android:src="@drawable/bluelogo"
+
+            />
+
+
+
+        <com.ingic.saeedni.ui.views.AnyTextView
+            android:id="@+id/txt_recive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:alpha="0.9"
+            android:gravity="center"
+            android:text="@string/delete_account"
+            android:textColor="@color/s_font_color_blue"
+            android:textSize="16sp"
+            app:typeface="Roboto-Regular.ttf" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/textLayout"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/two_round_button"
+        android:layout_marginTop="@dimen/x5"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_yes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+           android:background="@drawable/two_round_button"
+            android:text="@string/yes"
+            android:textAllCaps="false"
+            android:textColor="@color/app_blue"
+            android:textSize="@dimen/x16" />
+
+        <View
+            android:layout_width="@dimen/x1"
+            android:layout_height="match_parent"
+            android:background="@color/white"/>
+
+        <Button
+            android:id="@+id/btn_no"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/two_round_button"
+            android:text="@string/no"
+            android:textAllCaps="false"
+            android:textColor="@color/app_blue"
+            android:textSize="@dimen/x16" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

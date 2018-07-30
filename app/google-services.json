@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1004970365361",
+    "firebase_url": "https://saeedni-201713.firebaseio.com",
+    "project_id": "saeedni-201713",
+    "storage_bucket": "saeedni-201713.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1004970365361:android:598f4752f2cb0285",
+        "android_client_info": {
+          "package_name": "com.ingic.saeedni"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1004970365361-ra3ckaura1uecueupejmu4n8premdf5i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAr4zTnpNsXqGhnEVxgOpMWWz264Kv9rtU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

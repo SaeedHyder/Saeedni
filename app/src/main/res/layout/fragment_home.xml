@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="0.4"
+        >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/s_headerimage"/>
+
+        <ImageView
+            android:id="@+id/btn_notification"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/x30"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="@dimen/x10"
+            android:layout_marginTop="@dimen/x7"
+            android:src="@drawable/s_notification_title"/>
+
+        <ToggleButton
+            android:id="@+id/btn_changeLanguage"
+            android:layout_width="@dimen/x50"
+            android:layout_height="@dimen/x30"
+            android:layout_marginEnd="@dimen/x10"
+            android:layout_marginTop="@dimen/x7"
+            android:drawablePadding="0dp"
+            android:layout_toLeftOf="@+id/btn_notification"
+            android:background="@null"
+            android:drawableRight="@drawable/downarrow"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textOff="@string/eng"
+            android:textOn="@string/ar"/>
+
+        <ImageView
+            android:id="@+id/iv_logo"
+            android:layout_width="@dimen/x150"
+            android:layout_height="@dimen/x150"
+            android:layout_centerInParent="true"
+            android:src="@drawable/s_logo"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_ItemsParent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_ItemsFirstRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/ll_profile"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x110"
+
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="@dimen/x15">
+
+                <ImageView
+                    android:id="@+id/iv_profile"
+                    android:layout_width="@dimen/x50"
+                    android:layout_height="@dimen/x50"
+                    android:layout_gravity="center"
+                    android:src="@drawable/s_profile"/>
+
+                <com.ingic.saeedni.ui.views.AnyTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.4"
+                    android:paddingTop="@dimen/x5"
+                    android:text="@string/my_profile"
+                    android:textColor="@color/s_font_color_blue"
+                    android:textSize="@dimen/x14"
+                    app:typeface="Roboto-Regular.ttf"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/grey"/>
+
+            <LinearLayout
+                android:id="@+id/ll_newJobs"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x110"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="@dimen/x15">
+
+                <ImageView
+                    android:id="@+id/iv_newJobs"
+                    android:layout_width="@dimen/x50"
+                    android:layout_height="@dimen/x50"
+                    android:layout_gravity="center"
+                    android:src="@drawable/s_newjobs"/>
+
+                <com.ingic.saeedni.ui.views.AnyTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.4"
+                    android:paddingTop="@dimen/x5"
+                    android:text="@string/new_jobs"
+                    android:textColor="@color/s_font_color_blue"
+                    android:textSize="@dimen/x14"
+                    app:typeface="Roboto-Regular.ttf"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/grey"/>
+
+        <LinearLayout
+            android:id="@+id/ll_ItemsSecondtRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/ll_history"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x110"
+
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="@dimen/x15">
+
+                <ImageView
+                    android:id="@+id/iv_history"
+                    android:layout_width="@dimen/x50"
+                    android:layout_height="@dimen/x50"
+                    android:layout_gravity="center"
+                    android:src="@drawable/s_orderhistory"/>
+
+                <com.ingic.saeedni.ui.views.AnyTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.4"
+                    android:paddingTop="@dimen/x5"
+                    android:text="@string/order_history"
+                    android:textColor="@color/s_font_color_blue"
+                    android:textSize="@dimen/x14"
+                    app:typeface="Roboto-Regular.ttf"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/grey"/>
+
+            <LinearLayout
+                android:id="@+id/ll_notification"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x110"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="@dimen/x15">
+
+                <ImageView
+                    android:id="@+id/iv_notification"
+                    android:layout_width="@dimen/x50"
+                    android:layout_height="@dimen/x50"
+                    android:layout_gravity="center"
+
+                    android:src="@drawable/s_notifications"/>
+
+                <com.ingic.saeedni.ui.views.AnyTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.4"
+                    android:paddingTop="@dimen/x5"
+                    android:text="@string/notifications"
+                    android:textColor="@color/s_font_color_blue"
+                    android:textSize="@dimen/x14"
+                    app:typeface="Roboto-Regular.ttf"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/grey"/>
+
+        <LinearLayout
+            android:id="@+id/ll_ItemsThirdRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/ll_logout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x100"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="@dimen/x15">
+
+                <ImageView
+                    android:id="@+id/iv_logout"
+                    android:layout_width="@dimen/x50"
+                    android:layout_height="@dimen/x50"
+                    android:layout_gravity="center"
+
+                    android:src="@drawable/s_logout"/>
+
+                <com.ingic.saeedni.ui.views.AnyTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.4"
+                    android:text="@string/logout"
+
+                    android:textColor="@color/s_font_color_blue"
+                    android:textSize="@dimen/x14"
+                    app:typeface="Roboto-Regular.ttf"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

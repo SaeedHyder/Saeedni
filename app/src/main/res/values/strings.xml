@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <!-- mark favourite message -->
+    <string name="successful">Successfully marked as favourites</string>
+
+    <string name="drawer_open">open</string>
+    <string name="drawer_close">close</string>
+
+    <string name="api_key">AIzaSyAKCODXR2MQU8kd30dNwZ8iFybv9btnMbE  </string>
+    <string name="app_name">Saeedni</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="facebook_app_id">674632155971845</string>
+    <string name="facebook_app_id_test">175703936145004</string>
+
+    <!-- Error Messages -->
+    <string name="error_passwords_do_not_match">Passwords do not match.</string>
+    <string name="error_could_not_connect">Could not connect to server. Please try again later.</string>
+    <string name="error_cannot_create_account">Account already exists!</string>
+    <string name="error_cannot_sign_in">Please provide correct Email and Password</string>
+    <string name="crash_toast_text">Sorry for inconvenience, we will get this issue fixed!</string>
+    <string name="msg_connection_failed">Error! Connection to server failed.</string>
+    <string name="msg_connection_error">Please check your internet connection</string>
+
+    <!-- Date Time -->
+    <string name="common.months">months</string>
+    <string name="common.weeks">weeks</string>
+    <string name="common.days">days</string>
+    <string name="common.hrs">hrs</string>
+    <string name="common.mins">mins</string>
+    <string name="common.secs">secs</string>
+    <string name="common.ago">ago</string>
+
+    <!-- AnyTextView -->
+    <string name="typeface_not_found">Typeface %$1 not found, or could not be loaded.
+        Showing default typeface.</string>
+    <string name="app">AnyTextView</string>
+    <string name="assets_fonts_folder">fonts/</string>
+    <string name="txt_enter_phone_no">Enter Phone No.</string>
+    <string name="txt_enter_email_address">Enter Email Address <font fgcolor="#75000000">(Optional)</font></string>
+    <string name="txt_register_text">Verificaion process is required to verify the phone no.</string>
+    <string name="message_quit">Are you sure you want to exit?</string>
+    <string name="message_wait">Please wait while data is loading.</string>
+    <string name="email_address">Email Address</string>
+    <string name="password">Password</string>
+    <string name="confirm_pass">Confirm Password</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="click_here">  Click Here</string>
+    <string name="imgdesc_signup">Sign Up</string>
+    <string name="imgdesc_signin">Sign In</string>
+    <string name="back_to_login"><u>Back to Login</u></string>
+    <string name="remember_me">remember me</string>
+    <string name="login">Login</string>
+    <string name="user_name">User Name</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
+    <string name="categories">Categories</string>
+    <string name="messages">Messages</string>
+    <string name="settings">Settings</string>
+    <string name="search_hint">Search Ads, User or Category</string>
+    <string name="password_sent">Your password will be sent to your \nemail address</string>
+    <string name="change_password">CHANGE PASSWORD</string>
+    <string name="reason_for_rejection">REASON</string>
+    <string name="old_password">Old Password</string>
+    <string name="new_password">New Password</string>
+    <string name="via_email">Via Email</string>
+    <string name="via_sms">Via SMS</string>
+    <string name="tell_a_friend">TELL A FRIEND</string>
+    <string name="contact_email">contact@voltas.com</string>
+    <string name="contact_phone">5555 555 555</string>
+    <string name="enter_text">Enter Text</string>
+    <string name="you_paid">YOU PAID</string>
+    <string name="tap_to_rate">TAP A STAR TO RATE DRIVER</string>
+    <string name="contact_address">Columbus College of Arts, New York</string>
+    <string name="dummy_desciption">lorem ipsum dolor sit amet, comsectetur adipiscing elit,sed do eiusmod
+    tempor incididunt ut labore et dolore magna aliqua</string>
+    <string name="lorem_ipsum">Lorem Ipsum is simply dummy text of the printing and types
+        etting industry. Lorem Ipsum has been the industrys standard dummy text ever sinc
+        e the 1500s, when an unknown printer took a galley of type and scrambled it t
+        o make a type specimen book. It has survived not only five centuries, but
+         also the leap into electronic typesetting, remaining essentially unchanged
+         . It was popularised in the 1960s with the release of Letraset sheets cont
+         aining Lorem Ipsum passages, and more recently with desktop publishing so
+         ftware like Aldus PageMaker including versions of Lorem Ipsum.</string>
+    <string name="this_is_login_fragment">This is Login Fragment</string>
+    <string name="job_posted">Job Posted : 02-05-17</string>
+    <string name="select_job_type">Select Job Type</string>
+    <string name="selected_jobs">Selected Jobs</string>
+    <string name="additional_job">Additional Details</string>
+    <string name="addtional_job_description">Write your additional job\'s description here</string>
+    <string name="dummyAddress">795 Dubai Marina,UAE</string>
+    <string name="secondAddress">Enter unit or flat number</string>
+    <string name="dummydate">Date</string>
+    <string name="preferred_date">Preferred Date</string>
+    <string name="preferred_time">Preferred Time</string>
+    <string name="dummytime">Time</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="add_photo">Add Photos</string>
+    <string name="payment_method">Payment Mode</string>
+    <string name="cc">Credit Card</string>
+    <string name="cc_number">Credit Card Number</string>
+    <string name="expiration_date">Expiration Date</string>
+    <string name="cvv">CVV</string>
+    <string name="name_appearing_on_card">Name Appearing on the Card</string>
+    <string name="cod">Cash on Delivery</string>
+    <string name="cod_short">COD</string>
+    <string name="request_a_quote">Request a Quote</string>
+    <string name="gps_question">Location is Disabled.Do you want to enable it</string>
+    <string name="gps_yes">Yes</string>
+    <string name="gps_no">No</string>
+    <string name="email">Email</string>
+    <string name="new_jobs">New Jobs</string>
+    <string name="order_history">Order History</string>
+    <string name="notifications">Notifications</string>
+    <string name="logout">Logout</string>
+    <string name="completedjob">Completed Jobs</string>
+    <string name="in_progress">In Progress</string>
+    <string name="no_result_found">No Result Found</string>
+    <string name="job">Job Number:</string>
+    <string name="my_job">My Jobs</string>
+    <string name="new_job">New Jobs</string>
+    <string name="arabic_english">عربى - English</string>
+    <string name="english">English</string>
+    <string name="arabic">عربى</string>
+
+    <string name="about_app">About App</string>
+    <string name="job_completed">Job Completed:</string>
+    <string name="client_name">Client Name:</string>
+    <string name="job_title">Job Title:</string>
+    <string name="earning_cod">Earning (COD):</string>
+    <string name="rating">Rating:</string>
+    <string name="my_profile">My Profile</string>
+    <string name="email_id">Email Id</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="registration_type">Registration Type</string>
+    <string name="Registration_Date">Registration Date</string>
+    <string name="Customer_Name">Customer Name:</string>
+    <string name="Estimated_Quote">Estimated Quote:</string>
+    <string name="Service">Service:</string>
+    <string name="address">Address:</string>
+    <string name="description">Description:</string>
+    <string name="preferred_date_time">Preferred Date/Time</string>
+    <string name="accept">Accept</string>
+    <string name="reject">Reject</string>
+    <string name="user">User</string>
+    <string name="user_message">Want to use the Services</string>
+    <string name="technician">Technician</string>
+    <string name="wants_to_provide_services">Wants to provide Services</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="enter_full_name">Enter Full Name</string>
+    <string name="enter_name">Enter Name</string>
+    <string name="valid_number">Enter Valid Number</string>
+    <string name="enter_number">Enter Number</string>
+    <string name="submit">Submit</string>
+    <string name="incorrect_code">Incorrect Code</string>
+    <string name="success">Success</string>
+    <string name="i_have_read_the_term_and_conditions">You agree to our <font fgcolor='#095587'>Term and Conditions</font></string>
+    <string name="valid_email">Enter Valid Email</string>
+    <string name="valid_password">Enter valid Password</string>
+    <string name="ac">AC</string>
+    <string name="electrical">Electrical</string>
+    <string name="plumbing">Plumbing</string>
+    <string name="furniture_fixture_assembly"><![CDATA[Furniture Fixture & Assembly]]></string>
+    <string name="pest_control">Pest Control</string>
+    <string name="cleaning">Cleaning</string>
+    <string name="move_in_move_out">Move in / Move out</string>
+    <string name="customs_jobs">Customs Jobs</string>
+    <string name="update">Update</string>
+    <string name="enter_cc_number">Enter Credit Card Number</string>
+    <string name="expiredate_error">Enter Credit Card Expire Date</string>
+    <string name="cvv_error">Enter CVV Number</string>
+    <string name="cc_name_error">Enter Name on Credit Card Number</string>
+    <string name="khalid_howladar">Khalid Howladar</string>
+    <string name="khalidhowladar_sample_com">khalidhowladar@sample.com</string>
+
+    <string name="Job_Posted">Job Posted:</string>
+    <string name="call">Call</string>
+    <string name="add_job">Add Job</string>
+    <string name="mark_as_completed">Mark as Completed</string>
+    <string name="job_description">Job Description</string>
+    <string name="Total">Total</string>
+
+    <string name="Notifications">Notifications</string>
+    <string name="New_Jobs">New Jobs</string>
+    <string name="job_number">Job Number:</string>
+    <string name="Job_Title">Job Title:</string>
+    <string name="payment_mode">Payment Mode:</string>
+    <string name="User_Address">User Address:</string>
+    <string name="quotation_valid_till">Quotation Valid Till:</string>
+    <string name="estimated_quote">Estimated Quote:</string>
+    <string name="Electrical">Electrical</string>
+    <string name="no_data">No Data to Show</string>
+    <string name="address_2">Address 2</string>
+    <string name="address_1">Address 1</string>
+    <string name="edit_card">Edit Card</string>
+    <string name="are_you_sure_you_want_to_cancel_the_job">Are you sure you want to\n cancel the Job ?</string>
+    <string name="are_you_sure_you_want_to_logout">Are you sure you want to\n Logout ?</string>
+    <string name="enter_your_message_here">Enter your message here</string>
+    <string name="we_d_love_to_here_from_you">We\'d love to here from you</string>
+    <string name="sink_broken">Sink Broken</string>
+    <string name="requested_by">Requested by:</string>
+    <string name="muhammad_ali"> Muhammad Ali</string>
+    <string name="expected_time_of_arrival">Expected Time of Arrival</string>
+    <string name="ac_not_cooling_well">Ac not cooling well</string>
+    <string name="write_feedback_here">write feedback here...</string>
+    <string name="rate_techinecian">Rate Technician</string>
+    <string name="tip_techinecian">Tip Technician</string>
+    <string name="aed">AED  </string>
+    <string name="we_have_recive_your_request_will_touch_shorthly">"\"We have received your request\n and will be in touch shortly\""</string>
+    <string name="close">Close</string>
+    <string name="forgot_password_dialog">Forgot Password</string>
+    <string name="please_contact_al_musa_sub_admin_nfor_password_retrieval">Please contact Al-Musa (Sub admin)\nfor password retrieval</string>
+
+    <string name="expected_time_of_job_completion">Expected Time of Job Completion</string>
+    <string name="earning">Earning:</string>
+    <string name="Total_Earning">Total Earning:</string>
+
+    <string name="call_technician">Call Technician</string>
+    <string name="cancel_job">Cancel Job</string>
+    <string name="technician_number">Technician Number:</string>
+    <string name="dummy_number">+97 XXX XXX XXX</string>
+    <string name="amount_quoted">Amount Quoted:</string>
+    <string name="technician_name">Technician Name:</string>
+    <string name="dummy_name">Al Musa</string>
+    <string name="technician_rating">Technician Rating:</string>
+    <string name="amount_paid">Amount Paid:</string>
+    <string name="iam_a">Iam a...</string>
+    <string name="time_error">Please Select complete time after Arrive time</string>
+    <string name="arrive_time_error">Enter Arrive Time</string>
+    <string name="complete_time_error">Enter Complete Time</string>
+    <string name="less_time_error">Please Select Arrive time after Current Time</string>
+    <string name="enter_valid_number_error">Enter Valid Number</string>
+    <string name="date_before_error">Selected Date is Before Current Date</string>
+    <string name="cc_valid_error">Enter Valid Credit Card Number</string>
+    <string name="user_profile">User Profile</string>
+    <string name="jobs">Jobs</string>
+    <string name="terms_conditons">Terms and Conditions</string>
+    <string name="request_setvice">Request For Service</string>
+    <string name="edit_job">Edit Job</string>
+    <string name="add_payment">Add Payment</string>
+    <string name="internet_not_connected">Internet is not Connected</string>
+    <string name="empty_name_error">User Name can not be empty</string>
+    <string name="empty_email_error">User Email can not be empty</string>
+    <string name="address_empty_error">Address can not be empty</string>
+    <string name="thank_you">Thank You</string>
+    <string name="requesr_service_home">Request a Service</string>
+    <string name="please_enter_the_reason_for_nrefusing_job">Please Enter the Reason for  Refusing Job</string>
+    <string name="ok">OK</string>
+    <string name="cancle">Cancel</string>
+    <string name="_22_feb_2017_02_30_pm">22 Feb 2017 &#032;&#032;&#032;&#032;02:30 PM</string>
+    <string name="App_Name">Yellow Cap</string>
+    <string name="valid_code_error">Enter Valid Code</string>
+    <string name="profile_pic_error">Select Profile Picture</string>
+    <string name="imagelimit_error">You have Reached the limit of 5 Images</string>
+    <string name="job_posted_label">Job Posted : </string>
+    <string name="Estimated_Quotation">Estimated Quotation :</string>
+    <string name="no_technician_error">Not Assigned</string>
+    <string name="assignText">We will soon assign you a Technician</string>
+    <string name="no_number_tech">+97xxxxxxxx</string>
+    <string name="between_aed">Between</string>
+    <string name="between">Between</string>
+
+    <string name="select_date_error">Select Date First</string>
+    <string name="connection_lost">No Internet Found</string>
+    <string name="delete_account">You are about to permanently delete your account. To Sign Up again you will be requested to verify your Contact Details. Do you wish to delete your account?</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="uae_country_code">AE</string>
+    <string name="Quotation">Quotation</string>
+    <string name="enter_message">Enter your message here</string>
+    <string name="selectjob">Select a Job</string>
+    <string name="payment_type">Select Payment Type</string>
+    <string name="select_time">Select Time</string>
+    <string name="select_date">Select Date</string>
+    <string name="enter_address">Enter Address</string>
+    <string name="enter_email">Enter Valid Email</string>
+    <string name="email_alert_message">A verification code has been send to your Email address</string>
+    <string name="addtional_jobs">Additional Jobs</string>
+    <string name="to">to</string>
+    <string name="pricing_for_additional_job">Total Price of Job</string>
+    <string name="sub_job_type">Select Sub Job Type</string>
+    <string name="eng">ENG</string>
+    <string name="ar">AR</string>
+    <string name="location">Location:</string>
+    <string name="signup">Signup</string>
+    <string name="signin">Sign In</string>
+    <string name="reset_now">Reset Now</string>
+    <string name="address_">Address</string>
+    <string name="name">Name</string>
+    <string name="registration_message">Registration Successful!</string>
+    <string name="proceed">Proceed</string>
+    <string name="language">Language</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="unit_makeover">Unit Makeover</string>
+    <string name="job_description_message">White job description here…</string>
+    <string name="location_error">Cannot get Current Location! Try Again.</string>
+    <string name="contact_admin_message">Please contact admin for password</string>
+    <string name="forgot_password_">Forgot Password</string>
+    <string name="forgor_password_message">Your password will be sent to your email address</string>
+    <string name="select_job_error">Please Select a Job</string>
+    <string name="something_went_wrong">Something Went Wrong</string>
+    <string name="terms_error_message">Please agree to our Terms and Conditions</string>
+    <string name="more_jobs">More</string>
+    <string name="rate_user">Rate User</string>
+    <string name="are_you_sure">Are you sure ?</string>
+    <string name="enter_location">Enter Location</string>
+    <string name="server_error">No response from server!!</string>
+    <string name="verification">Verification</string>
+    <string name="attention">Attention</string>
+    <string name="request_now">Request Now</string>
+    <string name="image_select_question">How do you want to set your photo?</string>
+    <string name="select_image">Select Image</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+
+
+</resources>

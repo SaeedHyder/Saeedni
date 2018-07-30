@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+
+            android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white_dirty"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:id="@+id/ll_job"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x10"
+            android:layout_marginEnd="@dimen/x20"
+            android:layout_marginStart="@dimen/x12"
+            android:layout_marginTop="@dimen/x20"
+            android:orientation="horizontal">
+
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:id="@+id/txt_jobNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/x8"
+                android:layout_marginStart="@dimen/x8"
+                android:layout_weight="0"
+                android:text="@string/job"
+                android:textColor="@color/app_blue"
+                android:textSize="@dimen/x15"
+                app:typeface="Roboto-Regular.ttf"/>
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:id="@+id/txt_jobNoText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="01"
+                android:textColor="@color/s_font_color_blue"
+                android:textSize="@dimen/x15"
+                app:typeface="Roboto-Regular.ttf"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_clientName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x10"
+            android:layout_marginEnd="@dimen/x20"
+            android:layout_marginStart="@dimen/x12"
+            android:orientation="horizontal">
+
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:id="@+id/txt_ClientName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/x8"
+                android:layout_marginStart="@dimen/x8"
+                android:text="@string/client_name"
+                android:textColor="@color/app_blue"
+                android:textSize="@dimen/x15"
+                app:typeface="Roboto-Regular.ttf"/>
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:id="@+id/txt_clientNameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Jordan Bel"
+                android:textColor="@color/s_font_color_blue"
+                android:textSize="@dimen/x15"
+                app:typeface="Roboto-Regular.ttf"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/x20"
+            android:layout_marginLeft="@dimen/x20"
+            android:layout_marginRight="@dimen/x20"
+            android:orientation="vertical">
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:id="@+id/txt_jobtype"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:paddingBottom="@dimen/x10"
+                android:paddingTop="@dimen/x5"
+                android:text="@string/select_job_type"
+                android:textColor="@color/app_blue"
+                android:textSize="@dimen/x15"
+                android:textStyle="normal"
+                app:typeface="Roboto-Regular.ttf"/>
+
+            <com.ingic.saeedni.ui.views.AnySpinner
+                android:id="@+id/spn_jobtype"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x30"
+                android:layout_marginBottom="@dimen/x5"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x1"
+                android:layout_marginBottom="@dimen/x10"
+                android:background="@drawable/line"/>
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:id="@+id/txt_subjobtype"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:paddingBottom="@dimen/x10"
+                android:paddingTop="@dimen/x10"
+                android:text="@string/sub_job_type"
+                android:textColor="@color/app_blue"
+                android:textSize="@dimen/x15"
+                android:textStyle="normal"
+                app:typeface="Roboto-Regular.ttf"/>
+
+            <com.ingic.saeedni.ui.views.AnySpinner
+                android:id="@+id/spn_subjobtype"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x40"
+                android:layout_marginBottom="@dimen/x5"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x1"
+                android:layout_marginBottom="@dimen/x5"
+                android:background="@drawable/line"/>
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:id="@+id/txt_jobdescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:paddingBottom="@dimen/x10"
+                android:paddingTop="@dimen/x10"
+                android:text="@string/job_description"
+                android:textColor="@color/app_blue"
+                android:textSize="@dimen/x15"
+                android:textStyle="normal"
+                app:typeface="Roboto-Regular.ttf"/>
+
+            <com.ingic.saeedni.ui.views.AnySpinner
+                android:id="@+id/spn_jobdescription"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x30"
+                android:layout_marginBottom="@dimen/x5"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x1"
+                android:layout_marginBottom="@dimen/x5"
+                android:background="@drawable/line"/>
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:id="@+id/txt_jobselected"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:paddingBottom="@dimen/x10"
+                android:paddingTop="@dimen/x10"
+                android:text="@string/selected_jobs"
+                android:textColor="@color/app_blue"
+                android:textSize="@dimen/x15"
+                android:textStyle="normal"
+                app:typeface="Roboto-Regular.ttf"/>
+
+            <ListView
+                android:id="@+id/listView_jobselected"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:id="@+id/txt_jobadditional"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:paddingBottom="@dimen/x10"
+                android:paddingTop="@dimen/x10"
+                android:text="@string/additional_job"
+                android:textColor="@color/app_blue"
+                android:textSize="@dimen/x15"
+                android:textStyle="normal"
+                app:typeface="Roboto-Regular.ttf"/>
+
+            <com.ingic.saeedni.ui.views.AnyEditTextView
+                android:id="@+id/txt_additionDescription"
+                style="@style/form_edttext_fields_style"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x100"
+                android:background="@drawable/boxcentershape"
+                android:ems="10"
+                android:gravity="top"
+                android:hint="@string/addtional_job_description"
+                android:imeOptions="actionDone"
+                android:inputType="textMultiLine"
+                android:maxHeight="@dimen/x100"
+                android:overScrollMode="always"
+                android:padding="@dimen/x10"
+                android:scrollbarStyle="insideInset"
+                android:scrollbars="vertical"
+                android:textColor="@color/s_font_color_blue"
+                android:textColorHint="@color/s_font_color_blue"
+                app:typeface="Roboto-Regular.ttf"/>
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:id="@+id/txt_pricing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:paddingBottom="@dimen/x10"
+                android:paddingTop="@dimen/x10"
+                android:text="@string/pricing_for_additional_job"
+                android:textColor="@color/app_blue"
+                android:textSize="@dimen/x15"
+                android:textStyle="normal"
+                app:typeface="Roboto-Regular.ttf"/>
+
+            <LinearLayout
+                android:id="@+id/ll_TotalPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/boxcentershape"
+                android:orientation="horizontal">
+                <com.ingic.saeedni.ui.views.AnyTextView
+                    android:id="@+id/txt_Total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="@dimen/x12"
+                    android:layout_marginStart="@dimen/x12"
+                    android:text="@string/Total"
+                    android:textColor="@color/s_font_color_blue"
+                    android:textSize="@dimen/x15"
+                    app:typeface="Roboto-Regular.ttf"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/x40"
+                    >
+
+
+
+                    <com.ingic.saeedni.ui.views.AnyTextView
+                        android:id="@+id/txt_totalPriceText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@+id/edt_total"
+                       android:layout_marginEnd="@dimen/x10"
+                        android:text="@string/aed"
+                        android:textColor="@color/price_color"
+                        android:textSize="@dimen/x15"
+                        app:typeface="Roboto-Regular.ttf"/>
+
+                    <com.ingic.saeedni.ui.views.AnyEditTextView
+                        android:id="@+id/edt_total"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/x10"
+
+                        android:background="@android:color/transparent"
+                        android:hint="00"
+                        android:inputType="number"
+                        android:maxLength="6"
+                        android:maxLines="1"
+                        android:textColor="@color/price_color"
+                        android:textColorHint="@color/price_color"
+                        android:textSize="@dimen/x15"
+                        app:typeface="Roboto-Regular.ttf"/>
+
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

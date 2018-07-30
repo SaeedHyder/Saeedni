@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_marginRight="@dimen/x10">
+<RelativeLayout
+    android:layout_width="@dimen/x80"
+    android:layout_height="@dimen/x80">
+    <ImageView
+        android:id="@+id/img_addedimages"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@color/blue"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        />
+    <ImageView
+        android:id="@+id/delete_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/cross_img"
+        android:layout_alignParentRight="true"/>
+</RelativeLayout>
+</LinearLayout>
