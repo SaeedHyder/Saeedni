@@ -13,10 +13,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ToggleButton;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.ingic.saeedni.R;
 import com.ingic.saeedni.entities.ResponseWrapper;
 import com.ingic.saeedni.fragments.abstracts.BaseFragment;
 import com.ingic.saeedni.global.AppConstants;
+import com.ingic.saeedni.global.WebServiceConstants;
 import com.ingic.saeedni.helpers.DialogHelper;
 import com.ingic.saeedni.helpers.InternetHelper;
 import com.ingic.saeedni.helpers.UIHelper;
@@ -90,7 +92,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-
         ButterKnife.bind(this, view);
         return view;
 
@@ -114,7 +115,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 getDockActivity().replaceDockableFragment(TechNotificationsFragment.newInstance(), "TechNotificationsFragment");
             }
         }, prefHelper);
-        titleBar.setSubHeading(getString(R.string.home));
+        titleBar.setSubHeading(getDockActivity().getResources().getString(R.string.home));
         titleBar.hideTitleBar();
 
     }
@@ -122,6 +123,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+      //  serviceHelper.enqueueCall(webService.updateToken(prefHelper.getUserId(),AppConstants.Device_Type, FirebaseInstanceId.getInstance().getToken()), WebServiceConstants.UPDATE_DEVICE_TOKEN);
+
         getMainActivity().refreshFirstTimeSideMenu();
         getMainActivity().titleBar.invalidate();
         getMainActivity().titleBar.getImageView().invalidate();
@@ -208,7 +212,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                     if (response.body().getResponse().equals("2000")) {
                         getDockActivity().popBackStackTillEntry(0);
                         prefHelper.setLoginStatus(false);
-                        getDockActivity().replaceDockableFragment(LoginFragment.newInstance(), "LoginFragment");
+                        getDockActivity().replaceDockableFragment(UserSelectionFragment.newInstance(), "UserSelectionFragment");
                         techLogoutDialog.hideDialog();
                     } else {
                         UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());

@@ -88,12 +88,13 @@ public class OrderHistoryFragment extends BaseFragment implements View.OnClickLi
 
         mainFrame.setVisibility(View.GONE);
         setListners();
-        ReplaceListViewFragment(CompletedJobsFragment.newInstance());
+        ReplaceListView2Fragment(CompletedJobsFragment.newInstance());
+        ReplaceListViewFragment(InProgressExpendFragment.newInstance());
 
 
         getTechData();
 
-        ReplaceListView2Fragment(InProgressExpendFragment.newInstance());
+
     }
 
     private void getTechData() {
@@ -116,7 +117,7 @@ public class OrderHistoryFragment extends BaseFragment implements View.OnClickLi
         getDockActivity().lockDrawer();
         titleBar.hideButtons();
         titleBar.showBackButton();
-        titleBar.setSubHeading(getString(R.string.jobs));
+        titleBar.setSubHeading(getDockActivity().getResources().getString(R.string.jobs));
 
     }
 
@@ -164,7 +165,7 @@ public class OrderHistoryFragment extends BaseFragment implements View.OnClickLi
 
     }
 
-    private void ReplaceListView2Fragment(InProgressExpendFragment frag) {
+    private void ReplaceListView2Fragment(CompletedJobsFragment frag) {
 
         frag.setOrderCounts(this);
         FragmentTransaction transaction = getChildFragmentManager()

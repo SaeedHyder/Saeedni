@@ -24,6 +24,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.ingic.saeedni.global.AppConstants.BY_APPROVED;
+
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private static final String TAG = MyFirebaseMessagingService.class.getSimpleName();
@@ -50,26 +52,40 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
               /*  JSONObject json = new JSONObject(remoteMessage.getData().toString());
                 Log.e(TAG, "DATA: " + json);*/
             getNotificationCount();
-            buildNotification(remoteMessage);
 
+            if (remoteMessage.getData().get("type")==null) {
+                buildNotification(remoteMessage);
+            } else {
+                String message = remoteMessage.getData().get("en_message");
+                String Type = remoteMessage.getData().get("type");
+
+                Intent pushNotification = new Intent(AppConstants.PUSH_NOTIFICATION);
+                pushNotification.putExtra("message", message);
+                pushNotification.putExtra("pushtype", Type);
+                LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(pushNotification);
+            }
+        }
+        else if(remoteMessage.getNotification()!=null){
+            String title = getString(R.string.app_name);
+            String message = remoteMessage.getNotification().getBody().toString();
+            Log.e(TAG, "message: " + message);
+
+            Intent resultIntent = new Intent(MyFirebaseMessagingService.this, MainActivity.class);
+            resultIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            resultIntent.putExtra("message", message);
+            resultIntent.putExtra("tapped", true);
+
+
+            Intent pushNotification = new Intent(AppConstants.PUSH_NOTIFICATION);
+            pushNotification.putExtra("message", message);
+
+            LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(pushNotification);
+            showNotificationMessage(MyFirebaseMessagingService.this, title, message, "", resultIntent);
 
         }
     }
 
-   /* private void handleNotification(String message) {
-        if (!NotificationHelper.getInstance().isAppIsInBackground(getApplicationContext())) {
-            // app is in foreground, broadcast the push message
-            Intent pushNotification = new Intent(AppConstants.PUSH_NOTIFICATION);
-            pushNotification.putExtra("message", message);
-            LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
 
-            // play notification sound
-            NotificationHelper.getInstance().playNotificationSound(getApplicationContext());
-        } else {
-
-            // If the app is in background, firebase itself handles the notification
-        }
-    }*/
 
     private void getNotificationCount() {
 
@@ -109,7 +125,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             message = messageBody.getData().get("ar_message");
             if (message != null && !message.equals("")) {
 
-            }else {
+            } else {
                 message = messageBody.getData().get("message");
             }
         }

@@ -39,7 +39,7 @@ public class MoreJobsBinder extends RecyclerViewBinder<ServiceEnt> {
     public void bindView(final ServiceEnt entity, int position, Object viewHolder, Context context) {
         ViewHolder holder = (ViewHolder) viewHolder;
         if (prefHelp.isLanguageArabic())
-            holder.txtJobs.setText(entity.getTitle());
+            holder.txtJobs.setText(entity.getArTitle());
         else
             holder.txtJobs.setText(entity.getTitle());
 

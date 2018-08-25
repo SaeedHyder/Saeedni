@@ -1,5 +1,6 @@
 package com.ingic.saeedni.fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
@@ -14,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
@@ -181,7 +183,7 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
                         if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
                             try {
                                 loadingStarted();
-                                registerUser(phoneUtil.format(phoneUtil.parse(edtnumber.getText().toString(), getString(R.string.uae_country_code)),
+                                registerUser(phoneUtil.format(phoneUtil.parse(edtnumber.getText().toString(), getDockActivity().getResources().getString(R.string.uae_country_code)),
                                         PhoneNumberUtil.PhoneNumberFormat.E164));
 
                             } catch (Exception e) {
@@ -206,16 +208,16 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
 
 
         try {
-            Phonenumber.PhoneNumber number = phoneUtil.parse(edtnumber.getText().toString(), getString(R.string.uae_country_code));
+            Phonenumber.PhoneNumber number = phoneUtil.parse(edtnumber.getText().toString(), getDockActivity().getResources().getString(R.string.uae_country_code));
             if (phoneUtil.isValidNumber(number)) {
                 return true;
             } else {
-                edtnumber.setError(getString(R.string.enter_valid_number_error));
+                edtnumber.setError(getDockActivity().getResources().getString(R.string.enter_valid_number_error));
                 return false;
             }
         } catch (NumberParseException e) {
             System.err.println("NumberParseException was thrown: " + e.toString());
-            edtnumber.setError(getString(R.string.enter_valid_number_error));
+            edtnumber.setError(getDockActivity().getResources().getString(R.string.enter_valid_number_error));
             return false;
 
         }
@@ -225,7 +227,10 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
     public void ResponseSuccess(Object result, String Tag) {
         switch (Tag) {
             case WebServiceConstants.GET_ALL_CITIES:
-                allCities = (ArrayList<CitiesEnt>) result;
+                CitiesEnt citiesEnt=new CitiesEnt();
+                citiesEnt.setLocation(getDockActivity().getResources().getString(R.string.select_city));
+                allCities.add(citiesEnt);
+                allCities.addAll( (ArrayList<CitiesEnt>) result);
                 setCitiesSpinner(allCities);
                 break;
         }
@@ -264,7 +269,7 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
         super.setTitleBar(titleBar);
         titleBar.hideButtons();
         titleBar.showBackButton();
-        titleBar.setSubHeading(getResources().getString(R.string.signup));
+        titleBar.setSubHeading(getDockActivity().getResources().getString(R.string.signup));
     }
 
     private void registerUser(String number) {
@@ -332,55 +337,64 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
     }
 
     private void setCitiesSpinner(ArrayList<CitiesEnt> citiesEnts) {
+
         final ArrayList<String> citiesCollection = new ArrayList<String>();
+
+
         for (CitiesEnt item : citiesEnts
                 ) {
             citiesCollection.add(item.getLocation());
         }
-        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity(), android.R.layout.simple_spinner_item, citiesCollection);
+        //  ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity(), android.R.layout.simple_spinner_item, citiesCollection);
+
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity()
+                , android.R.layout.simple_spinner_item, citiesCollection) {
+            @Override
+            public boolean isEnabled(int position) {
+                return !(position == 0);
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView,
+                                        ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                tv.setTextColor(position == 0 ? Color.GRAY : Color.BLACK);
+                return view;
+            }
+
+        };
+
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnCity.setAdapter(categoryAdapter);
-
-        spnCity.setOnItemSelectedEvenIfUnchangedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                // bindSelectedJobview(selectedJobs);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-              /*  if (!selectedJobs.contains(jobChildcollection.get(0)))
-                    selectedJobs.add(jobChildcollection.get(0));
-
-                refreshListview();*/
-            }
-        });
     }
 
     private boolean isvalidated() {
 
         if (edtname.getText().toString().isEmpty()) {
-            edtname.setError(getString(R.string.enter_name));
+            edtname.setError(getDockActivity().getResources().getString(R.string.enter_name));
             return false;
         } else if (edtnumber.getText().toString().equals("") && edtnumber.getText().toString().isEmpty()) {
-            edtnumber.setError(getString(R.string.enter_number));
+            edtnumber.setError(getDockActivity().getResources().getString(R.string.enter_number));
             return false;
         } else if (edtnumber.getText().toString().length() < 9 || edtnumber.getText().toString().length() > 10) {
-            edtnumber.setError(getString(R.string.enter_valid_number_error));
+            edtnumber.setError(getDockActivity().getResources().getString(R.string.enter_valid_number_error));
             return false;
         } else if (edtEmail.getText() == null || (edtEmail.getText().toString().isEmpty()) ||
                 (!Patterns.EMAIL_ADDRESS.matcher(edtEmail.getText().toString()).matches())) {
-            edtEmail.setError(getString(R.string.enter_email));
+            edtEmail.setError(getDockActivity().getResources().getString(R.string.enter_email));
             return false;
         } else if (edtpassword.getText() == null || (edtpassword.getText().toString().isEmpty()) || edtpassword.getText().toString().length() < 6) {
-            edtpassword.setError(getString(R.string.valid_password));
+            edtpassword.setError(getDockActivity().getResources().getString(R.string.valid_password));
             return false;
         } else if (edtadress.getText().toString().isEmpty()) {
-            edtadress.setError(getString(R.string.address_empty_error));
+            edtadress.setError(getDockActivity().getResources().getString(R.string.address_empty_error));
+            return false;
+        }else if (spnCity.getSelectedItemPosition()==0) {
+            UIHelper.showShortToastInCenter(getDockActivity(), getDockActivity().getResources().getString(R.string.select_city));
             return false;
         } else if (!prefHelper.istermsCheck()) {
-            UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.terms_error_message));
+            UIHelper.showShortToastInCenter(getDockActivity(), getDockActivity().getResources().getString(R.string.terms_error_message));
             return false;
         } else {
             return true;

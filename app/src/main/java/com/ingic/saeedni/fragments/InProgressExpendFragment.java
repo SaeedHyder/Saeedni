@@ -137,6 +137,15 @@ public class InProgressExpendFragment extends BaseFragment implements MarkAsComp
         collectionGroup = new ArrayList<>();
         collectionChild = new ArrayList<>();
 
+        txtNoresult.setText(R.string.no_inprogress_job);
+        if(result.size()>0){
+            elvInprogress.setVisibility(View.VISIBLE);
+            txtNoresult.setVisibility(View.GONE);
+        }else{
+            elvInprogress.setVisibility(View.GONE);
+            txtNoresult.setVisibility(View.VISIBLE);
+        }
+
         listDataChild = new HashMap<>();
         for (TechInProgressEnt item : result
                 ) {
@@ -190,17 +199,21 @@ public class InProgressExpendFragment extends BaseFragment implements MarkAsComp
             price = userCollection.get(position).getRequest_detail().getTotal_amount() + "";
             userID = userCollection.get(position).getRequest_detail().getUser_id();
         }
-        final DialogHelper helper = new DialogHelper(getDockActivity());
-        final String finalAssignID = assignID;
-        final String finalUserID = userID;
-        helper.initMarkCompleteDialog(price, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                callMarkAsCompleteAPI(RequestID, finalAssignID, finalUserID, Math.round(helper.getRating(R.id.rbAddRating)));
-                helper.hideDialog();
-            }
-        });
-        helper.showDialog();
+        if (!price.equals("0") && !price.isEmpty() && !price.equals("")) {
+            final DialogHelper helper = new DialogHelper(getDockActivity());
+            final String finalAssignID = assignID;
+            final String finalUserID = userID;
+            helper.initMarkCompleteDialog(price, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    callMarkAsCompleteAPI(RequestID, finalAssignID, finalUserID, Math.round(helper.getRating(R.id.rbAddRating)));
+                    helper.hideDialog();
+                }
+            });
+            helper.showDialog();
+        } else {
+            UIHelper.showShortToastInCenter(getDockActivity(), getDockActivity().getResources().getString(R.string.please_entet_amount));
+        }
 
 
     }

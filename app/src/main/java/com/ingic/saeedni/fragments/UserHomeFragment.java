@@ -127,7 +127,7 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mServiceAdapter = new ArrayListAdapter<ServiceEnt>(getDockActivity(), new HomeServiceBinder(getDockActivity()));
+        mServiceAdapter = new ArrayListAdapter<ServiceEnt>(getDockActivity(), new HomeServiceBinder(getDockActivity(),prefHelper));
 
     }
 
@@ -178,7 +178,7 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
             }
         }, prefHelper);
         titleBar.showMenuButton();
-        titleBar.setSubHeading(getString(R.string.requesr_service_home));
+        titleBar.setSubHeading(getDockActivity().getResources().getString(R.string.requesr_service_home));
     }
 
     @Override
@@ -279,33 +279,33 @@ public class UserHomeFragment extends BaseFragment implements View.OnClickListen
     private void setHomedata(ArrayList<ServiceEnt> result) {
         if (result.size() > 0) {
             try {
-                if (!prefHelper.isLanguageArabic()) {
+                if (prefHelper.isLanguageArabic()) {
                     imageLoader.displayImage(result.get(0).getServiceImage(), ivAc);
-                    txtAc.setText(result.get(0).getTitle());
+                    txtAc.setText(result.get(0).getArTitle());
                     txtAc.setTag(result.get(0));
 
                     imageLoader.displayImage(result.get(1).getServiceImage(), ivElectrical);
-                    txtElectrical.setText(result.get(1).getTitle());
+                    txtElectrical.setText(result.get(1).getArTitle());
                     txtElectrical.setTag(result.get(1));
 
                     imageLoader.displayImage(result.get(2).getServiceImage(), ivPlumbing);
-                    txtPlumbing.setText(result.get(2).getTitle());
+                    txtPlumbing.setText(result.get(2).getArTitle());
                     txtPlumbing.setTag(result.get(2));
 
                     imageLoader.displayImage(result.get(3).getServiceImage(), ivFurniture);
-                    txtFurniture.setText(result.get(3).getTitle());
+                    txtFurniture.setText(result.get(3).getArTitle());
                     txtFurniture.setTag(result.get(3));
 
                     imageLoader.displayImage(result.get(4).getServiceImage(), ivPest);
-                    txtPest.setText(result.get(4).getTitle());
+                    txtPest.setText(result.get(4).getArTitle());
                     txtPest.setTag(result.get(4));
 
                     imageLoader.displayImage(result.get(5).getServiceImage(), ivCleaning);
-                    txtCleaning.setText(result.get(5).getTitle());
+                    txtCleaning.setText(result.get(5).getArTitle());
                     txtCleaning.setTag(result.get(5));
 
                     imageLoader.displayImage(result.get(6).getServiceImage(), ivMove);
-                    txtMove.setText(result.get(6).getTitle());
+                    txtMove.setText(result.get(6).getArTitle());
                     txtMove.setTag(result.get(6));
 
                    /* imageLoader.displayImage(result.get(7).getServiceImage(), ivCustom);

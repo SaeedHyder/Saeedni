@@ -8,7 +8,7 @@
     <string name="drawer_open">open</string>
     <string name="drawer_close">close</string>
 
-    <string name="api_key">AIzaSyAKCODXR2MQU8kd30dNwZ8iFybv9btnMbE  </string>
+    <string name="api_key">AIzaSyDw2ew6oAiPpok5CsURrqoEYsj6IpyXGX8</string>
     <string name="app_name">Saeedni</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -291,6 +291,7 @@
     <string name="reset_now">Reset Now</string>
     <string name="address_">Address</string>
     <string name="name">Name</string>
+    <string name="comapny_name">Company Name</string>
     <string name="registration_message">Registration Successful!</string>
     <string name="proceed">Proceed</string>
     <string name="language">Language</string>
@@ -316,6 +317,31 @@
     <string name="select_image">Select Image</string>
     <string name="camera">Camera</string>
     <string name="gallery">Gallery</string>
+    <string name="trade_license_date">Trade license Expiry Date</string>
+    <string name="trade_license_attach">Attach Trade License</string>
+    <string name="select_file">Select File</string>
+    <string name="set_file">How do you want to set your file?</string>
+    <string name="enter_company_name">Enter Company Name</string>
+    <string name="enter_first_name">Enter First Name</string>
+    <string name="enter_registration_type">Enter Registration Type</string>
+    <string name="enter_registration_date">Enter Registration Date</string>
+    <string name="enter_last_name">Enter Last Name</string>
+    <string name="attach_file">Attach License</string>
+    <string name="select_expiry_date">Select License Expiry Date</string>
+    <string name="select_profile_picture">Select Profile Picture</string>
+    <string name="user_selection">User Selection</string>
+    <string name="select_city">Select City</string>
+    <string name="select_speciality">Select Speciality</string>
+    <string name="enter_address1">Enter Address</string>
+    <string name="please_entet_amount">please enter amount</string>
+    <string name="total_field_requires">Total field is required</string>
+    <string name="job_added_successfully">Job added successfully</string>
+    <string name="edit_job_successfully">Job edit successfully</string>
+    <string name="select_job_description">Select Job Description</string>
+    <string name="feedback">Already given feedback on request</string>
+    <string name="user_logout">Logout</string>
+    <string name="no_inprogress_job">No Inprogress job found</string>
+    <string name="no_completed_job">No Completed job found</string>
 
 
 </resources>

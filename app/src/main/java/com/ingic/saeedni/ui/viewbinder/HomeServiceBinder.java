@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import com.ingic.saeedni.R;
 import com.ingic.saeedni.activities.DockActivity;
 import com.ingic.saeedni.entities.ServiceEnt;
+import com.ingic.saeedni.helpers.BasePreferenceHelper;
 import com.ingic.saeedni.ui.viewbinders.abstracts.ViewBinder;
 import com.ingic.saeedni.ui.views.AnyTextView;
 import com.squareup.picasso.Picasso;
@@ -20,20 +21,28 @@ import butterknife.ButterKnife;
 
 public class HomeServiceBinder extends ViewBinder<ServiceEnt> {
     DockActivity context;
+    BasePreferenceHelper preferenceHelper;
+
     @Override
     public BaseViewHolder createViewHolder(View view) {
         return new ViewHolder(view);
     }
 
-    public HomeServiceBinder(DockActivity activity) {
+    public HomeServiceBinder(DockActivity activity, BasePreferenceHelper preferenceHelper) {
         super(R.layout.row_item_home);
         context = activity;
+        this.preferenceHelper = preferenceHelper;
     }
 
     @Override
     public void bindView(ServiceEnt entity, int position, int grpPosition, View view, Activity activity) {
-        ViewHolder holder = (ViewHolder)view.getTag();
-        holder.txtServiceName.setText(entity.getTitle());
+        ViewHolder holder = (ViewHolder) view.getTag();
+        if (preferenceHelper.isLanguageArabic()) {
+            holder.txtServiceName.setText(entity.getArTitle());
+        } else {
+            holder.txtServiceName.setText(entity.getTitle());
+        }
+
         Picasso.with(context)
                 .load(entity.getServiceImage())
                 .into(holder.imgService);
@@ -45,7 +54,7 @@ public class HomeServiceBinder extends ViewBinder<ServiceEnt> {
         @BindView(R.id.txt_service_name)
         AnyTextView txtServiceName;
 
-       public ViewHolder(View view) {
+        public ViewHolder(View view) {
             ButterKnife.bind(this, view);
         }
     }

@@ -117,16 +117,16 @@ public class CompletedJobsFragment extends BaseFragment {
         userCollection = new ArrayList<>();
         orderCounts.setcompleteCount(result.size());
 
-       /* if(result.size()<0)
+        txt_no_data.setText(getDockActivity().getResources().getString(R.string.no_completed_job));
+        if(result.size()>0)
         {
+            txt_no_data.setVisibility(View.GONE);
+            CompletedJobsListView.setVisibility(View.VISIBLE);
+        }
+        else{
             txt_no_data.setVisibility(View.VISIBLE);
             CompletedJobsListView.setVisibility(View.GONE);
         }
-        else{
-            txt_no_data.setVisibility(View.GONE);
-            CompletedJobsListView.setVisibility(View.GONE);
-        }
-*/
         userCollection.addAll(result);
 
 
@@ -139,7 +139,7 @@ public class CompletedJobsFragment extends BaseFragment {
         if (CompletedJobsListView!=null)
         CompletedJobsListView.setAdapter(adapter);
         adapter.addAll(userCollection);
-        adapter.notifyDataSetChanged();
+
     }
 
 

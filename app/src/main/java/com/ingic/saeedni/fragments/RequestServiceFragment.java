@@ -2,6 +2,7 @@ package com.ingic.saeedni.fragments;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -222,7 +223,10 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
     public void ResponseSuccess(Object result, String Tag) {
         switch (Tag) {
             case WebServiceConstants.GET_ALL_CITIES:
-                allCities = (ArrayList<CitiesEnt>) result;
+                CitiesEnt citiesEnt = new CitiesEnt();
+                citiesEnt.setLocation(getDockActivity().getResources().getString(R.string.select_city));
+                allCities.add(citiesEnt);
+                allCities.addAll((ArrayList<CitiesEnt>) result);
                 setCitiesSpinner(allCities);
                 break;
         }
@@ -264,7 +268,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         getDockActivity().lockDrawer();
         titleBar.hideButtons();
         titleBar.showBackButton();
-        titleBar.setSubHeading(getString(R.string.request_setvice));
+        titleBar.setSubHeading(getDockActivity().getResources().getString(R.string.request_setvice));
     }
 
     private void setCitiesSpinner(ArrayList<CitiesEnt> citiesEnts) {
@@ -279,10 +283,29 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
             }
             citiesCollection.add(citiesEnts.get(i).getLocation());
         }
-        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity(), android.R.layout.simple_spinner_item, citiesCollection);
-        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity(), android.R.layout.simple_spinner_item, citiesCollection);
+        // categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity()
+                , android.R.layout.simple_spinner_item, citiesCollection) {
+            @Override
+            public boolean isEnabled(int position) {
+                return !(position == 0);
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView,
+                                        ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                tv.setTextColor(position == 0 ? Color.GRAY : Color.BLACK);
+                return view;
+            }
+
+        };
+
         spnCity.setAdapter(categoryAdapter);
-        spnCity.setSelection(selectedPosition);
+        //spnCity.setSelection(selectedPosition);
         spnCity.setOnItemSelectedEvenIfUnchangedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -320,7 +343,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
             if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
                 initJobTypeSpinner(TYPE);
             }
-            txtJobPosted.setText(getString(R.string.job_posted_label) +
+            txtJobPosted.setText(getDockActivity().getResources().getString(R.string.job_posted_label) +
                     new SimpleDateFormat("dd-MM-yy").format(Calendar.getInstance().getTime()));
 
         }
@@ -406,7 +429,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
                 break;
             case R.id.btn_addimage:
                 if (images.size() > 4) {
-                    UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.imagelimit_error));
+                    UIHelper.showShortToastInCenter(getDockActivity(), getDockActivity().getResources().getString(R.string.imagelimit_error));
                 } else {
                     CameraHelper.uploadMedia(getMainActivity());
                 }
@@ -609,6 +632,11 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
                 public void onResponse(Call<ResponseWrapper<ArrayList<ServiceEnt>>> call, Response<ResponseWrapper<ArrayList<ServiceEnt>>> response) {
                     if (response.body().getResponse().equals("2000")) {
                         jobChildcollection.clear();
+                        ServiceEnt serviceEnt = new ServiceEnt();
+                        serviceEnt.setTitle(getDockActivity().getResources().getString(R.string.select_job_description));
+                        serviceEnt.setArTitle(getDockActivity().getResources().getString(R.string.select_job_description));
+
+                        jobChildcollection.add(serviceEnt);
                         jobChildcollection.addAll(response.body().getResult());
                         setJobDescriptionSpinner();
 
@@ -659,7 +687,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
             btnPreferredtime.setText( new SimpleDateFormat("h:mm a").format(d1));*/
             btnPreferreddate.setText(previousRequestData.getDate());
             btnPreferredtime.setText(previousRequestData.getTime());
-            txtJobPosted.setText(getString(R.string.job_posted_label) + new SimpleDateFormat("dd-MM-yy").format(d2));
+            txtJobPosted.setText(getDockActivity().getResources().getString(R.string.job_posted_label) + new SimpleDateFormat("dd-MM-yy").format(d2));
         } catch (Exception ex) {
             Logger.getLogger(RequestServiceFragment.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -681,17 +709,40 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
             if (!prefHelper.isLanguageArabic()) {
                 jobdescriptionarraylist.add(item.getTitle());
             } else {
-                jobdescriptionarraylist.add(item.getTitle());
+                jobdescriptionarraylist.add(item.getArTitle());
             }
         }
-        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity(), android.R.layout.simple_spinner_item, jobdescriptionarraylist);
-        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity(), android.R.layout.simple_spinner_item, jobdescriptionarraylist);
+        //   categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity()
+                , android.R.layout.simple_spinner_item, jobdescriptionarraylist) {
+            @Override
+            public boolean isEnabled(int position) {
+                return !(position == 0);
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView,
+                                        ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                tv.setTextColor(position == 0 ? Color.GRAY : Color.BLACK);
+                return view;
+            }
+
+        };
+
         spnJobdescription.setAdapter(categoryAdapter);
+
         spnJobdescription.setOnItemSelectedEvenIfUnchangedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (!selectedJobs.contains(jobChildcollection.get(position))) {
-                    selectedJobs.add(jobChildcollection.get(position));
+                    if (position != 0)
+                        selectedJobs.add(jobChildcollection.get(position));
                 }
 
 
@@ -715,7 +766,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
             if (locationModel != null)
                 textView.setText(locationModel.getAddress());
             else {
-                UIHelper.showShortToastInCenter(getDockActivity(), getResources().getString(R.string.location_error));
+                UIHelper.showShortToastInCenter(getDockActivity(), getDockActivity().getResources().getString(R.string.location_error));
                 //getLocation(edtLocationgps);
             }
         }
@@ -796,7 +847,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         call.enqueue(new Callback<ResponseWrapper<RequestEnt>>() {
             @Override
             public void onResponse(Call<ResponseWrapper<RequestEnt>> call, Response<ResponseWrapper<RequestEnt>> response) {
-                isOnCall  = false;
+                isOnCall = false;
                 loadingFinished();
                 if (response.body().getResponse().equals("2000")) {
                     final DialogHelper RequestSend = new DialogHelper(getDockActivity());
@@ -826,19 +877,19 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
 
     private boolean validate() {
         if (edtLocationspecific.getText().toString().isEmpty()) {
-            edtLocationspecific.setError(getString(R.string.enter_address));
+            edtLocationspecific.setError(getDockActivity().getResources().getString(R.string.enter_address));
             return false;
         } else if (btnPreferreddate.getText().toString().isEmpty()) {
-            UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.select_date));
+            UIHelper.showShortToastInCenter(getDockActivity(), getDockActivity().getResources().getString(R.string.select_date));
             return false;
         } else if (btnPreferredtime.getText().toString().isEmpty()) {
-            UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.select_time));
+            UIHelper.showShortToastInCenter(getDockActivity(), getDockActivity().getResources().getString(R.string.select_time));
             return false;
         } else if (paymentType.isEmpty()) {
-            UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.payment_type));
+            UIHelper.showShortToastInCenter(getDockActivity(), getDockActivity().getResources().getString(R.string.payment_type));
             return false;
         } else if (selectedJobs.isEmpty()) {
-            UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.selectjob));
+            UIHelper.showShortToastInCenter(getDockActivity(), getDockActivity().getResources().getString(R.string.selectjob));
             return false;
         } else {
             return true;
@@ -877,7 +928,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
 // and get that as a Date
                         Date dateSpecified = c.getTime();
                         if (dateSpecified.before(date)) {
-                            UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.date_before_error));
+                            UIHelper.showShortToastInCenter(getDockActivity(), getDockActivity().getResources().getString(R.string.date_before_error));
                         } else {
                             DateSelected = dateSpecified;
                             if (prefHelper.isLanguageArabic())
@@ -904,7 +955,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                     Date date = new Date();
                     if (DateHelper.isSameDay(DateSelected, date) && !DateHelper.isTimeAfter(date.getHours(), date.getMinutes(), hourOfDay, minute)) {
-                        UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.less_time_error));
+                        UIHelper.showShortToastInCenter(getDockActivity(), getDockActivity().getResources().getString(R.string.less_time_error));
                     } else {
                         Calendar c = Calendar.getInstance();
                         int year = c.get(Calendar.YEAR);
@@ -923,7 +974,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
 
             timePicker.showTime();
         } else {
-            UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.select_date_error));
+            UIHelper.showShortToastInCenter(getDockActivity(), getDockActivity().getResources().getString(R.string.select_date_error));
         }
     }
 
@@ -952,6 +1003,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         listViewJobselected.setAdapter(selectedJobsadapter);
         selectedJobsadapter.addAll(selectedJobs);
         selectedJobsadapter.notifyDataSetChanged();
+
         setListViewHeightBasedOnChildren(listViewJobselected);
     }
 
@@ -989,6 +1041,9 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         if (selectedJobs.size() > position)
             selectedJobs.remove(position);
 
+        if(selectedJobs.size()<=0){
+            spnJobdescription.setSelection(0);
+        }
 
         refreshListview();
 

@@ -86,14 +86,14 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDeta
         if(entity.getUser_detail()!=null)
         parentViewHolder.txtClientNameText.setText(entity.getUser_detail().getFull_name()+"");
         if(!preferenceHelper.isLanguageArabic()){
-        parentViewHolder.txtEstimatedQuotationText.setText(context.getString(R.string.between_aed) +" "+ entity.getEstimate_from() +" "+ view.getContext().getResources().getString(R.string.to) +" "+ entity.getEstimate_to());}
+        parentViewHolder.txtEstimatedQuotationText.setText(context.getResources().getString(R.string.between_aed) +" "+ entity.getEstimate_from() +" "+ view.getContext().getResources().getString(R.string.to) +" "+ entity.getEstimate_to());}
         else
         {
-            parentViewHolder.txtEstimatedQuotationText.setText(context.getString(R.string.between) +" "+ entity.getEstimate_from() +" "+ view.getContext().getResources().getString(R.string.to) +" "+ entity.getEstimate_to()+" "+context.getResources().getString(R.string.aed));
+            parentViewHolder.txtEstimatedQuotationText.setText(context.getResources().getString(R.string.between) +" "+ entity.getEstimate_from() +" "+ view.getContext().getResources().getString(R.string.to) +" "+ entity.getEstimate_to()+" "+context.getResources().getString(R.string.aed));
     }
         if (entity.getService_detail() != null) {
             if(preferenceHelper.isLanguageArabic()){
-                parentViewHolder.txtJobTitleText.setText(entity.getService_detail().getTitle()+"");
+                parentViewHolder.txtJobTitleText.setText(entity.getService_detail().getAr_title()+"");
             }
             else {
                 parentViewHolder.txtJobTitleText.setText(entity.getService_detail().getTitle()+"");
@@ -103,9 +103,9 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDeta
             parentViewHolder.txtJobTitleText.setText("");
         }
         if (entity.getTotal().equals("")) {
-            parentViewHolder.txtEarningText.setText(context.getString(R.string.aed) +" "+ " 0");
+            parentViewHolder.txtEarningText.setText(context.getResources().getString(R.string.aed) +" "+ " 0");
         } else {
-            parentViewHolder.txtEarningText.setText(context.getString(R.string.aed) +" "+ entity.getTotal());
+            parentViewHolder.txtEarningText.setText(context.getResources().getString(R.string.aed) +" "+ entity.getTotal());
         }
         parentViewHolder.txtAddressText.setText(entity.getAddress()+"");
 
@@ -187,8 +187,8 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDeta
         }
 
         childViewHolder.txtJob1.setText(stringBuilder.toString());
-        childViewHolder.txtAddEarningText.setText(context.getString(R.string.aed)+" "+ entity.getTotal()  );
-        childViewHolder.txtTotalEarningText.setText(context.getString(R.string.aed) +" " + entity.getTotal_amount());
+        childViewHolder.txtAddEarningText.setText(context.getResources().getString(R.string.aed)+" "+ entity.getTotal()  );
+        childViewHolder.txtTotalEarningText.setText(context.getResources().getString(R.string.aed) +" " + entity.getTotal_amount());
 
         childViewHolder.btnMarkAsCompleteBottom.setOnClickListener(new View.OnClickListener() {
             @Override

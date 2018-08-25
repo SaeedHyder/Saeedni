@@ -8,11 +8,12 @@
     <com.ingic.saeedni.ui.views.AnyTextView
         android:id="@+id/txt_noresult"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
+        android:layout_height="match_parent"
+        android:gravity="center"
         android:paddingBottom="@dimen/x5"
         android:paddingLeft="@dimen/x8"
         android:paddingTop="@dimen/x2"
+
         android:text="@string/no_result_found"
         android:textColor="@color/black"
         android:textSize="@dimen/x20"

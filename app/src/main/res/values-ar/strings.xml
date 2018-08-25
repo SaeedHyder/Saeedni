@@ -54,7 +54,7 @@
     <string name="login">دخول</string>
     <string name="user_name">الاسم المستعار</string>
     <string name="first_name">الاسم الاول</string>
-    <string name="last_name">القبيلة</string>
+    <string name="last_name">الاسم الاخير</string>
     <string name="home">الصفحة الرئيسية</string>
     <string name="profile">ملفي الشخصي</string>
     <string name="categories">الاقسام</string>
@@ -114,23 +114,24 @@
     <string name="gps_yes">هيه</string>
     <string name="gps_no">لا</string>
     <string name="email">البريد الالكتروني</string>
-    <string name="new_jobs">مهام يديده</string>
+    <string name="new_jobs">المهام الجديدة</string>
     <string name="order_history">طلباتي</string>
     <string name="notifications">اشعارات</string>
-    <string name="logout">تسجيل الخروج</string>
+    <string name="logout">خروج</string>
+    <string name="user_logout">تسجيل الخروج</string>
     <string name="completedjob">الخدمات المنجزة</string>
     <string name="in_progress">قيد الاجراء</string>
-    <string name="no_result_found">ماشي علوم</string>
+    <string name="no_result_found">لم يتم العثور على نتائج</string>
     <string name="job">مهمة:</string>
     <string name="my_job">مهامي</string>
     <string name="about_app">عن التطبيق</string>
     <string name="job_completed">المهمة منتهية:</string>
-    <string name="client_name">اسم الزبون:</string>
+    <string name="client_name">اسم العميل:</string>
     <string name="job_title">مهمة:</string>
-    <string name="earning_cod">الكود (كود ):</string>
+    <string name="earning_cod">سعر الخدمة:</string>
     <string name="rating">تقييم:</string>
-    <string name="my_profile">الملف الشخص</string>
-    <string name="email_id">الايميل</string>
+    <string name="my_profile">الملف الشخصي</string>
+    <string name="email_id">البريد الالكتروني</string>
     <string name="phone_number"> رقم الهاتف </string>
     <string name="registration_type">نوع التسجيل</string>
     <string name="Registration_Date">تاريخ التسجيل</string>
@@ -151,8 +152,8 @@
     <string name="enter_name">أدخل الاسم</string>
     <string name="valid_number">أدخل الرقم الصحيح</string>
     <string name="enter_number">أدخل رقم</string>
-   <!-- <string name="submit">عرض</string>-->
-    <string name="submit">تم</string>
+    <!-- <string name="submit">عرض</string>-->
+    <string name="submit">خضع</string>
     <string name="incorrect_code">شفرة خاطئة</string>
     <string name="success">نجحنا</string>
     <string name="i_have_read_the_term_and_conditions">الموافقة على الشروط</string>
@@ -210,7 +211,7 @@
     <string name="tip_techinecian">فني</string>
     <string name="aed">درهم</string>
     <string name="we_have_recive_your_request_will_touch_shorthly">لقد تلقينا طلبك وسنتواصل معك قريبا</string>
-    <string name="close">اغلاق</string>
+    <string name="close">بند</string>
     <string name="forgot_password_dialog">نسيت الباسورد؟</string>
     <string name="please_contact_al_musa_sub_admin_nfor_password_retrieval">يرجى الاتصال آل-موسى (سوب ​​أدمين) لاسترجاع كلمة المرور</string>
 
@@ -313,5 +314,33 @@
     <string name="select_image">اختر صورة</string>
     <string name="camera">الة تصوير</string>
     <string name="gallery">صالة عرض</string>
+    <string name="select_file">أختيار ملف</string>
+    <string name="set_file">كيف تريد تعيين الملف الخاص بك؟</string>
+
+
+    <string name="comapny_name">اسم الشركة</string>
+    <string name="trade_license_date">الرخصة التجارية تاريخ انتهاء الصلاحية</string>
+    <string name="trade_license_attach">إرفاق ترخيص تجاري</string>
+    <string name="attach_file">اختر الرخصة التجارية</string>
+    <string name="select_expiry_date">أدخل تاريخ انتهاء الصلاحية</string>
+    <string name="select_profile_picture">Select Profile Picture</string>
+    <string name="enter_company_name">أدخل اسم الشركة</string>
+    <string name="enter_first_name">أدخل الاسم الأول</string>
+    <string name="enter_last_name">إدخال اسم آخر</string>
+    <string name="user_selection">اختيار المستخدم</string>
+    <string name="select_city">اختر مدينة</string>
+    <string name="select_speciality">اختر التخصص</string>
+    <string name="enter_address1">أدخل العنوان</string>
+    <string name="please_entet_amount">يرجى إدخال المبلغ</string>
+    <string name="total_field_requires">حقل المجموع مطلوب</string>
+    <string name="job_added_successfully">تمت إضافة المهمة بنجاح</string>
+    <string name="edit_job_successfully">تعديل المهمة بنجاح</string>
+    <string name="enter_registration_type">أدخل نوع التسجيل</string>
+    <string name="enter_registration_date">أدخل تاريخ التسجيل</string>
+    <string name="select_job_description">اشرح المهمة</string>
+    <string name="feedback">بالفعل قدمت ردود الفعل على الطلب</string>
+    <string name="no_inprogress_job">لا يوجد وظيفة في التقدم</string>
+    <string name="no_completed_job">لم يتم العثور على وظيفة مكتملة</string>
+
 
 </resources>

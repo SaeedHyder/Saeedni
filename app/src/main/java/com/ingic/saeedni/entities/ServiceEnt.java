@@ -49,6 +49,10 @@ public class ServiceEnt {
         setArTitle(arTitle);
     }
 
+    public ServiceEnt() {
+
+    }
+
     public int getId() {
         return id;
     }

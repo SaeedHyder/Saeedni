@@ -173,7 +173,7 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
             }
 
         else
-            titleBar.setSubHeading(getString(R.string.new_jobs));
+            titleBar.setSubHeading(getDockActivity().getResources().getString(R.string.new_jobs));
         // titleBar.setSubHeading(getString(R.string.plumbing));
 
     }
@@ -206,10 +206,10 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
       /*  txtEstimatedQuote.setText(getString(R.string.between_aed) + newJobJson.getRequest_detail().getEstimate_to()
                 + getString(R.string.to) + newJobJson.getRequest_detail().getEstimate_from() + "- " + getString(R.string.cod_short));*/
         if(!prefHelper.isLanguageArabic()){
-            txtEstimatedQuote.setText(getDockActivity().getString(R.string.between_aed) +" "+newJobJson.getRequest_detail().getEstimate_to() +" "+ getResources().getString(R.string.to) +" "+newJobJson.getRequest_detail().getEstimate_from()+ "- " + getString(R.string.cod_short));}
+            txtEstimatedQuote.setText(getDockActivity().getResources().getString(R.string.between_aed) +" "+newJobJson.getRequest_detail().getEstimate_to() +" "+ getDockActivity().getResources().getString(R.string.to) +" "+newJobJson.getRequest_detail().getEstimate_from()+ "- " + getDockActivity().getResources().getString(R.string.cod_short));}
         else
         {
-            txtEstimatedQuote.setText(getDockActivity().getString(R.string.between) +" "+ newJobJson.getRequest_detail().getEstimate_from() +" "+ getResources().getString(R.string.to) +" "+newJobJson.getRequest_detail().getEstimate_to()+" "+getDockActivity().getResources().getString(R.string.aed)+ "- " + getString(R.string.cod_short));
+            txtEstimatedQuote.setText(getDockActivity().getResources().getString(R.string.between) +" "+ newJobJson.getRequest_detail().getEstimate_from() +" "+ getDockActivity().getResources().getString(R.string.to) +" "+newJobJson.getRequest_detail().getEstimate_to()+" "+getDockActivity().getResources().getString(R.string.aed)+ "- " + getDockActivity().getResources().getString(R.string.cod_short));
         }
         //SERVICE remaining
 
@@ -344,7 +344,7 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
                         if (arriveTime.getId() == textView.getId()) {
                             Date date = new Date();
                             if (!DateHelper.isTimeAfter(date.getHours(), date.getMinutes(), hourOfDay, minute)) {
-                                UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.less_time_error));
+                                UIHelper.showShortToastInCenter(getDockActivity(), getDockActivity().getResources().getString(R.string.less_time_error));
                             } else {
                                 textView.setText(timePicker.getTime(hourOfDay, minute));
                             }
@@ -353,12 +353,12 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
                                 SimpleDateFormat parseFormat = new SimpleDateFormat("hh:mm:ss");
                                 Date date = parseFormat.parse(arriveTime.getText().toString());
                                 if (!DateHelper.isTimeAfter(date.getHours(), date.getMinutes(), hourOfDay, minute)) {
-                                    UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.time_error));
+                                    UIHelper.showShortToastInCenter(getDockActivity(), getDockActivity().getResources().getString(R.string.time_error));
                                 } else {
                                     textView.setText(timePicker.getTime(hourOfDay, minute));
                                 }
                             } else {
-                                UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.arrive_time_error));
+                                UIHelper.showShortToastInCenter(getDockActivity(), getDockActivity().getResources().getString(R.string.arrive_time_error));
                             }
                         }
                     }
@@ -494,7 +494,7 @@ public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSlide
                     public void onClick(View v) {
                         if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
                             if (RefusalDialog.getEditTextView(R.id.ed_msg).getText().toString().trim().equals("")) {
-                                RefusalDialog.getEditTextView(R.id.ed_msg).setError(getString(R.string.enter_message));
+                                RefusalDialog.getEditTextView(R.id.ed_msg).setError(getDockActivity().getResources().getString(R.string.enter_message));
                             } else {
                                 jobReject(RefusalDialog.getEditText(R.id.ed_msg), RefusalDialog);
                             }

@@ -53,7 +53,7 @@ public class AboutAppFragment extends BaseFragment {
         super.setTitleBar(titleBar);
         getDockActivity().lockDrawer();
         titleBar.hideButtons();
-        titleBar.setSubHeading(getString(R.string.about_app));
+        titleBar.setSubHeading(getDockActivity().getResources().getString(R.string.about_app));
         titleBar.showBackButton();
     }
 
@@ -87,7 +87,7 @@ public class AboutAppFragment extends BaseFragment {
 
     private void settitle(String response) {
         if (getMainActivity() != null && getMainActivity().titleBar != null) {
-            getMainActivity().titleBar.setSubHeading(getString(R.string.about_app));
+            getMainActivity().titleBar.setSubHeading(getDockActivity().getResources().getString(R.string.about_app));
             getMainActivity().titleBar.invalidate();
         }
         scrollTv1.setText(response);

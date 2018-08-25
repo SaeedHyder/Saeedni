@@ -141,7 +141,7 @@ public class TechNotificationsFragment extends BaseFragment {
         getDockActivity().lockDrawer();
         titleBar.hideButtons();
         titleBar.showBackButton();
-        titleBar.setSubHeading(getString(R.string.Notifications));
+        titleBar.setSubHeading(getDockActivity().getResources().getString(R.string.Notifications));
 
     }
 

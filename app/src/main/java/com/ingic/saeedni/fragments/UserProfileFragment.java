@@ -92,7 +92,7 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
         titleBar.hideButtons();
         getDockActivity().lockDrawer();
         titleBar.showBackButton();
-        titleBar.setSubHeading(getString(R.string.edit_profile));
+        titleBar.setSubHeading(getDockActivity().getResources().getString(R.string.edit_profile));
     }
 
     @Override
@@ -240,10 +240,10 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
 
     private boolean validate() {
         if (edtemail.getText().toString().isEmpty()) {
-            edtemail.setError(getString(R.string.empty_email_error));
+            edtemail.setError(getDockActivity().getResources().getString(R.string.empty_email_error));
             return false;
         } else if (edtPhoneNo.getText().toString().length() < 9 || edtPhoneNo.getText().toString().length() > 10) {
-            edtPhoneNo.setError(getString(R.string.enter_valid_number_error));
+            edtPhoneNo.setError(getDockActivity().getResources().getString(R.string.enter_valid_number_error));
             return false;
         } else {
             return true;
@@ -254,16 +254,16 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
 
 
         try {
-            Phonenumber.PhoneNumber number = phoneUtil.parse(edtPhoneNo.getText().toString(), getString(R.string.uae_country_code));
+            Phonenumber.PhoneNumber number = phoneUtil.parse(edtPhoneNo.getText().toString(), getDockActivity().getResources().getString(R.string.uae_country_code));
             if (phoneUtil.isValidNumber(number)) {
                 return true;
             } else {
-                edtPhoneNo.setError(getString(R.string.enter_valid_number_error));
+                edtPhoneNo.setError(getDockActivity().getResources().getString(R.string.enter_valid_number_error));
                 return false;
             }
         } catch (NumberParseException e) {
             System.err.println("NumberParseException was thrown: " + e.toString());
-            edtPhoneNo.setError(getString(R.string.enter_valid_number_error));
+            edtPhoneNo.setError(getDockActivity().getResources().getString(R.string.enter_valid_number_error));
             return false;
 
         }

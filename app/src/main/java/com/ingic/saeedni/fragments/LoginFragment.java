@@ -10,7 +10,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.ingic.saeedni.R;
 import com.ingic.saeedni.entities.RegistrationResultEnt;
@@ -27,6 +29,7 @@ import com.ingic.saeedni.ui.views.TitleBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,6 +42,10 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
     Unbinder unbinder;
     @BindView(R.id.btn_login)
     Button loginButton;
+    @BindView(R.id.btn_signup)
+    Button signupButton;
+    @BindView(R.id.btnBack)
+    ImageView btnBack;
 
     @BindView(R.id.txt_reset)
     AnyTextView txtForgotPass;
@@ -48,10 +55,47 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
     AnyEditTextView edtPassword;
     @BindView(R.id.scrollview_bigdaddy)
     LinearLayout scrollviewBigdaddy;
+    @BindView(R.id.iv_logo)
+    ImageView ivLogo;
+    @BindView(R.id.txt_login)
+    AnyTextView txtLogin;
+    @BindView(R.id.btn_login1)
+    RelativeLayout btnLogin1;
+    @BindView(R.id.btn_singup)
+    RelativeLayout btnSingup;
+    @BindView(R.id.iv_emailIcon)
+    ImageView ivEmailIcon;
+    @BindView(R.id.ll_email)
+    LinearLayout llEmail;
+    @BindView(R.id.iv_passwordIcon)
+    ImageView ivPasswordIcon;
+    @BindView(R.id.ll_password)
+    LinearLayout llPassword;
+    @BindView(R.id.txtForgotPass)
+    AnyTextView txtForgotPass1;
+
+    private boolean isUserSelection = false;
+    private static String USERSELECTIONKEY = "USERSELECTIONKEY";
 
 
     public static LoginFragment newInstance() {
         return new LoginFragment();
+    }
+
+    public static LoginFragment newInstance(boolean userSelection) {
+        Bundle args = new Bundle();
+        args.putBoolean(USERSELECTIONKEY, userSelection);
+        LoginFragment fragment = new LoginFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            isUserSelection = getArguments().getBoolean(USERSELECTIONKEY);
+        }
     }
 
     @Override
@@ -61,7 +105,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
         ButterKnife.bind(this, view);
         if (prefHelper.isLanguageArabic()) {
             scrollviewBigdaddy.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-           // edtPassword.setGravity(Gravity.END);
+            // edtPassword.setGravity(Gravity.END);
         } else {
             scrollviewBigdaddy.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
             //  edtPassword.setGravity(Gravity.START);
@@ -93,12 +137,25 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
         });
 
         setListeners();
+       /* if(isUserSelection){
+            btnBack.setVisibility(View.VISIBLE);
+        }else{
+            btnBack.setVisibility(View.GONE);
+        }*/
+        btnBack.setVisibility(View.VISIBLE);
 
     }
 
     private void setListeners() {
         loginButton.setOnClickListener(this);
         txtForgotPass.setOnClickListener(this);
+        signupButton.setOnClickListener(this);
+        btnBack.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getMainActivity().popFragment();
+            }
+        });
     }
 
     @Override
@@ -106,6 +163,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
         // TODO Auto-generated method stub
         super.setTitleBar(titleBar);
         titleBar.hideTitleBar();
+
     }
 
 
@@ -125,6 +183,10 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
                         loginTechnician();
                     }
                 }
+                break;
+
+            case R.id.btn_signup:
+          //      getDockActivity().replaceDockableFragment(TechSignupFragment.newInstance(), "TechSignupFragment");
                 break;
 
             case R.id.txt_reset:
@@ -150,18 +212,23 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
             public void onResponse(Call<ResponseWrapper<RegistrationResultEnt>> call, Response<ResponseWrapper<RegistrationResultEnt>> response) {
                 if (response.body().getResponse().equals("2000")) {
                     loadingFinished();
-                    prefHelper.setUserType("technician");
-                    prefHelper.setUsrId(String.valueOf(response.body().getResult().getId()));
-                    prefHelper.setUsrName(response.body().getResult().getFullName());
-                    prefHelper.setPhonenumber(response.body().getResult().getPhoneNo());
-                    prefHelper.putRegistrationResult(response.body().getResult());
-                    TokenUpdater.getInstance().UpdateToken(getDockActivity(),
-                            prefHelper.getUserId(),
-                            AppConstants.Device_Type,
-                            prefHelper.getFirebase_TOKEN());
-                    prefHelper.setLoginStatus(true);
-                    getDockActivity().popBackStackTillEntry(0);
-                    getDockActivity().replaceDockableFragment(HomeFragment.newInstance(), "HomeFragmnet");
+                    if (response.body().getResult().getId() != null) {
+                        prefHelper.setUserType("technician");
+                        prefHelper.setUsrId(String.valueOf(response.body().getResult().getId()));
+                        prefHelper.setUsrName(response.body().getResult().getFullName());
+                        prefHelper.setPhonenumber(response.body().getResult().getPhoneNo());
+                        prefHelper.putRegistrationResult(response.body().getResult());
+                        TokenUpdater.getInstance().UpdateToken(getDockActivity(),
+                                prefHelper.getUserId(),
+                                AppConstants.Device_Type,
+                                prefHelper.getFirebase_TOKEN());
+                        prefHelper.setLoginStatus(true);
+                        getDockActivity().popBackStackTillEntry(0);
+                        getDockActivity().replaceDockableFragment(HomeFragment.newInstance(), "HomeFragmnet");
+                    } else {
+                        loadingFinished();
+                        UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
+                    }
                 } else {
                     loadingFinished();
                     UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
@@ -182,10 +249,10 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
 
         if (edtEmail.getText() == null || (edtEmail.getText().toString().isEmpty()) ||
                 (!Patterns.EMAIL_ADDRESS.matcher(edtEmail.getText().toString()).matches())) {
-            edtEmail.setError(getString(R.string.valid_email));
+            edtEmail.setError(getDockActivity().getResources().getString(R.string.valid_email));
             return false;
         } else if (edtPassword.getText() == null || (edtPassword.getText().toString().isEmpty()) || edtPassword.getText().toString().length() < 6) {
-            edtPassword.setError(getString(R.string.valid_password));
+            edtPassword.setError(getDockActivity().getResources().getString(R.string.valid_password));
             return false;
         } else
             return true;
@@ -201,4 +268,15 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
     }
 
 
+
+
+    @OnClick({R.id.btn_login1, R.id.btn_singup})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+
+            case R.id.btn_singup:
+                getDockActivity().replaceDockableFragment(TechSignupFragment.newInstance(), "TechSignupFragment");
+                break;
+        }
+    }
 }

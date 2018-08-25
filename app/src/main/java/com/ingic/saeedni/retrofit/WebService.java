@@ -1,6 +1,7 @@
 package com.ingic.saeedni.retrofit;
 
 
+import com.ingic.saeedni.entities.AllServicesEnt;
 import com.ingic.saeedni.entities.CitiesEnt;
 import com.ingic.saeedni.entities.JobRequestEnt;
 import com.ingic.saeedni.entities.NewJobsEnt;
@@ -39,6 +40,28 @@ public interface WebService {
                                                               @Part("password") RequestBody password,
                                                               @Part("password_confirmation") RequestBody password_confirmation,
                                                               @Part MultipartBody.Part userprofileImage
+    );
+
+    @Multipart
+    @POST("technician/register")
+    Call<ResponseWrapper<RegistrationResultEnt>> registerTechnician(
+            @Part("company_name") RequestBody company_name,
+            @Part("first_name") RequestBody first_name,
+            @Part("last_name") RequestBody last_name,
+            @Part("phone_no") RequestBody phone_no,
+            @Part("email") RequestBody email,
+            @Part("category_id") RequestBody category_id,
+            @Part("password") RequestBody password,
+            @Part("password_confirmation") RequestBody password_confirmation,
+            @Part("registration_type") RequestBody registration_type,
+            @Part("registration_date") RequestBody registration_date,
+            @Part("address") RequestBody address,
+            @Part("city_id") RequestBody city_id,
+            @Part("expiry_date") RequestBody expiry_date,
+            @Part("device_token") RequestBody device_token,
+            @Part("device_type") RequestBody device_type,
+            @Part MultipartBody.Part profile_picture,
+            @Part MultipartBody.Part trade_license
     );
 
     @FormUrlEncoded
@@ -243,4 +266,7 @@ public interface WebService {
 
     @GET("getCities")
     Call<ResponseWrapper<ArrayList<CitiesEnt>>> getAllCities();
+
+    @GET("allservice")
+    Call<ResponseWrapper<ArrayList<AllServicesEnt>>> getAllServices();
 }

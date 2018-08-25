@@ -66,7 +66,7 @@ public class UserNotificationitemBinder extends ViewBinder<NotificationEnt> {
         }
         if (prefhelper.isLanguageArabic()) {
            // view.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-            viewHolder.txt_jobNotification.setText((entity.getMessage() + "").trim());
+            viewHolder.txt_jobNotification.setText((entity.getArmessage() + "").trim());
         } else {
           //  view.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
             viewHolder.txt_jobNotification.setText((entity.getMessage() + "").trim());
@@ -97,13 +97,13 @@ public class UserNotificationitemBinder extends ViewBinder<NotificationEnt> {
             if (!prefhelper.isLanguageArabic()) {
                 message = entity.getRequestDetail().getServicsList().get(0).getServiceEnt().getTitle();
             } else {
-                message = entity.getRequestDetail().getServicsList().get(0).getServiceEnt().getTitle();
+                message = entity.getRequestDetail().getServicsList().get(0).getServiceEnt().getArTitle();
             }
         }
         if (!prefhelper.isLanguageArabic()) {
             title = entity.getRequestDetail().getServiceDetail().getTitle();
         } else {
-            title = entity.getRequestDetail().getServiceDetail().getTitle();
+            title = entity.getRequestDetail().getServiceDetail().getArTitle();
         }
         final DialogHelper dialogHelper = new DialogHelper(dockActivity);
         dialogHelper.initRatingDialog(R.layout.rating_pop_up_dialog, new View.OnClickListener() {
@@ -141,7 +141,7 @@ public class UserNotificationitemBinder extends ViewBinder<NotificationEnt> {
                     dockActivity.popBackStackTillEntry(0);
                     dockActivity.replaceDockableFragment(UserHomeFragment.newInstance(), "UserHomeFragment");
                 } else {
-                    UIHelper.showShortToastInCenter(dockActivity, response.body().getMessage());
+                    UIHelper.showShortToastInCenter(dockActivity,dockActivity.getResources().getString(R.string.feedback));
                 }
             }
 

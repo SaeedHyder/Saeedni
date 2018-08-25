@@ -148,7 +148,7 @@ public class ProfileFragment extends BaseFragment {
         getDockActivity().lockDrawer();
         titleBar.hideButtons();
         titleBar.showBackButton();
-        titleBar.setSubHeading(getString(R.string.my_profile));
+        titleBar.setSubHeading(getDockActivity().getResources().getString(R.string.my_profile));
 
     }
 

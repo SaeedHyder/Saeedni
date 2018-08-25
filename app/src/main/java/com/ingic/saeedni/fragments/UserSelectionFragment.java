@@ -53,6 +53,9 @@ public class UserSelectionFragment extends BaseFragment implements View.OnClickL
         // TODO Auto-generated method stub
         super.setTitleBar(titleBar);
         titleBar.hideTitleBar();
+      /*  titleBar.hideButtons();
+        titleBar.showBackButton();
+        titleBar.setSubHeading(getDockActivity().getResources().getString(R.string.user_selection));*/
     }
 
 
@@ -106,11 +109,11 @@ public class UserSelectionFragment extends BaseFragment implements View.OnClickL
         switch (v.getId()){
             case R.id.usercontainer:
                 prefHelper.setUserType("user");
-                getDockActivity().replaceDockableFragment(UserSignupFragment.newInstance(),"UserSignUp Fragment");
+                getDockActivity().replaceDockableFragment(UserloginFragment.newInstance(),"UserloginFragment");
                 break;
             case R.id.techniciancontainer:
                 prefHelper.setUserType("technician");
-                getDockActivity().replaceDockableFragment(LoginFragment.newInstance(),"Login Fragment");
+                getDockActivity().replaceDockableFragment(LoginFragment.newInstance(true),"Login Fragment");
                 break;
         }
     }

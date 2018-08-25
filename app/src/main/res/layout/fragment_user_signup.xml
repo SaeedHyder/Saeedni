@@ -202,16 +202,16 @@
                     android:layout_height="@dimen/x20"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/x20"
-                    android:src="@drawable/address"/>
+                    android:src="@drawable/address_signup"/>
 
                 <com.jota.autocompletelocation.AutoCompleteLocation
                     android:id="@+id/edtadress"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_alignParentTop="true"
-                    android:layout_marginLeft="@dimen/x20"
-                    android:layout_marginRight="@dimen/x20"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="@dimen/x10"
+                    android:layout_marginRight="@dimen/x5"
+
                     android:layout_toEndOf="@+id/img_address"
                     android:background="@android:color/transparent"
                     android:drawablePadding="@dimen/x10"
@@ -248,8 +248,8 @@
                     android:layout_toEndOf="@+id/img_address2"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/x40"
-                    android:layout_marginLeft="@dimen/x20"
-                    android:layout_marginRight="@dimen/x20"
+                    android:layout_marginLeft="@dimen/x13"
+                    android:layout_marginRight="@dimen/x5"
                     android:layout_marginBottom="@dimen/x5"/>
             </RelativeLayout>
 

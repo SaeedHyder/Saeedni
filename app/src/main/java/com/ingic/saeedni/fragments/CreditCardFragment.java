@@ -90,7 +90,7 @@ public class CreditCardFragment extends BaseFragment implements View.OnClickList
         super.setTitleBar(titleBar);
         titleBar.hideButtons();
         titleBar.showBackButton();
-        titleBar.setSubHeading(getString(R.string.add_payment));
+        titleBar.setSubHeading(getDockActivity().getResources().getString(R.string.add_payment));
     }
 
     private void initDatePicker(final TextView textView){
@@ -113,7 +113,7 @@ public class CreditCardFragment extends BaseFragment implements View.OnClickList
 // and get that as a Date
                         Date dateSpecified = c.getTime();
                         if (dateSpecified.before(date)) {
-                            UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.date_before_error));
+                            UIHelper.showShortToastInCenter(getDockActivity(),getDockActivity().getResources().getString(R.string.date_before_error));
                         } else {
                             textView.setText(datePickerHelper.getStringDate(year, month, dayOfMonth));
                         }
@@ -124,22 +124,22 @@ public class CreditCardFragment extends BaseFragment implements View.OnClickList
     }
     private boolean validate() {
         if (edtCcNumber.getText().toString().isEmpty()){
-            edtCcNumber.setError(getString(R.string.enter_cc_number));
+            edtCcNumber.setError(getDockActivity().getResources().getString(R.string.enter_cc_number));
         return false;
         }else if (edtCcNumber.getText().toString().length()<16){
-            edtCcNumber.setError(getString(R.string.cc_valid_error));
+            edtCcNumber.setError(getDockActivity().getResources().getString(R.string.cc_valid_error));
             return false;
         }
         else if (edtCcExpiredate.getText().toString().isEmpty()){
-            edtCcExpiredate.setError(getString(R.string.expiredate_error));
+            edtCcExpiredate.setError(getDockActivity().getResources().getString(R.string.expiredate_error));
             return false;
         }
         else if (edtCcCvv.getText().toString().isEmpty()){
-            edtCcCvv.setError(getString(R.string.cvv_error));
+            edtCcCvv.setError(getDockActivity().getResources().getString(R.string.cvv_error));
             return false;
         }
         else if (edtCcName.getText().toString().isEmpty()){
-            edtCcName.setError(getString(R.string.cc_name_error));
+            edtCcName.setError(getDockActivity().getResources().getString(R.string.cc_name_error));
             return false;
         }
         else {
