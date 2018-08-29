@@ -17,9 +17,6 @@ import com.ingic.saeedni.ui.viewbinders.abstracts.ViewBinder;
 import com.ingic.saeedni.ui.views.AnyTextView;
 import com.ingic.saeedni.ui.views.CustomRatingBar;
 
-/**
- * Created by saeedhyder on 5/22/2017.
- */
 
 public class CompletedJobsBinder extends ViewBinder<TechInProgressEnt> {
     private BasePreferenceHelper prefHelper;

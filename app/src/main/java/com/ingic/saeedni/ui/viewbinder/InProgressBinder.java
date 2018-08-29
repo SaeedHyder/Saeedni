@@ -17,7 +17,7 @@ import com.ingic.saeedni.ui.viewbinders.abstracts.ViewBinder;
 import com.ingic.saeedni.ui.views.AnyTextView;
 
 /**
- * Created by saeedhyder on 5/24/2017.
+ * Created by  on 5/24/2017.
  */
 
 public class InProgressBinder extends ViewBinder<InProgressEnt> {

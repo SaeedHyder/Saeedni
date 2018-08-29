@@ -6,9 +6,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-/**
- * Created on 6/5/2017.
- */
 
 public class RequestEnt {
     @SerializedName("id")

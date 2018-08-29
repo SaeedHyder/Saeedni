@@ -82,9 +82,7 @@ import retrofit2.Response;
 
 import static com.ingic.saeedni.R.id.edt_addtional_job;
 
-/**
- * Created on 5/22/2017.
- */
+
 public class RequestServiceFragment extends BaseFragment implements View.OnClickListener, MainActivity.ImageSetter, onDeleteImage, AutoCompleteLocation.AutoCompleteLocationListener {
     public static String TYPE = "TYPE";
     public static String SCREENFROM = "SCREENFROM";

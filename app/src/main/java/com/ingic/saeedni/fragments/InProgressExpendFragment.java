@@ -36,9 +36,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * Created by saeedhyder on 6/6/2017.
- */
 
 public class InProgressExpendFragment extends BaseFragment implements MarkAsComplete, CallUser {
     @BindView(R.id.txt_noresult)

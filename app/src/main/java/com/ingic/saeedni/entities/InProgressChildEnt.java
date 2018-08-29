@@ -1,8 +1,6 @@
 package com.ingic.saeedni.entities;
 
-/**
- * Created by saeedhyder on 6/6/2017.
- */
+
 
 public class InProgressChildEnt {
 

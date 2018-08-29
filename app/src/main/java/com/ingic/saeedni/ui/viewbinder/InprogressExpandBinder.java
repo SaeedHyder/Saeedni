@@ -27,7 +27,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by saeedhyder on 6/6/2017.
+ * Created by  on 6/6/2017.
  */
 
 public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDetail, RequestDetail> {

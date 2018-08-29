@@ -23,9 +23,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.ingic.saeedni.activities.DockActivity.KEY_FRAG_FIRST;
 
-/**
- * Created by saeedhyder on 5/22/2017.
- */
+
 
 public class OrderHistoryFragment extends BaseFragment implements View.OnClickListener, SetOrderCounts {
 

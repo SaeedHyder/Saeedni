@@ -4,9 +4,7 @@ import com.ingic.saeedni.helpers.DateHelper;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created on 6/5/2017.
- */
+
 
 public class ImageDetailEnt {
     @SerializedName("id")

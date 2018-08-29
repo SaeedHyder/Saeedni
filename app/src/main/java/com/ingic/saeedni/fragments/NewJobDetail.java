@@ -47,9 +47,6 @@ import retrofit2.Response;
 
 import static com.ingic.saeedni.R.id.btn_accept;
 
-/**
- * Created by saeedhyder on 5/23/2017.
- */
 
 public class NewJobDetail extends BaseFragment implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener, View.OnClickListener {
 

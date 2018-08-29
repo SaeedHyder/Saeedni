@@ -46,9 +46,6 @@ import retrofit2.Response;
 
 import static com.ingic.saeedni.R.id.txt_totalPriceText;
 
-/**
- * Created by saeedhyder on 5/24/2017.
- */
 
 public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
     public static String TYPE = "TYPE";

@@ -31,9 +31,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * Created by saeedhyder on 5/24/2017.
- */
+
 
 public class QuotationFragment extends BaseFragment implements View.OnClickListener {
 

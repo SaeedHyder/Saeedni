@@ -3,9 +3,7 @@ package com.ingic.saeedni.entities;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created on 6/7/2017.
- */
+
 
 public class FeedBackEnt {
     @SerializedName("id")

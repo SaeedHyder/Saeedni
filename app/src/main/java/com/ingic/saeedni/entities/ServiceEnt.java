@@ -5,9 +5,6 @@ import com.google.gson.annotations.SerializedName;
 
 import static com.ingic.saeedni.helpers.DateHelper.getLocalTimeDate;
 
-/**
- * Created on 6/3/2017.
- */
 
 public class ServiceEnt {
     @SerializedName("id")

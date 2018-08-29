@@ -28,7 +28,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * Created by saeedhyder on 5/24/2017.
+ * Created by  on 5/24/2017.
  */
 
 public class UserNotificationitemBinder extends ViewBinder<NotificationEnt> {

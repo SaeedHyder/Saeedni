@@ -15,7 +15,7 @@ import java.util.List;
 
 
 /**
- * Created by ahmedsyed on 4/7/2017.
+ * Created on 4/7/2017.
  */
 
 public class RecyclerViewAdapterImages extends RecyclerView.Adapter<RecyclerViewAdapterImages.MyViewHolder> {

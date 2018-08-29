@@ -1,8 +1,5 @@
 package com.ingic.saeedni.entities;
 
-/**
- * Created by saeedhyder on 6/9/2017.
- */
 
 public class TechProfileEnt {
 

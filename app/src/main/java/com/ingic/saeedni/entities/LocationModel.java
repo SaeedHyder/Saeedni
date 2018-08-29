@@ -1,8 +1,6 @@
 package com.ingic.saeedni.entities;
 
-/**
- * Created on 5/23/2017.
- */
+
 
 public class LocationModel {
     private String address;

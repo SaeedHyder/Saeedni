@@ -1,8 +1,6 @@
 package com.ingic.saeedni.entities;
 
-/**
- * Created on 5/4/2017.
- */
+
 
 public class AndroidInfo  {
     private String name;

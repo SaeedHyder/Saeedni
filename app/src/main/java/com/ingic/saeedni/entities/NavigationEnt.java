@@ -1,8 +1,6 @@
 package com.ingic.saeedni.entities;
 
-/**
- * Created on 5/24/2017.
- */
+
 
 public class NavigationEnt {
     private int selectedDrawable;
