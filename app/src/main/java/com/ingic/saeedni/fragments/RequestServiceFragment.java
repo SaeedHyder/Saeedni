@@ -716,6 +716,13 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
 
     }
 
+
+
+
+
+
+
+
     private void setJobDescriptionSpinner() {
         final ArrayList<String> jobdescriptionarraylist = new ArrayList<String>();
         for (ServiceEnt item : jobChildcollection
