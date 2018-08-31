@@ -52,7 +52,7 @@ public class SaeedniNewJobBinder extends ViewBinder<NewJobsEnt> {
         }
         if (entity.getRequest_detail().getService_detail() != null) {
             if (entity.getRequest_detail().getService_detail() != null) {
-                viewHolder.txtEstimatedQuote.setText(activity.getString(R.string.aed) +" "+entity.getRequest_detail().getEstimate_from() +" "+
+                viewHolder.txtEstimatedQuote.setText(activity.getResources().getString(R.string.aed) +" "+entity.getRequest_detail().getEstimate_from() +" "+
                         "-" +" "+entity.getRequest_detail().getEstimate_to());}
             viewHolder. txtAddress.setText(entity.getRequest_detail().getAddress());
             viewHolder. txtJobName.setText(entity.getRequest_detail().getService_detail().getTitle());

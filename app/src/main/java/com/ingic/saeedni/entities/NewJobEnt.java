@@ -1,8 +1,6 @@
 package com.ingic.saeedni.entities;
 
-/**
- * Created by saeedhyder on 5/22/2017.
- */
+
 
 public class NewJobEnt {
 

@@ -43,7 +43,7 @@ public class TechNotificationitemBinder extends ViewBinder<NotificationEnt> {
         }
         if (prefhelper.isLanguageArabic()) {
            // view.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-            viewHolder.txt_jobNotification.setText((entity.getMessage() + "").trim());
+            viewHolder.txt_jobNotification.setText((entity.getArmessage() + "").trim());
         } else {
            // view.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
             viewHolder.txt_jobNotification.setText((entity.getMessage() + "").trim());

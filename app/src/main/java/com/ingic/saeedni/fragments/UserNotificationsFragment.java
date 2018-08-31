@@ -1,6 +1,7 @@
 package com.ingic.saeedni.fragments;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,15 +29,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * Created by saeedhyder on 5/24/2017.
- */
 
 public class UserNotificationsFragment extends BaseFragment {
     @BindView(R.id.lv_UserNotification)
     ListView lvUserNotification;
     @BindView(R.id.txt_no_data)
     AnyTextView txtNoData;
+    final Handler handler = new Handler();
 
 
     private ArrayListAdapter<NotificationEnt> adapter;
@@ -49,6 +48,7 @@ public class UserNotificationsFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        prefHelper.setBadgeCount(0);
         adapter = new ArrayListAdapter<NotificationEnt>(getDockActivity(), new UserNotificationitemBinder(getDockActivity(), webService, prefHelper));
     }
 
@@ -71,14 +71,20 @@ public class UserNotificationsFragment extends BaseFragment {
         getMainActivity().titleBar.invalidate();
         getMainActivity().titleBar.getImageView().invalidate();
 
-        Call<ResponseWrapper<countEnt>> callback = webService.getNotificationCount(prefHelper.getUserId());
+      /*  Call<ResponseWrapper<countEnt>> callback = webService.getNotificationCount(prefHelper.getUserId());
         callback.enqueue(new Callback<ResponseWrapper<countEnt>>() {
             @Override
             public void onResponse(Call<ResponseWrapper<countEnt>> call, Response<ResponseWrapper<countEnt>> response) {
 
                 prefHelper.setBadgeCount(response.body().getResult().getCount());
                 if (getMainActivity() != null)
-                    getMainActivity().refreshSideMenu();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            getMainActivity().refreshSideMenu();
+                        }
+                    }, 1000);
+
                 Log.e(UserNotificationsFragment.class.getSimpleName(), "aasd" + prefHelper.getUserId() + response.body().getResult().getCount());
                 //  SendNotification(response.body().getResult().getCount(), json);
             }
@@ -88,7 +94,7 @@ public class UserNotificationsFragment extends BaseFragment {
                 Log.e(UserNotificationsFragment.class.getSimpleName(), t.toString());
                 System.out.println(t.toString());
             }
-        });
+        });*/
 
 
     }
@@ -170,7 +176,7 @@ public class UserNotificationsFragment extends BaseFragment {
         getDockActivity().lockDrawer();
         titleBar.hideButtons();
         titleBar.showBackButton();
-        titleBar.setSubHeading(getString(R.string.Notifications));
+        titleBar.setSubHeading(getDockActivity().getResources().getString(R.string.Notifications));
 
     }
 

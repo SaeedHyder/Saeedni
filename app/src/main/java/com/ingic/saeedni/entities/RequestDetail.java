@@ -6,9 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by saeedhyder on 6/7/2017.
- */
+
 
 public class RequestDetail {
     @SerializedName("id")

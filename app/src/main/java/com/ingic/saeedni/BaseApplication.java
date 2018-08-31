@@ -1,5 +1,7 @@
 package com.ingic.saeedni;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -27,6 +29,23 @@ public class BaseApplication extends MultiDexApplication {
 		super.onCreate();
 		MultiDex.install(this);
 		initImageLoader();
+
+	}
+	public static final String CHANNEL = "channel";
+
+	private void createNotificationChannels() {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+			NotificationChannel channel1 = new NotificationChannel(
+					CHANNEL,
+					"Auditex",
+					NotificationManager.IMPORTANCE_HIGH
+			);
+			channel1.setDescription("Auditex");
+
+			NotificationManager manager = getSystemService(NotificationManager.class);
+			manager.createNotificationChannel(channel1);
+
+		}
 	}
 	public void initImageLoader() {
 		

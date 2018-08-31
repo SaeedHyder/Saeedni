@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.ingic.saeedni.R;
 import com.ingic.saeedni.activities.DockActivity;
@@ -52,6 +53,7 @@ public class UserInProgressBinder extends ViewBinder<UserInProgressEnt> {
 
         if (preferenceHelper.isLanguageArabic()) {
             viewHolder.root_layout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+            viewHolder.txtNumberText.setTextDirection(TextView.TEXT_DIRECTION_LTR);
         } else
             viewHolder.root_layout.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
 
@@ -65,8 +67,8 @@ public class UserInProgressBinder extends ViewBinder<UserInProgressEnt> {
             viewHolder.btnCallUser.setBackground(context.getResources().getDrawable(R.drawable.button_background));
         } else {
             viewHolder.ivEditBtn.setVisibility(View.VISIBLE);
-            viewHolder.txtTechNameText.setText(context.getString(R.string.no_technician_error));
-            viewHolder.txtNumberText.setText(context.getString(R.string.no_number_tech));
+            viewHolder.txtTechNameText.setText(context.getResources().getString(R.string.no_technician_error));
+            viewHolder.txtNumberText.setText(context.getResources().getString(R.string.no_number_tech));
             viewHolder.btnCallUser.setBackground(context.getResources().getDrawable(R.drawable.yellow_button_background));
 
         }
@@ -83,17 +85,17 @@ public class UserInProgressBinder extends ViewBinder<UserInProgressEnt> {
         if (!preferenceHelper.isLanguageArabic()) {
             if (entity.getTotal().equals("")) {
 //                viewHolder.txtAmountText.setText(context.getString(R.string.aed) + " " + entity.getEstimateFrom() + " " + activity.getResources().getString(R.string.to) + " " + entity.getEstimateTo());
-                viewHolder.txtAmountText.setText(context.getString(R.string.aed) + " " + 0);
+                viewHolder.txtAmountText.setText(context.getResources().getString(R.string.aed) + " " + 0);
             } else {
-                viewHolder.txtAmountText.setText(context.getString(R.string.aed) + " " + entity.getTotal_amount());
+                viewHolder.txtAmountText.setText(context.getResources().getString(R.string.aed) + " " + entity.getTotal_amount());
 
             }
         } else {
             if (entity.getTotal().equals("")) {
                 //viewHolder.txtAmountText.setText(entity.getEstimateTo() + " " + activity.getResources().getString(R.string.to) + " " + entity.getEstimateFrom() + " " + context.getString(R.string.aed));
-                viewHolder.txtAmountText.setText(context.getString(R.string.aed) + " " + 0);
+                viewHolder.txtAmountText.setText(context.getResources().getString(R.string.aed) + " " + 0);
             } else {
-                viewHolder.txtAmountText.setText(entity.getTotal_amount() + " " + context.getString(R.string.aed));
+                viewHolder.txtAmountText.setText(entity.getTotal_amount() + " " + context.getResources().getString(R.string.aed));
 
             }
         }
@@ -120,7 +122,7 @@ public class UserInProgressBinder extends ViewBinder<UserInProgressEnt> {
                 if (finalTechnicianEnt != null && entity.getStatus() == AppConstants.TECH_ACCEPT_ASSIGN_JOB) {
                     callUser.CallOnUserNumber(finalTechnicianEnt.getTechnician_details().getPhoneNo());
                 } else {
-                    UIHelper.showShortToastInCenter(context, context.getString(R.string.assignText));
+                    UIHelper.showShortToastInCenter(context, context.getResources().getString(R.string.assignText));
                 }
             }
         });

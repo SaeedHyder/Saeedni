@@ -36,14 +36,18 @@ import com.ingic.saeedni.entities.LocationModel;
 import com.ingic.saeedni.fragments.HomeFragment;
 import com.ingic.saeedni.fragments.SideMenuFragment;
 import com.ingic.saeedni.fragments.UserHomeFragment;
+import com.ingic.saeedni.fragments.UserSelectionFragment;
 import com.ingic.saeedni.fragments.UserloginFragment;
 import com.ingic.saeedni.fragments.abstracts.BaseFragment;
 import com.ingic.saeedni.helpers.ScreenHelper;
 import com.ingic.saeedni.helpers.UIHelper;
 import com.ingic.saeedni.ui.views.TitleBar;
 import com.kbeanie.imagechooser.api.ChooserType;
+import com.kbeanie.imagechooser.api.ChosenFile;
 import com.kbeanie.imagechooser.api.ChosenImage;
 import com.kbeanie.imagechooser.api.ChosenImages;
+import com.kbeanie.imagechooser.api.FileChooserListener;
+import com.kbeanie.imagechooser.api.FileChooserManager;
 import com.kbeanie.imagechooser.api.ImageChooserListener;
 import com.kbeanie.imagechooser.api.ImageChooserManager;
 
@@ -55,7 +59,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class MainActivity extends DockActivity implements OnClickListener, ImageChooserListener {
+public class MainActivity extends DockActivity implements OnClickListener, ImageChooserListener,FileChooserListener {
     private final static String TAG = "ICA";
     public TitleBar titleBar;
     public boolean isNotification;
@@ -77,6 +81,7 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
     private String thumbnailSmallFilePath;
     private float lastTranslate = 0.0f;
     private ImageSetter imageSetter;
+    private FileChooserManager fm;
 
     public static boolean hasPermissions(Context context, String... permissions) {
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
@@ -229,7 +234,7 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
             }
 
         } else {
-            replaceDockableFragment(UserloginFragment.newInstance(), "UserloginFragment");
+            replaceDockableFragment(UserSelectionFragment.newInstance(), "UserSelectionFragment");
         }
     }
 
@@ -430,8 +435,18 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
         Log.i(TAG, "File Path : " + filePath);
         Log.i(TAG, "Chooser Type: " + chooserType);
         setCurrentLocale();
-        if (resultCode == RESULT_OK
-                && (requestCode == ChooserType.REQUEST_PICK_PICTURE || requestCode == ChooserType.REQUEST_CAPTURE_PICTURE)) {
+
+        if (requestCode == ChooserType.REQUEST_PICK_FILE && resultCode == RESULT_OK) {
+            if (fm == null) {
+                fm = new FileChooserManager(this);
+                fm.setFileChooserListener(this);
+            }
+            Log.i(TAG, "Probable file size: " + fm.queryProbableFileSize(data.getData(), this));
+            fm.submit(requestCode, data);
+        }
+
+        if (resultCode == RESULT_OK && (requestCode == ChooserType.REQUEST_PICK_PICTURE || requestCode == ChooserType.REQUEST_CAPTURE_PICTURE)) {
+
             if (imageChooserManager == null) {
                 reinitializeImageChooser();
             }
@@ -489,6 +504,29 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
             }
         });
 
+    }
+
+    @Override
+    public void onFileChosen(final ChosenFile file) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                // progressBar.setVisibility(View.INVISIBLE);
+                imageSetter.setFilePath(file.getFilePath());
+                populateFileDetails(file);
+            }
+        });
+    }
+
+    private void populateFileDetails(ChosenFile file) {
+        StringBuffer text = new StringBuffer();
+        text.append("File name: " + file.getFileName() + "\n\n");
+        text.append("File path: " + file.getFilePath() + "\n\n");
+        text.append("Mime type: " + file.getMimeType() + "\n\n");
+        text.append("File extn: " + file.getExtension() + "\n\n");
+        text.append("File size: " + file.getFileSize() / 1024 + "KB");
+
+        //Toast.makeText(this, text.toString(), Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -576,6 +614,7 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
     }
 
     public boolean statusCheck() {
+
         if (isNetworkAvailable()) {
             final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -645,6 +684,19 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
         public void setVideo(String videoPath);
 
     }
+
+    public void pickFile() {
+        fm = new FileChooserManager(this);
+        fm.setFileChooserListener(this);
+        try {
+            // progressBar.setVisibility(View.VISIBLE);
+            fm.choose();
+        } catch (Exception e) {
+            // progressBar.setVisibility(View.INVISIBLE);
+            e.printStackTrace();
+        }
+    }
+
 
 
 

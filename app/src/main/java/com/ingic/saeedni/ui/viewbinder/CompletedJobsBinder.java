@@ -17,9 +17,6 @@ import com.ingic.saeedni.ui.viewbinders.abstracts.ViewBinder;
 import com.ingic.saeedni.ui.views.AnyTextView;
 import com.ingic.saeedni.ui.views.CustomRatingBar;
 
-/**
- * Created by saeedhyder on 5/22/2017.
- */
 
 public class CompletedJobsBinder extends ViewBinder<TechInProgressEnt> {
     private BasePreferenceHelper prefHelper;
@@ -58,7 +55,7 @@ public class CompletedJobsBinder extends ViewBinder<TechInProgressEnt> {
         }
         if (entity.getRequest_detail().getServics_list().size() > 0) {
             if (prefHelper.isLanguageArabic()) {
-                viewHolder.txt_JobTitleText.setText(entity.getRequest_detail().getServics_list().get(0).getService_detail().getTitle()+"");
+                viewHolder.txt_JobTitleText.setText(entity.getRequest_detail().getServics_list().get(0).getService_detail().getAr_title()+"");
             } else {
                 viewHolder.txt_JobTitleText.setText(entity.getRequest_detail().getServics_list().get(0).getService_detail().getTitle()+"");
             }

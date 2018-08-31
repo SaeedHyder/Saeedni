@@ -12,7 +12,7 @@ import com.ingic.saeedni.ui.views.AnyTextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
- * Created by saeedhyder on 5/22/2017.
+ * Created by  on 5/22/2017.
  */
 
 public class NewJobsitemBinder  extends ViewBinder<NewJobsEnt> {

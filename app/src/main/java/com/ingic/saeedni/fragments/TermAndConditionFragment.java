@@ -81,7 +81,7 @@ public class TermAndConditionFragment extends BaseFragment {
 
     private void settitle(String response) {
         if (getMainActivity() != null && getMainActivity().titleBar != null) {
-            getMainActivity().titleBar.setSubHeading(getString(R.string.terms_conditons));
+            getMainActivity().titleBar.setSubHeading(getDockActivity().getResources().getString(R.string.terms_conditons));
             getMainActivity().titleBar.invalidate();
         }
         txtTermCondition.setText(response);
@@ -106,7 +106,7 @@ public class TermAndConditionFragment extends BaseFragment {
         super.setTitleBar(titleBar);
         titleBar.hideButtons();
         titleBar.showBackButton();
-        titleBar.setSubHeading(getString(R.string.terms_conditons));
+        titleBar.setSubHeading(getDockActivity().getResources().getString(R.string.terms_conditons));
     }
 
 

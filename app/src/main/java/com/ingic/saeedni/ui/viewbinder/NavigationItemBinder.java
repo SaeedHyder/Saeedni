@@ -62,7 +62,7 @@ public class NavigationItemBinder extends ViewBinder<NavigationEnt> implements U
         else  viewHolder.rootLayout.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
         viewHolder.txtLanguage.setVisibility(View.GONE);
         badgeHelper = new BadgeHelper(viewHolder.imgNotificationCount, (DockActivity) activity);
-        if (entity.getItem_text().equals(activity.getString(R.string.home)) && !entity.getItem_text().equals(activity.getString(R.string.english))) {
+        if (entity.getItem_text().equals(activity.getResources().getString(R.string.home)) && !entity.getItem_text().equals(activity.getResources().getString(R.string.english))) {
             viewHolder.txtHome.setText(entity.getItem_text());
             //viewHolder.imgUnselected.setImageResource(entity.getSelectedDrawable());
             viewHolder.txtHome.setTextColor(activity.getResources().getColor(R.color.app_blue));
@@ -74,13 +74,13 @@ public class NavigationItemBinder extends ViewBinder<NavigationEnt> implements U
             viewHolder.txtHome.setText(entity.getItem_text());
             viewHolder.txtHome.setTextColor(activity.getResources().getColor(R.color.black));
             badgeHelper.hideBadge();
-            if (entity.getItem_text().equals(activity.getString(R.string.notifications))) {
+            if (entity.getItem_text().equals(activity.getResources().getString(R.string.notifications))) {
                 badgeHelper.initBadge(activity);
                 badgeHelper.addtoBadge(prefHelper.getBadgeCount());
                 badgeHelper.showBadge();
-            } else if (entity.getItem_text().equals(activity.getString(R.string.english)) && !entity.getItem_text().equals(activity.getString(R.string.home))) {
+            } else if (entity.getItem_text().equals(activity.getResources().getString(R.string.english)) && !entity.getItem_text().equals(activity.getResources().getString(R.string.home))) {
                 viewHolder.txtLanguage.setVisibility(View.VISIBLE);
-                viewHolder.txtHome.setText(activity.getString(R.string.language));
+                viewHolder.txtHome.setText(activity.getResources().getString(R.string.language));
                 viewHolder.txtHome.setTextColor(activity.getResources().getColor(R.color.black));
                 if (prefHelper.isLanguageArabic()) {
                     String sourceString = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b> <font color='#fcc739'>" + dockActivity.getResources().getString(R.string.ar) + "</font> </b> " + " |" +

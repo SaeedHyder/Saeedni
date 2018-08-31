@@ -22,9 +22,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-/**
- * Created by saeedhyder on 5/24/2017.
- */
 
 public class InProgressFragment extends BaseFragment implements CallUser{
 

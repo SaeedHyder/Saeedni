@@ -56,7 +56,7 @@
             android:id="@+id/ll_InProgess"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
+            android:background="@color/app_blue"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -66,7 +66,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
-                android:textColor="@color/app_blue"
+                android:textColor="@color/white"
+
                 android:textSize="@dimen/x30"
                 app:typeface="Roboto-Regular.ttf"
                 />
@@ -78,7 +79,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/in_progress"
-                android:textColor="@color/app_blue"
+                android:textColor="@color/white"
                 app:typeface="Roboto-Regular.ttf"/>
 
             <ImageView
@@ -103,7 +104,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/app_blue"
+            android:background="@color/white"
             android:orientation="vertical">
 
             <com.ingic.saeedni.ui.views.AnyTextView
@@ -113,7 +114,7 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 tools:text="0"
-                android:textColor="@color/white"
+                android:textColor="@color/app_blue"
                 android:textSize="@dimen/x30"
                 app:typeface="Roboto-Regular.ttf"
                 />
@@ -125,7 +126,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/completedjob"
-                android:textColor="@color/white"
+                android:textColor="@color/app_blue"
                 app:typeface="Roboto-Regular.ttf"
                 />
 

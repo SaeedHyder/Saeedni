@@ -59,6 +59,8 @@ public class UserloginFragment extends BaseFragment {
     AnyTextView txtReset;
     @BindView(R.id.btn_login)
     Button btnLogin;
+    @BindView(R.id.btnBack)
+    ImageView btnBack;
 
     public static UserloginFragment newInstance() {
         Bundle args = new Bundle();
@@ -98,16 +100,23 @@ public class UserloginFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getMainActivity().popFragment();
+            }
+        });
+
     }
 
     private boolean isvalidate() {
 
         if (edtEmail.getText() == null || (edtEmail.getText().toString().isEmpty()) ||
                 (!Patterns.EMAIL_ADDRESS.matcher(edtEmail.getText().toString()).matches())) {
-            edtEmail.setError(getString(R.string.valid_email));
+            edtEmail.setError(getDockActivity().getResources().getString(R.string.valid_email));
             return false;
         } else if (edtPassword.getText() == null || (edtPassword.getText().toString().isEmpty()) || edtPassword.getText().toString().length() < 6) {
-            edtPassword.setError(getString(R.string.valid_password));
+            edtPassword.setError(getDockActivity().getResources().getString(R.string.valid_password));
             return false;
         } else
             return true;
@@ -129,7 +138,7 @@ public class UserloginFragment extends BaseFragment {
                 }
                 break;
             case R.id.btn_singup:
-                getDockActivity().replaceDockableFragment(UserSelectionFragment.newInstance(), "ProfileFragment");
+                getDockActivity().replaceDockableFragment(UserSignupFragment.newInstance(), "UserSignupFragment");
                 break;
         }
     }

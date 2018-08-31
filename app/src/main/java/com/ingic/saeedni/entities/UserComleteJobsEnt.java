@@ -6,9 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created on 5/25/2017.
- */
+
 
 public class UserComleteJobsEnt {
 

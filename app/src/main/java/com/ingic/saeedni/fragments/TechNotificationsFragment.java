@@ -27,9 +27,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * Created by saeedhyder on 5/24/2017.
- */
 
 public class TechNotificationsFragment extends BaseFragment {
 
@@ -141,7 +138,7 @@ public class TechNotificationsFragment extends BaseFragment {
         getDockActivity().lockDrawer();
         titleBar.hideButtons();
         titleBar.showBackButton();
-        titleBar.setSubHeading(getString(R.string.Notifications));
+        titleBar.setSubHeading(getDockActivity().getResources().getString(R.string.Notifications));
 
     }
 

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
-
+    android:layoutDirection="rtl"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
@@ -161,8 +161,9 @@
             android:id="@+id/txt_number_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:maxLength="16"
+            android:maxLength="20"
             android:text="@string/dummy_number"
+
             android:textColor="@color/black"
             android:textSize="@dimen/x15"
             app:typeface="Roboto-Regular.ttf" />

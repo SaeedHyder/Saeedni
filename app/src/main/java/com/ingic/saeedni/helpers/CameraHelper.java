@@ -70,6 +70,21 @@ public class CameraHelper {
 
 	}
 
+	public static void uploadFile(final MainActivity activity) {
+		AlertDialog.Builder myAlertDialog = new AlertDialog.Builder(activity);
+		myAlertDialog.setTitle(R.string.select_file);
+		myAlertDialog.setMessage(R.string.set_file);
+
+		myAlertDialog.setPositiveButton(R.string.select_file, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				activity.pickFile();
+			}
+		});
+		myAlertDialog.show();
+	}
+
+
 	// public static void uploadMultipleFromGallery(Fragment fragment) {
 	//
 	// pictureActionIntent = new Intent(Intent.ACTION_PICK,

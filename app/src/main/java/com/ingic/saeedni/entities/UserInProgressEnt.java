@@ -6,9 +6,6 @@ import com.ingic.saeedni.helpers.DateHelper;
 
 import java.util.List;
 
-/**
- * Created on 5/24/2017.
- */
 
 public class UserInProgressEnt {
     @SerializedName("id")

@@ -79,7 +79,7 @@ public class ForgotPasswordFragment extends BaseFragment {
         super.setTitleBar(titleBar);
         titleBar.hideButtons();
         titleBar.showBackButton();
-        titleBar.setSubHeading(getString(R.string.forgot_password_));
+        titleBar.setSubHeading(getDockActivity().getResources().getString(R.string.forgot_password_));
     }
 
     @Override
@@ -92,7 +92,7 @@ public class ForgotPasswordFragment extends BaseFragment {
 
         if (edtEmail.getText() == null || (edtEmail.getText().toString().isEmpty()) ||
                 (!Patterns.EMAIL_ADDRESS.matcher(edtEmail.getText().toString()).matches())) {
-            edtEmail.setError(getString(R.string.valid_email));
+            edtEmail.setError(getDockActivity().getResources().getString(R.string.valid_email));
             return false;
         } else
             return true;
@@ -118,7 +118,7 @@ public class ForgotPasswordFragment extends BaseFragment {
                 if (response.body().getResponse().equals("2000")) {
                     loadingFinished();
                     UIHelper.showShortToastInCenter(getDockActivity(),getDockActivity().getResources().getString(R.string.forgor_password_message));
-                    getDockActivity().popBackStackTillEntry(0);
+                    getDockActivity().popBackStackTillEntry(1);
                     getDockActivity().replaceDockableFragment(UserloginFragment.newInstance(), "UserloginFragment");
                 } else {
                     loadingFinished();

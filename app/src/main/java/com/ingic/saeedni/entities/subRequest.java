@@ -5,9 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-/**
- * Created by saeedhyder on 6/8/2017.
- */
+
 
 public class subRequest {
 

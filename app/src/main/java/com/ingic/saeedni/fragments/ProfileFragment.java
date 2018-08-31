@@ -28,9 +28,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * Created by saeedhyder on 5/22/2017.
- */
 
 public class ProfileFragment extends BaseFragment {
 
@@ -148,7 +145,7 @@ public class ProfileFragment extends BaseFragment {
         getDockActivity().lockDrawer();
         titleBar.hideButtons();
         titleBar.showBackButton();
-        titleBar.setSubHeading(getString(R.string.my_profile));
+        titleBar.setSubHeading(getDockActivity().getResources().getString(R.string.my_profile));
 
     }
 

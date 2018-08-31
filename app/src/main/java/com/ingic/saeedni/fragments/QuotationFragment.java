@@ -31,9 +31,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * Created by saeedhyder on 5/24/2017.
- */
+
 
 public class QuotationFragment extends BaseFragment implements View.OnClickListener {
 
@@ -162,9 +160,9 @@ public class QuotationFragment extends BaseFragment implements View.OnClickListe
             if (!prefHelper.isLanguageArabic()) {
               /*  activity.getString(R.string.aed) +" "+entity.getRequest_detail().getEstimate_to() +" "+
                         "-" +" "+entity.getRequest_detail().getEstimate_from())*/
-                txtEstimatedQuote.setText(getDockActivity().getString(R.string.aed) + " " + QuotationData.getRequestDetail().getEstimateFrom() + " " + "-" + " " + QuotationData.getRequestDetail().getEstimateTo());
+                txtEstimatedQuote.setText(getDockActivity().getResources().getString(R.string.aed) + " " + QuotationData.getRequestDetail().getEstimateFrom() + " " + "-" + " " + QuotationData.getRequestDetail().getEstimateTo());
             } else {
-                txtEstimatedQuote.setText(getDockActivity().getString(R.string.aed) + " " + QuotationData.getRequestDetail().getEstimateFrom() + " " + "-" + " " + QuotationData.getRequestDetail().getEstimateTo() + " " );
+                txtEstimatedQuote.setText(getDockActivity().getResources().getString(R.string.aed) + " " + QuotationData.getRequestDetail().getEstimateFrom() + " " + "-" + " " + QuotationData.getRequestDetail().getEstimateTo() + " " );
             }
             if (!prefHelper.isLanguageArabic()) {
                 txtQuotationValid.setText(DateHelper.dateFormat(QuotationData.getRequestDetail().getDate(), AppConstants.DateFormat_DMY, AppConstants.DateFormat_YMD) + "");
@@ -273,7 +271,7 @@ public class QuotationFragment extends BaseFragment implements View.OnClickListe
                 titleBar.setSubHeading(QuotationData.getRequestDetail().getServiceDetail().getTitle() + "");
             }
         else
-            titleBar.setSubHeading(getString(R.string.Quotation));
+            titleBar.setSubHeading(getDockActivity().getResources().getString(R.string.Quotation));
 
     }
 

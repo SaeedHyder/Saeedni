@@ -121,7 +121,7 @@ public class EntryCodeFragment extends BaseFragment implements View.OnClickListe
             });
         } else {
             loadingFinished();
-            UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.valid_code_error));
+            UIHelper.showShortToastInCenter(getDockActivity(), getDockActivity().getResources().getString(R.string.valid_code_error));
         }
 
     }
@@ -144,7 +144,7 @@ public class EntryCodeFragment extends BaseFragment implements View.OnClickListe
         super.setTitleBar(titleBar);
         titleBar.hideButtons();
         titleBar.showBackButton();
-        titleBar.setSubHeading(getResources().getString(R.string.verification));
+        titleBar.setSubHeading(getDockActivity().getResources().getString(R.string.verification));
     }
 
     private void initPinEnrty() {
@@ -158,7 +158,7 @@ public class EntryCodeFragment extends BaseFragment implements View.OnClickListe
                     } else {
                         txtPinEntry.setError(true);
                         isValidate = false;
-                        UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.incorrect_code));
+                        UIHelper.showShortToastInCenter(getDockActivity(), getDockActivity().getResources().getString(R.string.incorrect_code));
                         txtPinEntry.postDelayed(new Runnable() {
                             @Override
                             public void run() {

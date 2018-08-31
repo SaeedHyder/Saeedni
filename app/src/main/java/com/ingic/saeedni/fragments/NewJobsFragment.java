@@ -1,7 +1,12 @@
 package com.ingic.saeedni.fragments;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,9 +36,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * Created by saeedhyder on 5/22/2017.
- */
 
 public class NewJobsFragment extends BaseFragment {
 
@@ -42,6 +44,8 @@ public class NewJobsFragment extends BaseFragment {
 
     @BindView(R.id.txt_no_data)
     AnyTextView txtNoData;
+
+    protected BroadcastReceiver broadcastReceiver;
 
     private ArrayListAdapter<NewJobsEnt> adapter;
     private ArrayList<NewJobsEnt> userCollection;
@@ -61,7 +65,7 @@ public class NewJobsFragment extends BaseFragment {
                         public void onClick(View v) {
                             if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
                                 if (RefusalDialog.getEditTextView(R.id.ed_msg).getText().toString().trim().equals("")) {
-                                    RefusalDialog.getEditTextView(R.id.ed_msg).setError(getString(R.string.enter_message));
+                                    RefusalDialog.getEditTextView(R.id.ed_msg).setError(getDockActivity().getResources().getString(R.string.enter_message));
                                 } else {
                                     jobReject(RefusalDialog.getEditText(R.id.ed_msg), RefusalDialog, ent);
                                 }
@@ -93,8 +97,8 @@ public class NewJobsFragment extends BaseFragment {
                     getDockActivity().onLoadingFinished();
                     if (response.body().getResponse().equals("2000")) {
                         refusalDialog.hideDialog();
-                        getDockActivity().popBackStackTillEntry(0);
-                        getDockActivity().replaceDockableFragment(HomeFragment.newInstance(), "HomeFragment");
+                        getDockActivity().popBackStackTillEntry(1);
+                        getDockActivity().replaceDockableFragment(NewJobsFragment.newInstance(), "NewJobsFragment");
 
                     } else {
                         UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
@@ -168,7 +172,7 @@ public class NewJobsFragment extends BaseFragment {
         getDockActivity().lockDrawer();
         titleBar.hideButtons();
         titleBar.showBackButton();
-        titleBar.setSubHeading(getString(R.string.New_Jobs));
+        titleBar.setSubHeading(getDockActivity().getResources().getString(R.string.new_jobs));
 
     }
 
@@ -179,8 +183,35 @@ public class NewJobsFragment extends BaseFragment {
             getNewJobs();
         }
         selectNewJobsListItem();
+        onNotificationReceived();
 
 
+    }
+
+    private void onNotificationReceived() {
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                // checking for type intent filter
+                if (intent.getAction().equals(AppConstants.REGISTRATION_COMPLETE)) {
+                    System.out.println("registration complete");
+                    System.out.println(prefHelper.getFirebase_TOKEN());
+
+                } else if (intent.getAction().equals(AppConstants.PUSH_NOTIFICATION)) {
+                    Bundle bundle = intent.getExtras();
+                    if (bundle != null) {
+                        String Type = bundle.getString("pushtype");
+
+                        if (Type != null && Type.equals(AppConstants.BY_APPROVED)) {
+                            getDockActivity().popFragment();
+                            getDockActivity().replaceDockableFragment(NewJobsFragment.newInstance(), "NewJobsFragment");
+                        }
+                    }
+
+                }
+            }
+
+        };
     }
 
     private void getNewJobs() {
@@ -239,6 +270,24 @@ public class NewJobsFragment extends BaseFragment {
                 //getDockActivity().addDockableFragment(NewJobDetail.newInstance(userCollection.get(position)), "NewJobDetail");
             }
         });
+
+    }
+
+    @Override
+    public void onPause() {
+        LocalBroadcastManager.getInstance(getDockActivity()).unregisterReceiver(broadcastReceiver);
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        LocalBroadcastManager.getInstance(getDockActivity()).registerReceiver(broadcastReceiver,
+                new IntentFilter(AppConstants.REGISTRATION_COMPLETE));
+
+        LocalBroadcastManager.getInstance(getDockActivity()).registerReceiver(broadcastReceiver,
+                new IntentFilter(AppConstants.PUSH_NOTIFICATION));
+
 
     }
 }

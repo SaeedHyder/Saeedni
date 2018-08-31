@@ -41,7 +41,7 @@ public class SelectedJobBinder extends ViewBinder<ServiceEnt> {
             viewHolder.txtJobselectedtext.setText(entity.getTitle());
         }
         else {
-            viewHolder.txtJobselectedtext.setText(entity.getTitle());
+            viewHolder.txtJobselectedtext.setText(entity.getArTitle());
         }
         viewHolder.deleteText.setOnClickListener(new View.OnClickListener() {
             @Override

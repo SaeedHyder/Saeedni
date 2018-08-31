@@ -149,7 +149,7 @@ public class UserJobsFragment extends BaseFragment implements View.OnClickListen
         titleBar.hideButtons();
         titleBar.showBackButton();
         getDockActivity().lockDrawer();
-        titleBar.setSubHeading(getString(R.string.jobs));
+        titleBar.setSubHeading(getDockActivity().getResources().getString(R.string.jobs));
     }
 
 

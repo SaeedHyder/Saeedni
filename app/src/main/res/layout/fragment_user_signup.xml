@@ -81,20 +81,35 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/x20"
                     android:src="@drawable/contact"/>
-
+                <com.hbb20.CountryCodePicker
+                    android:id="@+id/Countrypicker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:ccp_autoDetectCountry="false"
+                    android:layout_centerVertical="true"
+                    app:ccp_contentColor="@color/dark_grey"
+                    app:ccp_defaultNameCode="SA"
+                    android:layout_toEndOf="@+id/img_phone"
+                    app:ccp_hintExampleNumber="true"
+                    app:ccp_hintExampleNumberType="MOBILE"
+                    app:ccp_showArrow="false"
+                    app:ccp_showFlag="false"
+                    app:ccp_textGravity="LEFT"
+                    android:layout_marginStart="@dimen/x10"
+                    app:ccp_showNameCode="false"
+                    app:ccp_textSize="@dimen/x14"/>
                 <com.ingic.saeedni.ui.views.AnyEditTextView
                     android:id="@+id/edtnumber"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginEnd="@dimen/x20"
-                    android:layout_marginStart="@dimen/x20"
-                    android:layout_toEndOf="@+id/img_phone"
+                    android:layout_marginEnd="@dimen/x10"
+                    android:layout_marginStart="@dimen/x2"
+                    android:layout_toEndOf="@+id/Countrypicker"
                     android:background="@android:color/transparent"
-                    android:drawablePadding="@dimen/x10"
                     android:gravity="start|center_vertical"
                     android:hint="@string/phone_number"
                     android:imeOptions="actionNext"
-                    android:inputType="number"
+                    android:inputType="phone"
                     android:maxLength="50"
 
                     android:singleLine="true"
@@ -202,16 +217,16 @@
                     android:layout_height="@dimen/x20"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/x20"
-                    android:src="@drawable/address"/>
+                    android:src="@drawable/address_signup"/>
 
                 <com.jota.autocompletelocation.AutoCompleteLocation
                     android:id="@+id/edtadress"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_alignParentTop="true"
-                    android:layout_marginLeft="@dimen/x20"
-                    android:layout_marginRight="@dimen/x20"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="@dimen/x10"
+                    android:layout_marginRight="@dimen/x5"
+
                     android:layout_toEndOf="@+id/img_address"
                     android:background="@android:color/transparent"
                     android:drawablePadding="@dimen/x10"
@@ -248,8 +263,8 @@
                     android:layout_toEndOf="@+id/img_address2"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/x40"
-                    android:layout_marginLeft="@dimen/x20"
-                    android:layout_marginRight="@dimen/x20"
+                    android:layout_marginLeft="@dimen/x13"
+                    android:layout_marginRight="@dimen/x5"
                     android:layout_marginBottom="@dimen/x5"/>
             </RelativeLayout>
 

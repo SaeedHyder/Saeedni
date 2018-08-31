@@ -29,8 +29,12 @@ import com.ingic.saeedni.ui.views.TitleBar;
 import com.jota.autocompletelocation.AutoCompleteLocation;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.squareup.picasso.Picasso;
+import com.yanzhenjie.permission.Action;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.Permission;
 
 import java.io.File;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -92,7 +96,7 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
         titleBar.hideButtons();
         getDockActivity().lockDrawer();
         titleBar.showBackButton();
-        titleBar.setSubHeading(getString(R.string.edit_profile));
+        titleBar.setSubHeading(getDockActivity().getResources().getString(R.string.edit_profile));
     }
 
     @Override
@@ -156,21 +160,44 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
     }
 
     private void getLocation(AutoCompleteTextView textView) {
-        if (getMainActivity().statusCheck()) {
-            LocationModel locationModel = getMainActivity().getMyCurrentLocation();
-            if (locationModel != null)
-                textView.setText(locationModel.getAddress());
-            else {
-                getLocation(edtLocationgps);
-            }
-        }
+        AndPermission.with(this)
+                .runtime()
+                .permission(Permission.ACCESS_COARSE_LOCATION, Permission.ACCESS_FINE_LOCATION)
+                .onGranted(data -> {
+                    if (getMainActivity().statusCheck()) {
+                        LocationModel locationModel = getMainActivity().getMyCurrentLocation();
+                        if (locationModel != null)
+                            textView.setText(locationModel.getAddress());
+                        else {
+                            getLocation(edtLocationgps);
+                        }
+                    }
+                })
+                .onDenied(permissions -> {
+                    UIHelper.showShortToastInCenter(getMainActivity(), getString(R.string.storage_permission));
+                })
+                .start();
+
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.CircularImageSharePop:
-                CameraHelper.uploadMedia(getMainActivity());
+                AndPermission.with(this)
+                        .runtime()
+                        .permission(Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE, Permission.CAMERA)
+                        .onGranted(new Action<List<String>>() {
+                            @Override
+                            public void onAction(List<String> data) {
+                                CameraHelper.uploadMedia(getMainActivity());
+                            }
+                        })
+                        .onDenied(permissions -> {
+                            UIHelper.showShortToastInCenter(getMainActivity(), getString(R.string.storage_permission));
+                        })
+                        .start();
+
                 break;
             case R.id.img_gps:
                 getLocation(edtLocationgps);
@@ -240,10 +267,10 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
 
     private boolean validate() {
         if (edtemail.getText().toString().isEmpty()) {
-            edtemail.setError(getString(R.string.empty_email_error));
+            edtemail.setError(getDockActivity().getResources().getString(R.string.empty_email_error));
             return false;
         } else if (edtPhoneNo.getText().toString().length() < 9 || edtPhoneNo.getText().toString().length() > 10) {
-            edtPhoneNo.setError(getString(R.string.enter_valid_number_error));
+            edtPhoneNo.setError(getDockActivity().getResources().getString(R.string.enter_valid_number_error));
             return false;
         } else {
             return true;
@@ -254,16 +281,16 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
 
 
         try {
-            Phonenumber.PhoneNumber number = phoneUtil.parse(edtPhoneNo.getText().toString(), getString(R.string.uae_country_code));
+            Phonenumber.PhoneNumber number = phoneUtil.parse(edtPhoneNo.getText().toString(), getDockActivity().getResources().getString(R.string.uae_country_code));
             if (phoneUtil.isValidNumber(number)) {
                 return true;
             } else {
-                edtPhoneNo.setError(getString(R.string.enter_valid_number_error));
+                edtPhoneNo.setError(getDockActivity().getResources().getString(R.string.enter_valid_number_error));
                 return false;
             }
         } catch (NumberParseException e) {
             System.err.println("NumberParseException was thrown: " + e.toString());
-            edtPhoneNo.setError(getString(R.string.enter_valid_number_error));
+            edtPhoneNo.setError(getDockActivity().getResources().getString(R.string.enter_valid_number_error));
             return false;
 
         }

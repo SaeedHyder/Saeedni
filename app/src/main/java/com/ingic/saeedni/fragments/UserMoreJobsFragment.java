@@ -101,7 +101,7 @@ public class UserMoreJobsFragment extends BaseFragment {
             }
         }, prefHelper);
         titleBar.showMenuButton();
-        titleBar.setSubHeading(getString(R.string.requesr_service_home));
+        titleBar.setSubHeading(getDockActivity().getResources().getString(R.string.requesr_service_home));
     }
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
