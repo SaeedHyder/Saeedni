@@ -614,6 +614,7 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
     }
 
     public boolean statusCheck() {
+
         if (isNetworkAvailable()) {
             final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {

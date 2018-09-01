@@ -10,7 +10,6 @@ import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -20,6 +19,7 @@ import android.widget.TextView;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
+import com.hbb20.CountryCodePicker;
 import com.ingic.saeedni.R;
 import com.ingic.saeedni.activities.MainActivity;
 import com.ingic.saeedni.entities.CitiesEnt;
@@ -39,9 +39,13 @@ import com.ingic.saeedni.ui.views.AnyTextView;
 import com.ingic.saeedni.ui.views.TitleBar;
 import com.jota.autocompletelocation.AutoCompleteLocation;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.yanzhenjie.permission.Action;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.Permission;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -93,6 +97,8 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
     ArrayList<CitiesEnt> allCities = new ArrayList<>();
     @BindView(R.id.edtadress)
     AutoCompleteLocation edtadress;
+    @BindView(R.id.Countrypicker)
+    CountryCodePicker Countrypicker;
     private MainActivity.ImageSetter imageSetter = new MainActivity.ImageSetter() {
 
         @Override
@@ -134,6 +140,7 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
         setlistener();
         phoneUtil = PhoneNumberUtil.getInstance();
         getAllCities();
+        Countrypicker.registerCarrierNumberEditText(edtnumber);
     }
 
     private void getAllCities() {
@@ -196,7 +203,20 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
                 }
                 break;
             case R.id.btn_image:
-                CameraHelper.uploadMedia(getMainActivity());
+
+                AndPermission.with(this)
+                        .runtime()
+                        .permission(Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE, Permission.CAMERA)
+                        .onGranted(new Action<List<String>>() {
+                            @Override
+                            public void onAction(List<String> data) {
+                                CameraHelper.uploadMedia(getMainActivity());
+                            }
+                        })
+                        .onDenied(permissions -> {
+                            UIHelper.showShortToastInCenter(getMainActivity(), getString(R.string.storage_permission));
+                        })
+                        .start();
                 break;
             case R.id.btn_tnc:
                 getDockActivity().replaceDockableFragment(TermAndConditionFragment.newInstance(), "Terms And conditon Fragment");
@@ -208,8 +228,13 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
 
 
         try {
-            Phonenumber.PhoneNumber number = phoneUtil.parse(edtnumber.getText().toString(), getDockActivity().getResources().getString(R.string.uae_country_code));
-            if (phoneUtil.isValidNumber(number)) {
+            Phonenumber.PhoneNumber number = phoneUtil.parse(edtnumber.getText().toString(),Countrypicker.getSelectedCountryNameCode());
+            /*if (!Countrypicker.isValidFullNumber()) {
+                return true; getDockActivity().getResources().getString(R.string.uae_country_code
+            } else {
+                edtnumber.setError(getDockActivity().getResources().getString(R.string.enter_valid_number_error));
+                return false;
+            } */if (phoneUtil.isValidNumber(number)) {
                 return true;
             } else {
                 edtnumber.setError(getDockActivity().getResources().getString(R.string.enter_valid_number_error));
@@ -221,16 +246,17 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
             return false;
 
         }
+
     }
 
     @Override
     public void ResponseSuccess(Object result, String Tag) {
         switch (Tag) {
             case WebServiceConstants.GET_ALL_CITIES:
-                CitiesEnt citiesEnt=new CitiesEnt();
+                CitiesEnt citiesEnt = new CitiesEnt();
                 citiesEnt.setLocation(getDockActivity().getResources().getString(R.string.select_city));
                 allCities.add(citiesEnt);
-                allCities.addAll( (ArrayList<CitiesEnt>) result);
+                allCities.addAll((ArrayList<CitiesEnt>) result);
                 setCitiesSpinner(allCities);
                 break;
         }
@@ -305,7 +331,7 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
                             AppConstants.Device_Type,
                             prefHelper.getFirebase_TOKEN());
                     prefHelper.setLoginStatus(false);
-                  getDockActivity().replaceDockableFragment(EntryCodeFragment.newInstance(),"EntryCodeFragment");
+                    getDockActivity().replaceDockableFragment(EntryCodeFragment.newInstance(), "EntryCodeFragment");
                     //showSignupDialog();
 
                 } else {
@@ -377,10 +403,10 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
         } else if (edtnumber.getText().toString().equals("") && edtnumber.getText().toString().isEmpty()) {
             edtnumber.setError(getDockActivity().getResources().getString(R.string.enter_number));
             return false;
-        } else if (edtnumber.getText().toString().length() < 9 || edtnumber.getText().toString().length() > 10) {
+        } /*else if (edtnumber.getText().toString().length() < 9 || edtnumber.getText().toString().length() > 10) {
             edtnumber.setError(getDockActivity().getResources().getString(R.string.enter_valid_number_error));
             return false;
-        } else if (edtEmail.getText() == null || (edtEmail.getText().toString().isEmpty()) ||
+        }*/ else if (edtEmail.getText() == null || (edtEmail.getText().toString().isEmpty()) ||
                 (!Patterns.EMAIL_ADDRESS.matcher(edtEmail.getText().toString()).matches())) {
             edtEmail.setError(getDockActivity().getResources().getString(R.string.enter_email));
             return false;
@@ -390,7 +416,7 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
         } else if (edtadress.getText().toString().isEmpty()) {
             edtadress.setError(getDockActivity().getResources().getString(R.string.address_empty_error));
             return false;
-        }else if (spnCity.getSelectedItemPosition()==0) {
+        } else if (spnCity.getSelectedItemPosition() == 0) {
             UIHelper.showShortToastInCenter(getDockActivity(), getDockActivity().getResources().getString(R.string.select_city));
             return false;
         } else if (!prefHelper.istermsCheck()) {
@@ -401,5 +427,6 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
         }
 
     }
+
 
 }

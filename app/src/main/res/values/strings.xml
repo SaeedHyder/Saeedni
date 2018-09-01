@@ -342,6 +342,7 @@
     <string name="user_logout">Logout</string>
     <string name="no_inprogress_job">No Inprogress job found</string>
     <string name="no_completed_job">No Completed job found</string>
+    <string name="storage_permission">Permission is required to access this feature</string>
 
 
 </resources>

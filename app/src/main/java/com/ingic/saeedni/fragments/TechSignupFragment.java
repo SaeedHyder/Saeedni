@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
+import com.hbb20.CountryCodePicker;
 import com.ingic.saeedni.R;
 import com.ingic.saeedni.activities.MainActivity;
 import com.ingic.saeedni.entities.AllServicesEnt;
@@ -39,12 +40,16 @@ import com.ingic.saeedni.ui.views.AnyTextView;
 import com.ingic.saeedni.ui.views.TitleBar;
 import com.jota.autocompletelocation.AutoCompleteLocation;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.yanzhenjie.permission.Action;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.Permission;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -129,6 +134,8 @@ public class TechSignupFragment extends BaseFragment {
     AnyEditTextView edtregistrationtype;
     @BindView(R.id.edtRegistration_date)
     AnyTextView edtRegistrationDate;
+    @BindView(R.id.Countrypicker)
+    CountryCodePicker Countrypicker;
     private String selectedDate = "";
 
 
@@ -158,6 +165,7 @@ public class TechSignupFragment extends BaseFragment {
         phoneUtil = PhoneNumberUtil.getInstance();
         getAllCities();
         getAllServices();
+        Countrypicker.registerCarrierNumberEditText(edtnumber);
     }
 
     private void getAllServices() {
@@ -183,7 +191,7 @@ public class TechSignupFragment extends BaseFragment {
     private boolean isPhoneNumberValid() {
 
         try {
-            Phonenumber.PhoneNumber number = phoneUtil.parse(edtnumber.getText().toString(), getDockActivity().getResources().getString(R.string.uae_country_code));
+            Phonenumber.PhoneNumber number = phoneUtil.parse(edtnumber.getText().toString(), Countrypicker.getSelectedCountryNameCode());
             if (phoneUtil.isValidNumber(number)) {
                 return true;
             } else {
@@ -409,10 +417,10 @@ public class TechSignupFragment extends BaseFragment {
         } else if (edtnumber.getText().toString().equals("") && edtnumber.getText().toString().isEmpty()) {
             edtnumber.setError(getDockActivity().getResources().getString(R.string.enter_number));
             return false;
-        } else if (edtnumber.getText().toString().length() < 9 || edtnumber.getText().toString().length() > 10) {
+        } /*else if (edtnumber.getText().toString().length() < 9 || edtnumber.getText().toString().length() > 10) {
             edtnumber.setError(getDockActivity().getResources().getString(R.string.enter_valid_number_error));
             return false;
-        } else if (edtEmail.getText() == null || (edtEmail.getText().toString().isEmpty()) ||
+        }*/ else if (edtEmail.getText() == null || (edtEmail.getText().toString().isEmpty()) ||
                 (!Patterns.EMAIL_ADDRESS.matcher(edtEmail.getText().toString()).matches())) {
             edtEmail.setError(getDockActivity().getResources().getString(R.string.enter_email));
             return false;
@@ -486,7 +494,20 @@ public class TechSignupFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_image:
-                CameraHelper.uploadMedia(getMainActivity());
+                AndPermission.with(this)
+                        .runtime()
+                        .permission(Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE, Permission.CAMERA)
+                        .onGranted(new Action<List<String>>() {
+                            @Override
+                            public void onAction(List<String> data) {
+                                CameraHelper.uploadMedia(getMainActivity());
+                            }
+                        })
+                        .onDenied(permissions -> {
+                            UIHelper.showShortToastInCenter(getMainActivity(), getString(R.string.storage_permission));
+                        })
+                        .start();
+
                 break;
             case R.id.edtLicenseExpiry:
                 initDatePicker(edtLicenseExpiry);
@@ -495,7 +516,20 @@ public class TechSignupFragment extends BaseFragment {
                 initDatePicker(edtRegistrationDate);
                 break;
             case R.id.edtLicenseAttach:
-                CameraHelper.uploadFile(getMainActivity());
+                AndPermission.with(this)
+                        .runtime()
+                        .permission(Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE, Permission.CAMERA)
+                        .onGranted(new Action<List<String>>() {
+                            @Override
+                            public void onAction(List<String> data) {
+                                CameraHelper.uploadFile(getMainActivity());
+                            }
+                        })
+                        .onDenied(permissions -> {
+                            UIHelper.showShortToastInCenter(getMainActivity(), getString(R.string.storage_permission));
+                        })
+                        .start();
+
                 break;
             case R.id.btn_signup:
                 if (isvalidated()) {
@@ -550,6 +584,7 @@ public class TechSignupFragment extends BaseFragment {
         datePickerHelper.setminDate(c.getTime().getTime());
         datePickerHelper.showDate();
     }
+
 
 
 }

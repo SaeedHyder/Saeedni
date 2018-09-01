@@ -57,6 +57,9 @@ import com.ingic.saeedni.ui.views.AnySpinner;
 import com.ingic.saeedni.ui.views.AnyTextView;
 import com.ingic.saeedni.ui.views.TitleBar;
 import com.jota.autocompletelocation.AutoCompleteLocation;
+import com.yanzhenjie.permission.Action;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.Permission;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -429,7 +432,20 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
                 if (images.size() > 4) {
                     UIHelper.showShortToastInCenter(getDockActivity(), getDockActivity().getResources().getString(R.string.imagelimit_error));
                 } else {
-                    CameraHelper.uploadMedia(getMainActivity());
+                    AndPermission.with(this)
+                            .runtime()
+                            .permission(Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE, Permission.CAMERA)
+                            .onGranted(new Action<List<String>>() {
+                                @Override
+                                public void onAction(List<String> data) {
+                                    CameraHelper.uploadMedia(getMainActivity());
+                                }
+                            })
+                            .onDenied(permissions -> {
+                                UIHelper.showShortToastInCenter(getMainActivity(), getString(R.string.storage_permission));
+                            })
+                            .start();
+
                 }
 
                 break;
@@ -700,6 +716,13 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
 
     }
 
+
+
+
+
+
+
+
     private void setJobDescriptionSpinner() {
         final ArrayList<String> jobdescriptionarraylist = new ArrayList<String>();
         for (ServiceEnt item : jobChildcollection
@@ -759,15 +782,25 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
     }
 
     private void getLocation(AutoCompleteTextView textView) {
-        if (getMainActivity().statusCheck()) {
-            LocationModel locationModel = getMainActivity().getMyCurrentLocation();
-            if (locationModel != null)
-                textView.setText(locationModel.getAddress());
-            else {
-                UIHelper.showShortToastInCenter(getDockActivity(), getDockActivity().getResources().getString(R.string.location_error));
-                //getLocation(edtLocationgps);
-            }
-        }
+        AndPermission.with(this)
+                .runtime()
+                .permission(Permission.ACCESS_COARSE_LOCATION, Permission.ACCESS_FINE_LOCATION)
+                .onGranted(data -> {
+                    if (getMainActivity().statusCheck()) {
+                        LocationModel locationModel = getMainActivity().getMyCurrentLocation();
+                        if (locationModel != null)
+                            textView.setText(locationModel.getAddress());
+                        else {
+                            UIHelper.showShortToastInCenter(getDockActivity(), getDockActivity().getResources().getString(R.string.location_error));
+                            //getLocation(edtLocationgps);
+                        }
+                    }
+                })
+                .onDenied(permissions -> {
+                    UIHelper.showShortToastInCenter(getMainActivity(), getString(R.string.storage_permission));
+                })
+                .start();
+
     }
 
     private void CreateRequest() {
@@ -1039,7 +1072,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         if (selectedJobs.size() > position)
             selectedJobs.remove(position);
 
-        if(selectedJobs.size()<=0){
+        if (selectedJobs.size() <= 0) {
             spnJobdescription.setSelection(0);
         }
 

@@ -29,8 +29,12 @@ import com.ingic.saeedni.ui.views.TitleBar;
 import com.jota.autocompletelocation.AutoCompleteLocation;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.squareup.picasso.Picasso;
+import com.yanzhenjie.permission.Action;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.Permission;
 
 import java.io.File;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -156,21 +160,44 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
     }
 
     private void getLocation(AutoCompleteTextView textView) {
-        if (getMainActivity().statusCheck()) {
-            LocationModel locationModel = getMainActivity().getMyCurrentLocation();
-            if (locationModel != null)
-                textView.setText(locationModel.getAddress());
-            else {
-                getLocation(edtLocationgps);
-            }
-        }
+        AndPermission.with(this)
+                .runtime()
+                .permission(Permission.ACCESS_COARSE_LOCATION, Permission.ACCESS_FINE_LOCATION)
+                .onGranted(data -> {
+                    if (getMainActivity().statusCheck()) {
+                        LocationModel locationModel = getMainActivity().getMyCurrentLocation();
+                        if (locationModel != null)
+                            textView.setText(locationModel.getAddress());
+                        else {
+                            getLocation(edtLocationgps);
+                        }
+                    }
+                })
+                .onDenied(permissions -> {
+                    UIHelper.showShortToastInCenter(getMainActivity(), getString(R.string.storage_permission));
+                })
+                .start();
+
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.CircularImageSharePop:
-                CameraHelper.uploadMedia(getMainActivity());
+                AndPermission.with(this)
+                        .runtime()
+                        .permission(Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE, Permission.CAMERA)
+                        .onGranted(new Action<List<String>>() {
+                            @Override
+                            public void onAction(List<String> data) {
+                                CameraHelper.uploadMedia(getMainActivity());
+                            }
+                        })
+                        .onDenied(permissions -> {
+                            UIHelper.showShortToastInCenter(getMainActivity(), getString(R.string.storage_permission));
+                        })
+                        .start();
+
                 break;
             case R.id.img_gps:
                 getLocation(edtLocationgps);
