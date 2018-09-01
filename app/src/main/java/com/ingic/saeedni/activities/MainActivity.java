@@ -15,6 +15,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
@@ -314,6 +315,9 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
         Log.i("Screen Density", ScreenHelper.getDensity(this) + "");
         settingSideMenu();
         setCurrentLocale();
+
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
         //  prefHelper.putLang(this,prefHelper.getLang());
 
         if (getIntent().getExtras() != null) {

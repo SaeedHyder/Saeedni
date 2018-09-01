@@ -190,8 +190,9 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
                         if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
                             try {
                                 loadingStarted();
-                                registerUser(phoneUtil.format(phoneUtil.parse(edtnumber.getText().toString(), getDockActivity().getResources().getString(R.string.uae_country_code)),
-                                        PhoneNumberUtil.PhoneNumberFormat.E164));
+                                /*registerUser(phoneUtil.format(phoneUtil.parse(edtnumber.getText().toString(), getDockActivity().getResources().getString(R.string.uae_country_code)),
+                                        PhoneNumberUtil.PhoneNumberFormat.E164));*/
+                                registerUser(Countrypicker.getFullNumberWithPlus());
 
                             } catch (Exception e) {
 
