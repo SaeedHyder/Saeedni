@@ -118,7 +118,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     private void buildNotification(RemoteMessage messageBody) {
-        String title = getString(R.string.app_name);
+        String title = getString(R.string.app_name_);
         String message = "";
         message = messageBody.getData().get("message");
         if (preferenceHelper.isLanguageArabic()) {

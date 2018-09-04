@@ -31,22 +31,7 @@ public class BaseApplication extends MultiDexApplication {
 		initImageLoader();
 
 	}
-	public static final String CHANNEL = "channel";
 
-	private void createNotificationChannels() {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-			NotificationChannel channel1 = new NotificationChannel(
-					CHANNEL,
-					"Auditex",
-					NotificationManager.IMPORTANCE_HIGH
-			);
-			channel1.setDescription("Auditex");
-
-			NotificationManager manager = getSystemService(NotificationManager.class);
-			manager.createNotificationChannel(channel1);
-
-		}
-	}
 	public void initImageLoader() {
 		
 		DisplayImageOptions options = new DisplayImageOptions.Builder()
