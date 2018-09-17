@@ -184,15 +184,11 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.CircularImageSharePop:
-                AndPermission.with(this)
+                AndPermission.with(getMainActivity())
                         .runtime()
-                        .permission(Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE, Permission.CAMERA)
-                        .onGranted(new Action<List<String>>() {
-                            @Override
-                            public void onAction(List<String> data) {
-                                CameraHelper.uploadMedia(getMainActivity());
-                            }
-                        })
+                        .permission(Permission.READ_EXTERNAL_STORAGE,Permission.WRITE_EXTERNAL_STORAGE, Permission.CAMERA)
+                        .onGranted(data ->
+                                CameraHelper.uploadMedia(getMainActivity()))
                         .onDenied(permissions -> {
                             UIHelper.showShortToastInCenter(getMainActivity(), getString(R.string.storage_permission));
                         })
