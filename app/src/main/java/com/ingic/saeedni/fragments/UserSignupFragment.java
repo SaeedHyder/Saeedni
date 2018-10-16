@@ -1,5 +1,6 @@
 package com.ingic.saeedni.fragments;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,12 +11,18 @@ import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
@@ -37,7 +44,6 @@ import com.ingic.saeedni.ui.views.AnyEditTextView;
 import com.ingic.saeedni.ui.views.AnySpinner;
 import com.ingic.saeedni.ui.views.AnyTextView;
 import com.ingic.saeedni.ui.views.TitleBar;
-import com.jota.autocompletelocation.AutoCompleteLocation;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
@@ -57,11 +63,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.app.Activity.RESULT_CANCELED;
+import static android.app.Activity.RESULT_OK;
+
 /**
  * Created on 5/23/2017.
  */
 
 public class UserSignupFragment extends BaseFragment implements View.OnClickListener {
+    private static final int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
     public File profilePic;
     public String UserImagePath;
     @BindView(R.id.edtname)
@@ -92,13 +102,21 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
     ImageView imgAddress;
     @BindView(R.id.spnCity)
     AnySpinner spnCity;
+    @BindView(R.id.spnCountry)
+    AnySpinner spnCountry;
     @BindView(R.id.ll_textFields)
     LinearLayout llTextFields;
     ArrayList<CitiesEnt> allCities = new ArrayList<>();
+    ArrayList<CitiesEnt> allCountries = new ArrayList<>();
     @BindView(R.id.edtadress)
-    AutoCompleteLocation edtadress;
+    AnyTextView edtadress;
     @BindView(R.id.Countrypicker)
     CountryCodePicker Countrypicker;
+    int selectCountryIndex = 0;
+    int selectCityIndex = 0;
+    int newSelectedCountryCode = 0;
+    @BindView(R.id.chk_read)
+    CheckBox chkRead;
     private MainActivity.ImageSetter imageSetter = new MainActivity.ImageSetter() {
 
         @Override
@@ -136,23 +154,78 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
             view.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
             //   edtnumber.setGravity(Gravity.START);
         }
+        chkRead.setChecked(prefHelper.istermsCheck());
+        chkRead.setOnCheckedChangeListener((buttonView, isChecked) -> prefHelper.setTermsCheck(isChecked));
         getMainActivity().setImageSetter(imageSetter);
         setlistener();
         phoneUtil = PhoneNumberUtil.getInstance();
-        getAllCities();
+        getallCountries();
         Countrypicker.registerCarrierNumberEditText(edtnumber);
+        Countrypicker.setOnCountryChangeListener(() -> {
+            newSelectedCountryCode = Countrypicker.getSelectedCountryCodeAsInt();
+        });
+        Countrypicker.setCountryForPhoneCode(newSelectedCountryCode);
     }
 
-    private void getAllCities() {
-        if (allCities.isEmpty())
-            serviceHelper.enqueueCall(webService.getAllCities(), WebServiceConstants.GET_ALL_CITIES);
-        else setCitiesSpinner(allCities);
+    private void openLocationSelector() {
+
+        try {
+           /* Intent intent =
+                    new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
+                            .build(getDockActivity());*/
+            PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+
+            getDockActivity().startActivityForResult(builder.build(getDockActivity()), PLACE_AUTOCOMPLETE_REQUEST_CODE);
+            //this.startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+
+                Place place = PlaceAutocomplete.getPlace(getDockActivity(), data);
+                if (place != null) {
+                    edtadress.setText(place.getAddress().toString());
+                    Log.i("Profile", "Place: " + place.getName());
+                }
+
+            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
+                Status status = PlaceAutocomplete.getStatus(getDockActivity(), data);
+                // TODO: Handle the error.
+                Log.i("Profile", status.getStatusMessage());
+
+            } else if (resultCode == RESULT_CANCELED) {
+                // The user canceled the operation.
+            }
+        }
+
+    }
+
+    private void getallCountries() {
+        if (allCountries.isEmpty()) {
+            serviceHelper.enqueueCall(webService.getAllCountries(), WebServiceConstants.GET_ALL_COUNTRIES);
+        } else {
+            setCountriesSpinner(allCountries);
+        }
+    }
+
+    private void getAllCities(int countryID) {
+        serviceHelper.enqueueCall(webService.getAllCities(countryID), WebServiceConstants.GET_ALL_CITIES);
     }
 
     private void setlistener() {
         btnsignup.setOnClickListener(this);
         btnImage.setOnClickListener(this);
         btnTnc.setOnClickListener(this);
+        edtadress.setOnClickListener(this);
         edtnumber.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -203,6 +276,9 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
 
                 }
                 break;
+            case R.id.edtadress:
+                openLocationSelector();
+                break;
             case R.id.btn_image:
 
                 AndPermission.with(this)
@@ -229,13 +305,14 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
 
 
         try {
-            Phonenumber.PhoneNumber number = phoneUtil.parse(edtnumber.getText().toString(),Countrypicker.getSelectedCountryNameCode());
+            Phonenumber.PhoneNumber number = phoneUtil.parse(edtnumber.getText().toString(), Countrypicker.getSelectedCountryNameCode());
             /*if (!Countrypicker.isValidFullNumber()) {
                 return true; getDockActivity().getResources().getString(R.string.uae_country_code
             } else {
                 edtnumber.setError(getDockActivity().getResources().getString(R.string.enter_valid_number_error));
                 return false;
-            } */if (phoneUtil.isValidNumber(number)) {
+            } */
+            if (phoneUtil.isValidNumber(number)) {
                 return true;
             } else {
                 edtnumber.setError(getDockActivity().getResources().getString(R.string.enter_valid_number_error));
@@ -254,11 +331,18 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
     public void ResponseSuccess(Object result, String Tag) {
         switch (Tag) {
             case WebServiceConstants.GET_ALL_CITIES:
+                allCities = new ArrayList<>();
                 CitiesEnt citiesEnt = new CitiesEnt();
-                citiesEnt.setLocation(getDockActivity().getResources().getString(R.string.select_city));
+                citiesEnt.setLocation("Select City");
+                citiesEnt.setAr_address("اختر مدينة");
                 allCities.add(citiesEnt);
                 allCities.addAll((ArrayList<CitiesEnt>) result);
                 setCitiesSpinner(allCities);
+                break;
+            case WebServiceConstants.GET_ALL_COUNTRIES:
+                allCountries.addAll((ArrayList<CitiesEnt>) result);
+                setCountriesSpinner(allCountries);
+
                 break;
         }
     }
@@ -312,10 +396,12 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
                 RequestBody.create(MediaType.parse("text/plain"), edtname.getText().toString()),
                 RequestBody.create(MediaType.parse("text/plain"), edtEmail.getText().toString()),
                 RequestBody.create(MediaType.parse("text/plain"), allCities.get(spnCity.getSelectedItemPosition()).getId() + ""),
+                RequestBody.create(MediaType.parse("text/plain"), allCountries.get(spnCountry.getSelectedItemPosition()).getId() + ""),
                 RequestBody.create(MediaType.parse("text/plain"), number),
                 RequestBody.create(MediaType.parse("text/plain"), edtadress.getText().toString()),
                 RequestBody.create(MediaType.parse("text/plain"), edtpassword.getText().toString()),
                 RequestBody.create(MediaType.parse("text/plain"), edtpassword.getText().toString()),
+                RequestBody.create(MediaType.parse("text/plain"), prefHelper.getLang()),
                 filePart);
         call.enqueue(new Callback<ResponseWrapper<RegistrationResultEnt>>() {
             @Override
@@ -332,6 +418,7 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
                             AppConstants.Device_Type,
                             prefHelper.getFirebase_TOKEN());
                     prefHelper.setLoginStatus(false);
+                    UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
                     getDockActivity().replaceDockableFragment(EntryCodeFragment.newInstance(), "EntryCodeFragment");
                     //showSignupDialog();
 
@@ -370,12 +457,18 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
 
         for (CitiesEnt item : citiesEnts
                 ) {
-            citiesCollection.add(item.getLocation());
+
+            if (prefHelper.isLanguageArabic()){
+                citiesCollection.add(item.getAr_location());
+
+            }else {
+                citiesCollection.add(item.getLocation());
+            }
         }
         //  ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity(), android.R.layout.simple_spinner_item, citiesCollection);
 
         ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity()
-                , android.R.layout.simple_spinner_item, citiesCollection) {
+                , R.layout.row_item_spinner, citiesCollection) {
             @Override
             public boolean isEnabled(int position) {
                 return !(position == 0);
@@ -394,6 +487,54 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
 
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnCity.setAdapter(categoryAdapter);
+        if (selectCityIndex < citiesCollection.size())
+            spnCity.setSelection(selectCityIndex);
+        spnCity.setOnItemSelectedEvenIfUnchangedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectCityIndex = i;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
+    private void setCountriesSpinner(ArrayList<CitiesEnt> citiesEnts) {
+
+        final ArrayList<String> citiesCollection = new ArrayList<String>();
+
+
+        for (CitiesEnt item : citiesEnts
+                ) {
+            if (prefHelper.isLanguageArabic()){
+                citiesCollection.add(item.getAr_location());
+
+            }else {
+                citiesCollection.add(item.getLocation());
+            }
+        }
+        if (citiesEnts.size() > 0) getAllCities(allCountries.get(selectCountryIndex).getId());
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity(), R.layout.row_item_spinner, citiesCollection);
+        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnCountry.setAdapter(categoryAdapter);
+        spnCountry.setOnItemSelectedEvenIfUnchangedListener(null);
+        spnCountry.setSelection(selectCountryIndex);
+        spnCountry.setOnItemSelectedEvenIfUnchangedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                getAllCities(allCountries.get(i).getId());
+                selectCountryIndex = i;
+                selectCityIndex = 0;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     private boolean isvalidated() {

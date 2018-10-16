@@ -57,6 +57,6 @@ public class AppConstants {
     public static final String BY_APPROVED = "by_approved";
 
 
-
-
+    public static int STATUS_COMPLETED = 7;
+    public static int STATUS_CANCEL = 4;
 }

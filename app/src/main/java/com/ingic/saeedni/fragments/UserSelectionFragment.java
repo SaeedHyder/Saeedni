@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
  */
 
 
-public class UserSelectionFragment extends BaseFragment implements View.OnClickListener{
+public class UserSelectionFragment extends BaseFragment implements View.OnClickListener {
     @BindView(R.id.usercontainer)
     LinearLayout usercontainer;
     @BindView(R.id.techniciancontainer)
@@ -31,7 +31,6 @@ public class UserSelectionFragment extends BaseFragment implements View.OnClickL
     RadioButton cb_english;
     @BindView(R.id.cb_arabic)
     RadioButton cb_arabic;
-
 
 
     public static UserSelectionFragment newInstance() {
@@ -59,17 +58,13 @@ public class UserSelectionFragment extends BaseFragment implements View.OnClickL
     }
 
 
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if(prefHelper.isLanguageArabic())
-        {
+        if (prefHelper.isLanguageArabic()) {
             cb_arabic.setChecked(true);
-        }
-        else
-        {
+        } else {
             cb_english.setChecked(true);
         }
         setlistener();
@@ -79,18 +74,8 @@ public class UserSelectionFragment extends BaseFragment implements View.OnClickL
         usercontainer.setOnClickListener(this);
         techniciancontainer.setOnClickListener(this);
 
-       cb_english.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               prefHelper.putLang(getDockActivity(),"en");
-           }
-       });
-      cb_arabic.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-              prefHelper.putLang(getDockActivity(),"ar");
-          }
-      });
+        cb_english.setOnClickListener(v -> prefHelper.putLang(getDockActivity(), "en"));
+        cb_arabic.setOnClickListener(v -> prefHelper.putLang(getDockActivity(), "ar"));
 
     }
 
@@ -98,22 +83,21 @@ public class UserSelectionFragment extends BaseFragment implements View.OnClickL
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
-     ButterKnife.bind(this, Objects.requireNonNull(rootView));
+        ButterKnife.bind(this, Objects.requireNonNull(rootView));
         return rootView;
     }
 
 
-
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.usercontainer:
                 prefHelper.setUserType("user");
-                getDockActivity().replaceDockableFragment(UserloginFragment.newInstance(),"UserloginFragment");
+                getDockActivity().replaceDockableFragment(UserloginFragment.newInstance(), "UserloginFragment");
                 break;
             case R.id.techniciancontainer:
                 prefHelper.setUserType("technician");
-                getDockActivity().replaceDockableFragment(LoginFragment.newInstance(true),"Login Fragment");
+                getDockActivity().replaceDockableFragment(LoginFragment.newInstance(true), "Login Fragment");
                 break;
         }
     }

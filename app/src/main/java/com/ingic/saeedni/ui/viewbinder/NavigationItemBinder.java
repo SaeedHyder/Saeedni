@@ -101,7 +101,7 @@ public class NavigationItemBinder extends ViewBinder<NavigationEnt> implements U
 
     }
 
-    private void changeBadgeSide(int GravitySide, ImageView imgBadge) {
+   /* private void changeBadgeSide(int GravitySide, ImageView imgBadge) {
         RelativeLayout.LayoutParams params =
                 new RelativeLayout.LayoutParams(imgBadge.getWidth(),
                         imgBadge.getHeight());
@@ -153,7 +153,7 @@ public class NavigationItemBinder extends ViewBinder<NavigationEnt> implements U
         });
     }
 
-
+*/
     @Override
     public void updateCount(int count) {
         badgeCount = count;

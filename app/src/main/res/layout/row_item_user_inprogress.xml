@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
-    android:layoutDirection="rtl"
+    android:layoutDirection="ltr"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
@@ -68,7 +68,38 @@
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_companyName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/x3"
+        android:layout_marginStart="@dimen/x12"
+        android:layout_marginEnd="@dimen/x20"
+        android:orientation="horizontal">
 
+
+        <com.ingic.saeedni.ui.views.AnyTextView
+            android:id="@+id/txt_companyName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/x8"
+            android:layout_marginStart="@dimen/x8"
+            android:text="@string/companyName"
+            android:textColor="@color/app_blue"
+            android:textSize="@dimen/x15"
+            android:textStyle="bold"
+            app:typeface="Roboto-Regular.ttf"/>
+
+        <com.ingic.saeedni.ui.views.AnyTextView
+            android:id="@+id/txt_companyNameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:textColor="@color/black"
+            android:textSize="@dimen/x15"
+            app:typeface="Roboto-Regular.ttf"/>
+
+    </LinearLayout>
     <LinearLayout
         android:id="@+id/ll_JobTitle"
         android:layout_width="match_parent"

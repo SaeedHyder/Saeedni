@@ -1,5 +1,6 @@
 package com.ingic.saeedni.ui.viewbinder;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Typeface;
 import android.support.v7.widget.CardView;
@@ -58,6 +59,7 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDeta
         return new childViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void bindGroupView(final RequestDetail entity, final int position, int grpPosition, int childCount, View view, Activity activity) {
 
@@ -76,7 +78,7 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDeta
             parentViewHolder.llEstimatedQuotation.setVisibility(View.GONE);
             parentViewHolder.llBottomBtns.setVisibility(View.GONE);
         }
-        parentViewHolder.txtJobNoText.setText(String.valueOf(position + 1));
+        parentViewHolder.txtJobNoText.setText(entity.getId()+"");
         //parentViewHolder.txtJobPostedText.setText(entity.getDate()+"");
         if (!preferenceHelper.isLanguageArabic()) {
             parentViewHolder.txtJobPostedText.setText(DateHelper.dateFormat(entity.getDate(), AppConstants.DateFormat_DMY, AppConstants.DateFormat_YMD) + "");

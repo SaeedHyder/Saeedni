@@ -274,7 +274,16 @@
                 android:textAllCaps="false"
                 android:textColor="@color/white"/>
 
-
+            <Button
+                android:id="@+id/btnViewImages"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/x40"
+                android:layout_marginStart="@dimen/x3"
+                android:layout_weight="1"
+                android:background="@drawable/yellow_button_background"
+                android:text="@string/viewImages"
+                android:textAllCaps="false"
+                android:textColor="@color/white"/>
         </LinearLayout>
     </LinearLayout>
 

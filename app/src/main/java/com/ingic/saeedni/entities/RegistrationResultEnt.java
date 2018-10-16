@@ -6,7 +6,6 @@ import com.google.gson.annotations.SerializedName;
 import static com.ingic.saeedni.helpers.DateHelper.getLocalTimeDate;
 
 
-
 public class RegistrationResultEnt {
 
     @SerializedName("id")
@@ -30,6 +29,9 @@ public class RegistrationResultEnt {
     @SerializedName("email")
     @Expose
     private String email;
+    @SerializedName("company_name")
+    @Expose
+    private String company_name;
     @SerializedName("code")
     @Expose
     private String code;
@@ -69,6 +71,9 @@ public class RegistrationResultEnt {
     @SerializedName("city_id")
     @Expose
     private int city_id;
+    @SerializedName("country_id")
+    @Expose
+    private int country_id;
     @SerializedName("updated_at")
     @Expose
     private String updatedAt;
@@ -78,6 +83,25 @@ public class RegistrationResultEnt {
     @SerializedName("profile_image")
     @Expose
     private String profileImage;
+    @SerializedName("push_notification")
+    @Expose
+    private int push_notification;
+
+    public int getCountry_id() {
+        return country_id;
+    }
+
+    public String getCompany_name() {
+        return company_name;
+    }
+
+    public boolean isPushNotificationOn() {
+        return push_notification == 1;
+    }
+
+    public void setPush_notification(int push_notification) {
+        this.push_notification = push_notification;
+    }
 
     public String getCode_verify() {
         return code_verify;
@@ -87,7 +111,7 @@ public class RegistrationResultEnt {
         this.code_verify = code_verify;
     }
 
-    public Integer getCity_id() {
+    public int getCity_id() {
         return city_id;
     }
 

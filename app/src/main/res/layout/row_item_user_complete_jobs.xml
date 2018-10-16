@@ -112,6 +112,37 @@
                 app:typeface="Roboto-Regular.ttf"/>
 
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_companyName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x3"
+            android:layout_marginLeft="@dimen/x20"
+            android:layout_marginRight="@dimen/x20"
+            android:orientation="horizontal">
+
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:id="@+id/txt_companyName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/x8"
+                android:layout_marginStart="@dimen/x8"
+                android:text="@string/companyName"
+                android:textColor="@color/app_blue"
+                android:textSize="@dimen/x15"
+                app:typeface="Roboto-Regular.ttf"/>
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:id="@+id/txt_companyNameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:textColor="@color/black"
+                android:textSize="@dimen/x15"
+                app:typeface="Roboto-Regular.ttf"/>
+
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/ll_JobTitle"
@@ -216,12 +247,43 @@
                 app:typeface="Roboto-Regular.ttf"/>
 
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x3"
+            android:layout_marginLeft="@dimen/x20"
+            android:layout_marginRight="@dimen/x20"
+            android:orientation="horizontal">
 
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:id="@+id/txt_Status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/x8"
+                android:layout_marginStart="@dimen/x8"
+                android:text="@string/status"
+                android:textColor="@color/app_blue"
+                android:textSize="@dimen/x15"
+                app:typeface="Roboto-Regular.ttf"/>
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:id="@+id/txt_StatusText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:textColor="@color/black"
+                android:textSize="@dimen/x15"
+                app:typeface="Roboto-Regular.ttf"/>
+
+        </LinearLayout>
         <LinearLayout
             android:id="@+id/ll_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/x3"
+            android:visibility="gone"
             android:layout_marginLeft="@dimen/x20"
             android:layout_marginRight="@dimen/x20"
             android:orientation="horizontal">

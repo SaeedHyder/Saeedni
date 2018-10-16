@@ -206,7 +206,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
 
     private void loginTechnician() {
         Call<ResponseWrapper<RegistrationResultEnt>> call = webService.loginTechnician(edtEmail.getText().toString(),
-                edtPassword.getText().toString());
+                edtPassword.getText().toString(),prefHelper.getLang());
         call.enqueue(new Callback<ResponseWrapper<RegistrationResultEnt>>() {
             @Override
             public void onResponse(Call<ResponseWrapper<RegistrationResultEnt>> call, Response<ResponseWrapper<RegistrationResultEnt>> response) {

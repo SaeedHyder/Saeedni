@@ -46,6 +46,12 @@ public class ServiceEnt {
         setArTitle(arTitle);
     }
 
+    public ServiceEnt(String title, String arTitle, String serviceImage) {
+        this.title = title;
+        this.arTitle = arTitle;
+        this.serviceImage = serviceImage;
+    }
+
     public ServiceEnt() {
 
     }

@@ -13,6 +13,9 @@ public class CitiesEnt {
     @SerializedName("location")
     @Expose
     private String location;
+    @SerializedName("ar_address")
+    @Expose
+    private String ar_address;
     @SerializedName("latitude")
     @Expose
     private String latitude;
@@ -28,6 +31,10 @@ public class CitiesEnt {
     @SerializedName("updated_at")
     @Expose
     private String updatedAt;
+
+    public String getAr_location() {
+        return ar_address;
+    }
 
     public Integer getId() {
         return id;
@@ -45,28 +52,8 @@ public class CitiesEnt {
         this.location = location;
     }
 
-    public String getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
-    }
-
-    public String getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
-    }
-
-    public String getIsDeleted() {
-        return isDeleted;
-    }
-
-    public void setIsDeleted(String isDeleted) {
-        this.isDeleted = isDeleted;
+    public void setAr_address(String ar_address) {
+        this.ar_address = ar_address;
     }
 
     public String getCreatedAt() {

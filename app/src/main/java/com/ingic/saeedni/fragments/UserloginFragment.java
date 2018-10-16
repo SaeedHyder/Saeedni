@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.ingic.saeedni.R;
@@ -61,6 +62,8 @@ public class UserloginFragment extends BaseFragment {
     Button btnLogin;
     @BindView(R.id.btnBack)
     ImageView btnBack;
+    @BindView(R.id.parent)
+    ScrollView parent;
 
     public static UserloginFragment newInstance() {
         Bundle args = new Bundle();
@@ -99,7 +102,7 @@ public class UserloginFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        parent.setLayoutDirection(prefHelper.isLanguageArabic() ? View.LAYOUT_DIRECTION_RTL : View.LAYOUT_DIRECTION_LTR);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -145,7 +148,7 @@ public class UserloginFragment extends BaseFragment {
 
     private void loginUser() {
 
-        Call<ResponseWrapper<RegistrationResultEnt>> call = webService.loginUser(edtEmail.getText().toString(), edtPassword.getText().toString(), FirebaseInstanceId.getInstance().getToken()
+        Call<ResponseWrapper<RegistrationResultEnt>> call = webService.loginUser(edtEmail.getText().toString(), edtPassword.getText().toString(),prefHelper.getLang(), FirebaseInstanceId.getInstance().getToken()
                 , AppConstants.Device_Type);
         call.enqueue(new Callback<ResponseWrapper<RegistrationResultEnt>>() {
             @Override
@@ -186,4 +189,6 @@ public class UserloginFragment extends BaseFragment {
             }
         });
     }
+
+
 }

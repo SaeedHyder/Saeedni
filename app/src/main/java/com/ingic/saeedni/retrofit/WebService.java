@@ -35,10 +35,12 @@ public interface WebService {
     Call<ResponseWrapper<RegistrationResultEnt>> registerUser(@Part("full_name") RequestBody userName,
                                                               @Part("email") RequestBody email,
                                                               @Part("city_id") RequestBody cityID,
+                                                              @Part("country_id") RequestBody country_id,
                                                               @Part("phone_no") RequestBody UserPhone,
                                                               @Part("address") RequestBody address,
                                                               @Part("password") RequestBody password,
                                                               @Part("password_confirmation") RequestBody password_confirmation,
+                                                              @Part("lang") RequestBody lang,
                                                               @Part MultipartBody.Part userprofileImage
     );
 
@@ -56,10 +58,12 @@ public interface WebService {
             @Part("registration_type") RequestBody registration_type,
             @Part("registration_date") RequestBody registration_date,
             @Part("address") RequestBody address,
+            @Part("country_id") RequestBody country_id,
             @Part("city_id") RequestBody city_id,
             @Part("expiry_date") RequestBody expiry_date,
             @Part("device_token") RequestBody device_token,
             @Part("device_type") RequestBody device_type,
+            @Part("lang") RequestBody lang,
             @Part MultipartBody.Part profile_picture,
             @Part MultipartBody.Part trade_license
     );
@@ -68,14 +72,50 @@ public interface WebService {
     @POST("user/login")
     Call<ResponseWrapper<RegistrationResultEnt>> loginUser(@Field("email") String email,
                                                            @Field("password") String password,
+                                                           @Field("lang") String lang,
                                                            @Field("device_token") String device_token,
                                                            @Field("device_type") String device_type);
+
+    @FormUrlEncoded
+    @POST("user/changePhoneNumber")
+    Call<ResponseWrapper> changePhoneNumber(@Field("user_id") String user_id,
+                                            @Field("password") String password,
+                                            @Field("old_phone_no") String old_phone_no,
+                                            @Field("new_phone_no") String new_phone_no);
+
+    @FormUrlEncoded
+    @POST("user/newPassword")
+    Call<ResponseWrapper> forgotNewPassword(@Field("user_id") String user_id,
+                                            @Field("password") String password,
+                                            @Field("password_confirmation") String password_confirmation);
+
+    @FormUrlEncoded
+    @POST("user/lang")
+    Call<ResponseWrapper> updateUserLanguage(@Field("user_id") String user_id,
+                                             @Field("lang") String lang);
+
+    @FormUrlEncoded
+    @POST("user/changepassword")
+    Call<ResponseWrapper> changePassword(@Field("user_id") String user_id,
+                                         @Field("old_password") String old_password,
+                                         @Field("password") String password,
+                                         @Field("password_confirmation") String password_confirmation);
 
     @FormUrlEncoded
     @POST("notification/updatedevicetoken")
     Call<ResponseWrapper> updateToken(@Field("user_id") String userid,
                                       @Field("device_type") String deviceType,
                                       @Field("device_token") String token);
+
+    @FormUrlEncoded
+    @POST("user/verifyForgotPassword")
+    Call<ResponseWrapper<RegistrationResultEnt>> forgotVerifyCode(@Field("user_id") String UserID,
+                                                                  @Field("code") String Code);
+
+    @FormUrlEncoded
+    @POST("user/verifyChangePhoneNumber")
+    Call<ResponseWrapper<RegistrationResultEnt>> changePhoneVerifyCode(@Field("user_id") String UserID,
+                                                                       @Field("code") String Code);
 
     @FormUrlEncoded
     @POST("user/verifycode")
@@ -93,16 +133,22 @@ public interface WebService {
                                                                @Part("address") RequestBody useraddress,
                                                                @Part("full_address") RequestBody userfulladdress,
                                                                @Part("phone_no") RequestBody phone_number,
+                                                               @Part("city_id") RequestBody cityID,
+                                                               @Part("country_id") RequestBody country_id,
                                                                @Part MultipartBody.Part userprofileImage
     );
 
     @GET("cms")
     Call<ResponseWrapper<StaticPageEnt>> getTermandAbout(@Query("id") String userID, @Query("type") String type);
 
+    @GET("admindata")
+    Call<ResponseWrapper<RegistrationResultEnt>> getAdminDetails();
+
     @FormUrlEncoded
     @POST("technician/login")
     Call<ResponseWrapper<RegistrationResultEnt>> loginTechnician(@Field("email") String email,
-                                                                 @Field("password") String password);
+                                                                 @Field("password") String password,
+                                                                 @Field("lang") String lang);
 
     @GET("notification/getnotifications")
     Call<ResponseWrapper<ArrayList<NotificationEnt>>> getNotification(@Query("user_id") String userID);
@@ -121,6 +167,7 @@ public interface WebService {
     Call<ResponseWrapper<RequestEnt>> createRequest(@Part("user_id") RequestBody userID,
                                                     @Part("service_id") RequestBody service_id,
                                                     @Part("category_id") RequestBody category_id,
+                                                    @Part("country_id") RequestBody country_id,
                                                     @Part("city_id") RequestBody city_id,
                                                     @Part("services_ids") RequestBody services_ids,
                                                     @Part("discription") RequestBody discription,
@@ -233,6 +280,13 @@ public interface WebService {
     );
 
     @FormUrlEncoded
+    @POST("request/usermarkcomplte")
+    Call<ResponseWrapper> userMarkComplete(@Field("request_id") String request_id,
+                                           @Field("user_status") int user_status
+
+    );
+
+    @FormUrlEncoded
     @POST("request/editbytechnician")
     Call<ResponseWrapper> editTechJob(@Field("technician_id") String technician_id,
                                       @Field("service_id") String service_id,
@@ -257,15 +311,25 @@ public interface WebService {
     Call<ResponseWrapper> logoutTechnician(@Field("user_id") String userID);
 
     @FormUrlEncoded
+    @POST("user/chnagePushNotificationStatus")
+    Call<ResponseWrapper> changePushNotificationStatus(@Field("user_id") String userID, @Field("push_notification") int pushNotificationStatus);
+
+    @FormUrlEncoded
     @POST("user/logout")
     Call<ResponseWrapper> logoutUser(@Field("user_id") String userID);
 
     @FormUrlEncoded
     @POST("user/forgotpassword")
-    Call<ResponseWrapper> forgotPassword(@Field("email") String email);
+    Call<ResponseWrapper<RegistrationResultEnt>> forgotPassword(@Field("email") String email, @Field("lang") String lang);
+
+    @GET("getCities")
+    Call<ResponseWrapper<ArrayList<CitiesEnt>>> getAllCities(@Query("country_id") int country_id);
 
     @GET("getCities")
     Call<ResponseWrapper<ArrayList<CitiesEnt>>> getAllCities();
+
+    @GET("getCountries")
+    Call<ResponseWrapper<ArrayList<CitiesEnt>>> getAllCountries();
 
     @GET("allservice")
     Call<ResponseWrapper<ArrayList<AllServicesEnt>>> getAllServices();

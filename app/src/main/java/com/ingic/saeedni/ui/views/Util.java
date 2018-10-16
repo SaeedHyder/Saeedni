@@ -3,21 +3,25 @@ package com.ingic.saeedni.ui.views;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
+import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.TextView;
 
 import com.ingic.saeedni.R;
 
+@SuppressLint("StringFormatInvalid")
 
 public class Util {
-	
+	private static long lastClickTime;
+
 	public static Map<String, Typeface> typefaceCache = new HashMap<String, Typeface>();
 	
-	public static void setTypeface( AttributeSet attrs, TextView textView ) {
+	public static void setTypeface(AttributeSet attrs, TextView textView ) {
 		Context context = textView.getContext();
 		
 		TypedArray values = context.obtainStyledAttributes( attrs,
@@ -77,4 +81,12 @@ public class Util {
 		
 		values.recycle();
 	}
+	public static boolean doubleClickCheck() {
+		if (SystemClock.elapsedRealtime() - lastClickTime < 1000) {
+			return false;
+		}
+		lastClickTime = SystemClock.elapsedRealtime();
+		return true;
+	}
+
 }

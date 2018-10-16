@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white_dirty"
+    android:id="@+id/parent"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="0.40">
+
+        <ImageView
+            android:id="@+id/iv_logo"
+            android:layout_width="@dimen/x150"
+            android:layout_height="@dimen/x150"
+            android:layout_centerInParent="true"
+            android:src="@drawable/bluelogo" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.55"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_textFields"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.01"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x40"
+                android:layout_marginLeft="@dimen/x20"
+                android:layout_marginRight="@dimen/x20"
+                android:layout_marginTop="@dimen/x10"
+                android:background="@drawable/boxcentershape">
+
+                <ImageView
+                    android:id="@+id/img_password"
+                    android:layout_width="@dimen/x20"
+                    android:layout_height="@dimen/x20"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/x20"
+                    android:src="@drawable/pass" />
+
+                <com.ingic.saeedni.ui.views.AnyEditTextView
+                    android:id="@+id/edtpassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="@dimen/x20"
+                    android:layout_marginRight="@dimen/x20"
+                    android:layout_marginStart="20dp"
+                    android:layout_toEndOf="@+id/img_password"
+                    android:background="@android:color/transparent"
+                    android:drawablePadding="@dimen/x10"
+                    android:gravity="start|center_vertical"
+                    android:hint="@string/password"
+                    android:imeOptions="actionNext"
+                    android:inputType="textPassword"
+                    android:maxLength="50"
+                    android:paddingEnd="10dp"
+                    android:singleLine="true"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="@dimen/x14"
+                    app:testType="email"
+                    app:typeface="Roboto-Regular.ttf" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x40"
+                android:layout_marginEnd="@dimen/x20"
+                android:layout_marginStart="@dimen/x20"
+                android:layout_marginTop="@dimen/x10"
+
+                android:background="@drawable/boxcentershape">
+
+                <ImageView
+                    android:id="@+id/img_oldphone"
+                    android:layout_width="@dimen/x20"
+                    android:layout_height="@dimen/x20"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/x20"
+                    android:src="@drawable/contact" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layoutDirection="ltr"
+                    android:layout_toEndOf="@+id/img_oldphone"
+                    android:orientation="horizontal">
+                <com.hbb20.CountryCodePicker
+                    android:id="@+id/oldCountrypicker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/img_oldphone"
+                    android:layout_marginStart="@dimen/x10"
+                    app:ccp_autoDetectCountry="false"
+                    app:ccp_contentColor="@color/dark_grey"
+                    app:ccp_defaultNameCode="ae"
+                    app:ccp_hintExampleNumber="false"
+                    app:ccp_hintExampleNumberType="MOBILE"
+                    app:ccp_showArrow="false"
+                    app:ccp_showFlag="false"
+                    app:ccp_showNameCode="false"
+                    app:ccp_textGravity="LEFT"
+                    app:ccp_textSize="@dimen/x14" />
+
+                <com.ingic.saeedni.ui.views.AnyEditTextView
+                    android:id="@+id/edtOldNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/x10"
+                    android:layout_marginStart="@dimen/x2"
+                    android:layout_toEndOf="@+id/oldCountrypicker"
+                    android:background="@android:color/transparent"
+                    android:gravity="start|center_vertical"
+                    android:hint="@string/oldPhoneNumber"
+                    android:imeOptions="actionNext"
+                    android:inputType="phone"
+                    android:maxLength="50"
+                    android:paddingEnd="5dp"
+                    android:singleLine="true"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="@dimen/x14"
+                    app:typeface="Roboto-Regular.ttf" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x40"
+                android:layout_marginEnd="@dimen/x20"
+                android:layout_marginStart="@dimen/x20"
+                android:layout_marginTop="@dimen/x10"
+
+                android:background="@drawable/boxcentershape">
+
+                <ImageView
+                    android:id="@+id/img_phone"
+                    android:layout_width="@dimen/x20"
+                    android:layout_height="@dimen/x20"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/x20"
+                    android:src="@drawable/contact" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layoutDirection="ltr"
+                    android:layout_toEndOf="@+id/img_phone"
+                    android:orientation="horizontal">
+                <com.hbb20.CountryCodePicker
+                    android:id="@+id/Countrypicker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/x10"
+                    android:layout_toEndOf="@+id/img_phone"
+                    app:ccp_autoDetectCountry="false"
+                    app:ccp_contentColor="@color/dark_grey"
+                    app:ccp_defaultNameCode="ae"
+                    app:ccp_hintExampleNumber="false"
+                    app:ccp_hintExampleNumberType="MOBILE"
+                    app:ccp_showArrow="false"
+                    app:ccp_showFlag="false"
+                    app:ccp_showNameCode="false"
+                    app:ccp_textGravity="LEFT"
+                    app:ccp_textSize="@dimen/x14" />
+
+                <com.ingic.saeedni.ui.views.AnyEditTextView
+                    android:id="@+id/edtnumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/x10"
+                    android:layout_marginStart="@dimen/x2"
+                    android:layout_toEndOf="@+id/Countrypicker"
+                    android:background="@android:color/transparent"
+                    android:gravity="start|center_vertical"
+                    android:hint="@string/newPhoneNumer"
+                    android:imeOptions="actionNext"
+                    android:inputType="phone"
+                    android:maxLength="50"
+                    android:paddingEnd="5dp"
+
+                    android:singleLine="true"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="@dimen/x14"
+                    app:typeface="Roboto-Regular.ttf" />
+                </LinearLayout>
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x20"
+            android:layout_marginLeft="@dimen/x20"
+            android:layout_marginRight="@dimen/x20"
+            android:layout_weight="0.3"
+            android:orientation="vertical">
+
+
+            <Button
+                android:id="@+id/btn_submit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/x15"
+                android:background="@drawable/yellow_button_background"
+                android:text="@string/update"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</LinearLayout>

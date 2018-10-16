@@ -8,17 +8,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ToggleButton;
 
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.ingic.saeedni.R;
 import com.ingic.saeedni.entities.ResponseWrapper;
 import com.ingic.saeedni.fragments.abstracts.BaseFragment;
 import com.ingic.saeedni.global.AppConstants;
-import com.ingic.saeedni.global.WebServiceConstants;
 import com.ingic.saeedni.helpers.DialogHelper;
 import com.ingic.saeedni.helpers.InternetHelper;
 import com.ingic.saeedni.helpers.UIHelper;
@@ -124,7 +121,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-      //  serviceHelper.enqueueCall(webService.updateToken(prefHelper.getUserId(),AppConstants.Device_Type, FirebaseInstanceId.getInstance().getToken()), WebServiceConstants.UPDATE_DEVICE_TOKEN);
+        //  serviceHelper.enqueueCall(webService.updateToken(prefHelper.getUserId(),AppConstants.Device_Type, FirebaseInstanceId.getInstance().getToken()), WebServiceConstants.UPDATE_DEVICE_TOKEN);
 
         getMainActivity().refreshFirstTimeSideMenu();
         getMainActivity().titleBar.invalidate();
@@ -135,23 +132,25 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         }
 
         btnChangeLanguage.setChecked(prefHelper.isLanguageArabic());
-        btnChangeLanguage.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    prefHelper.putLang(getDockActivity(), "ar");
-
-                } else {
-                    prefHelper.putLang(getDockActivity(), "en");
-
-                }
-
-            }
+        btnChangeLanguage.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            serviceHelper.enqueueCall(webService.updateUserLanguage(prefHelper.getUserId(), isChecked ? "ar" : "en"), isChecked ? "ar" : "en");
         });
         listners();
         onNotificationReceived();
         getMainActivity().refreshSideMenuWithnewFragment();
         getMainActivity().refreshSideMenu();
+    }
+
+    @Override
+    public void ResponseSuccess(Object result, String Tag) {
+        switch (Tag) {
+            case "en":
+                prefHelper.putLang(getDockActivity(), "en");
+                break;
+            case "ar":
+                prefHelper.putLang(getDockActivity(), "ar");
+                break;
+        }
     }
 
     private void showNotification() {
@@ -174,10 +173,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                     // new push notification is received
                     isNotification = true;
                     System.out.println(prefHelper.getFirebase_TOKEN());
-                    if (titleBar==null){
+                    if (titleBar == null) {
                         getMainActivity().titleBar.invalidate();
                         getMainActivity().titleBar.getImageView().invalidate();
-                    }else {
+                    } else {
                         titleBar.invalidate();
                         titleBar.getImageView().invalidate();
                         titleBar.showNotificationButton(new View.OnClickListener() {
@@ -186,7 +185,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                                 getDockActivity().replaceDockableFragment(UserNotificationsFragment.newInstance(), "UserNotificationsFragment");
 
                             }
-                        },prefHelper);
+                        }, prefHelper);
                     }
 
                 }
@@ -226,7 +225,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 }
             });
         }
-    }    @Override
+    }
+
+    @Override
     public void onClick(View v) {
 
         switch (v.getId()) {
@@ -240,7 +241,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 break;
 
             case ll_notification:
-                getDockActivity().replaceDockableFragment(TechNotificationsFragment.newInstance(), "TechNotificationsFragment");
+                getDockActivity().replaceDockableFragment(SettingFragment.newInstance(), "SettingFragment");
                 break;
 
             case ll_profile:

@@ -36,6 +36,7 @@
             android:layout_marginBottom="3dp"
             android:layout_marginTop="1dp"
             android:alpha="0.6"
+            android:visibility="gone"
             android:layout_gravity="center"
             android:background="@drawable/text"/>
 
@@ -46,6 +47,7 @@
             android:layout_marginBottom="@dimen/x3"
             android:layout_marginLeft="@dimen/x5"
             android:layout_marginRight="@dimen/x5"
+            android:visibility="gone"
             android:layout_marginTop="@dimen/x3"
             android:orientation="vertical">
 

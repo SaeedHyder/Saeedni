@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/s_bg_two">
+
+    <com.ingic.saeedni.ui.views.AnyTextView
+        android:id="@+id/anyTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="@dimen/x8"
+        android:layout_marginStart="@dimen/x8"
+        android:layout_marginTop="@dimen/x32"
+        android:text="@string/feel_free"
+        android:textColor="@color/black"
+        android:textSize="@dimen/x14"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.126"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:typeface="@string/font_normal" />
+
+
+    <ImageView
+        android:id="@+id/ivPhone"
+        android:layout_width="@dimen/x19"
+        android:layout_height="@dimen/x19"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="35dp"
+        android:src="@drawable/contact"
+        app:layout_constraintStart_toStartOf="@+id/anyTextView"
+        app:layout_constraintTop_toBottomOf="@id/anyTextView" />
+
+    <View
+        android:id="@+id/viewPhone"
+        android:layout_width="@dimen/x1"
+        android:layout_height="@dimen/x25"
+        android:alpha="0.5"
+        android:layout_marginStart="@dimen/x10"
+        android:background="@color/gray_dark"
+        app:layout_constraintStart_toEndOf="@+id/ivPhone"
+        app:layout_constraintTop_toTopOf="@+id/ivPhone" />
+
+
+
+    <com.ingic.saeedni.ui.views.AnyTextView
+        android:id="@+id/txtPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="+93205450646"
+        android:textColor="@color/black"
+        android:textSize="@dimen/x14"
+        app:typeface="@string/font_normal"
+        android:layout_marginStart="@dimen/x10"
+        app:layout_constraintStart_toEndOf="@id/viewPhone"
+        app:layout_constraintTop_toTopOf="@id/viewPhone"/>
+
+
+    <ImageView
+        android:id="@+id/ivEmail"
+        android:layout_width="@dimen/x19"
+        android:layout_height="@dimen/x19"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/email"
+        app:layout_constraintStart_toStartOf="@+id/ivPhone"
+        app:layout_constraintTop_toBottomOf="@id/ivPhone" />
+
+    <View
+        android:id="@+id/viewEmail"
+        android:layout_width="@dimen/x1"
+        android:layout_height="@dimen/x25"
+        android:layout_marginStart="@dimen/x10"
+        android:alpha="0.5"
+        android:background="@color/gray_dark"
+        app:layout_constraintStart_toEndOf="@+id/ivEmail"
+        app:layout_constraintTop_toTopOf="@+id/ivEmail" />
+
+
+
+    <com.ingic.saeedni.ui.views.AnyTextView
+        android:id="@+id/txEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="info@gymsmart.com"
+        android:textColor="@color/black"
+        android:textSize="@dimen/x14"
+        app:typeface="@string/font_normal"
+        android:layout_marginStart="@dimen/x10"
+        app:layout_constraintStart_toEndOf="@id/viewEmail"
+        app:layout_constraintTop_toTopOf="@id/viewEmail"/>
+
+    <ImageView
+        android:id="@+id/ivAddress"
+        android:layout_width="@dimen/x19"
+        android:layout_height="@dimen/x19"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/address"
+        app:layout_constraintStart_toStartOf="@+id/ivEmail"
+        app:layout_constraintTop_toBottomOf="@id/ivEmail" />
+
+    <View
+        android:id="@+id/viewAddress"
+        android:layout_width="@dimen/x1"
+        android:layout_height="@dimen/x25"
+        android:layout_marginStart="@dimen/x10"
+        android:alpha="0.5"
+        android:background="@color/gray_dark"
+        app:layout_constraintStart_toEndOf="@+id/ivAddress"
+        app:layout_constraintTop_toTopOf="@+id/ivAddress" />
+
+
+
+    <com.ingic.saeedni.ui.views.AnyTextView
+        android:id="@+id/txtAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Some Address"
+        android:textColor="@color/black"
+        android:textSize="@dimen/x14"
+        app:typeface="@string/font_normal"
+        android:layout_marginStart="@dimen/x10"
+        app:layout_constraintStart_toEndOf="@id/viewAddress"
+        app:layout_constraintTop_toTopOf="@id/viewAddress"/>
+
+</android.support.constraint.ConstraintLayout>

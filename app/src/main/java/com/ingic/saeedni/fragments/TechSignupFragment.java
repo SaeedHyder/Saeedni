@@ -1,6 +1,7 @@
 package com.ingic.saeedni.fragments;
 
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,12 +10,17 @@ import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
@@ -38,7 +44,6 @@ import com.ingic.saeedni.ui.views.AnyEditTextView;
 import com.ingic.saeedni.ui.views.AnySpinner;
 import com.ingic.saeedni.ui.views.AnyTextView;
 import com.ingic.saeedni.ui.views.TitleBar;
-import com.jota.autocompletelocation.AutoCompleteLocation;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
@@ -64,11 +69,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.app.Activity.RESULT_CANCELED;
+import static android.app.Activity.RESULT_OK;
+
 public class TechSignupFragment extends BaseFragment {
 
 
+    private static final int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
     public File profilePic;
     public String UserImagePath;
+    public File file;
+    public String fileAddress;
     PhoneNumberUtil phoneUtil;
     ArrayList<CitiesEnt> allCities = new ArrayList<>();
     ArrayList<AllServicesEnt> allServices = new ArrayList<>();
@@ -105,7 +116,7 @@ public class TechSignupFragment extends BaseFragment {
     @BindView(R.id.img_address)
     ImageView imgAddress;
     @BindView(R.id.edtadress)
-    AutoCompleteLocation edtadress;
+    AnyTextView edtadress;
     @BindView(R.id.img_address2)
     ImageView imgAddress2;
     @BindView(R.id.spnCity)
@@ -125,9 +136,6 @@ public class TechSignupFragment extends BaseFragment {
     @BindView(R.id.ll_textFields)
     LinearLayout llTextFields;
     Unbinder unbinder;
-
-    public File file;
-    public String fileAddress;
     @BindView(R.id.img_registration_type)
     ImageView imgRegistrationType;
     @BindView(R.id.edtregistrationtype)
@@ -136,13 +144,42 @@ public class TechSignupFragment extends BaseFragment {
     AnyTextView edtRegistrationDate;
     @BindView(R.id.Countrypicker)
     CountryCodePicker Countrypicker;
+    @BindView(R.id.spnCountry)
+    AnySpinner spnCountry;
+    ArrayList<CitiesEnt> allCountries = new ArrayList<>();
     private String selectedDate = "";
+    private MainActivity.ImageSetter imageSetter = new MainActivity.ImageSetter() {
 
+        @Override
+        public void setImage(String imagePath) {
+            if (imagePath != null) {
+                profilePic = new File(imagePath);
+                ImageLoader.getInstance().displayImage(
+                        "file:///" + imagePath, btnImage);
+                UserImagePath = imagePath;
+            }
+        }
+
+        @Override
+        public void setFilePath(String filePath) {
+            if (filePath != null) {
+                file = new File(filePath);
+                fileAddress = filePath;
+                edtLicenseAttach.setText(filePath);
+
+            }
+
+        }
+
+        @Override
+        public void setVideo(String videoPath) {
+
+        }
+    };
 
     public static TechSignupFragment newInstance() {
         return new TechSignupFragment();
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -151,7 +188,6 @@ public class TechSignupFragment extends BaseFragment {
         unbinder = ButterKnife.bind(this, rootView);
         return rootView;
     }
-
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -163,7 +199,7 @@ public class TechSignupFragment extends BaseFragment {
         }
         getMainActivity().setImageSetter(imageSetter);
         phoneUtil = PhoneNumberUtil.getInstance();
-        getAllCities();
+        getallCountries();
         getAllServices();
         Countrypicker.registerCarrierNumberEditText(edtnumber);
     }
@@ -180,13 +216,17 @@ public class TechSignupFragment extends BaseFragment {
         return R.layout.fragment_tech_signup;
     }
 
-
-    private void getAllCities() {
-        if (allCities.isEmpty())
-            serviceHelper.enqueueCall(webService.getAllCities(), WebServiceConstants.GET_ALL_CITIES);
-        else setCitiesSpinner(allCities);
+    private void getallCountries() {
+        if (allCountries.isEmpty()) {
+            serviceHelper.enqueueCall(webService.getAllCountries(), WebServiceConstants.GET_ALL_COUNTRIES);
+        } else {
+            setCountriesSpinner(allCountries);
+        }
     }
 
+    private void getAllCities(int countryID) {
+        serviceHelper.enqueueCall(webService.getAllCities(countryID), WebServiceConstants.GET_ALL_CITIES);
+    }
 
     private boolean isPhoneNumberValid() {
 
@@ -210,11 +250,18 @@ public class TechSignupFragment extends BaseFragment {
     public void ResponseSuccess(Object result, String Tag) {
         switch (Tag) {
             case WebServiceConstants.GET_ALL_CITIES:
+                allCities = new ArrayList<>();
                 CitiesEnt citiesEnt = new CitiesEnt();
-                citiesEnt.setLocation(getDockActivity().getResources().getString(R.string.select_city));
+                citiesEnt.setLocation("Select City");
+                citiesEnt.setAr_address("اختر مدينة");
                 allCities.add(citiesEnt);
                 allCities.addAll((ArrayList<CitiesEnt>) result);
                 setCitiesSpinner(allCities);
+                break;
+            case WebServiceConstants.GET_ALL_COUNTRIES:
+                allCountries.addAll((ArrayList<CitiesEnt>) result);
+                setCountriesSpinner(allCountries);
+
                 break;
 
             case WebServiceConstants.GET_ALL_SERVICES:
@@ -230,6 +277,78 @@ public class TechSignupFragment extends BaseFragment {
         }
     }
 
+    private void setCountriesSpinner(ArrayList<CitiesEnt> citiesEnts) {
+
+        final ArrayList<String> citiesCollection = new ArrayList<String>();
+
+
+        for (CitiesEnt item : citiesEnts
+                ) {
+            if (prefHelper.isLanguageArabic()){
+                citiesCollection.add(item.getAr_location());
+
+            }else {
+                citiesCollection.add(item.getLocation());
+            }
+        }
+        if (citiesEnts.size() > 0) getAllCities(allCountries.get(0).getId());
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity(), R.layout.row_item_spinner, citiesCollection);
+        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnCountry.setAdapter(categoryAdapter);
+        spnCountry.setOnItemSelectedEvenIfUnchangedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                getAllCities(allCountries.get(i).getId());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
+    private void openLocationSelector() {
+
+        try {
+           /* Intent intent =
+                    new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
+                            .build(getDockActivity());*/
+            PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+
+            getDockActivity().startActivityForResult(builder.build(getDockActivity()), PLACE_AUTOCOMPLETE_REQUEST_CODE);
+            //this.startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+
+                Place place = PlaceAutocomplete.getPlace(getDockActivity(), data);
+                if (place != null) {
+                    edtadress.setText(place.getAddress().toString());
+                    Log.i("Profile", "Place: " + place.getName());
+                }
+
+            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
+                Status status = PlaceAutocomplete.getStatus(getDockActivity(), data);
+                // TODO: Handle the error.
+                Log.i("Profile", status.getStatusMessage());
+
+            } else if (resultCode == RESULT_CANCELED) {
+                // The user canceled the operation.
+            }
+        }
+
+    }
 
     @Override
     public void onResume() {
@@ -243,7 +362,6 @@ public class TechSignupFragment extends BaseFragment {
             }
         }
     }
-
 
     private void registerUser(String number) {
         MultipartBody.Part filePart;
@@ -279,10 +397,12 @@ public class TechSignupFragment extends BaseFragment {
                 RequestBody.create(MediaType.parse("text/plain"), edtregistrationtype.getText().toString()),
                 RequestBody.create(MediaType.parse("text/plain"), edtRegistrationDate.getText().toString()),
                 RequestBody.create(MediaType.parse("text/plain"), edtadress.getText().toString()),
+                RequestBody.create(MediaType.parse("text/plain"), allCountries.get(spnCountry.getSelectedItemPosition()).getId() + ""),
                 RequestBody.create(MediaType.parse("text/plain"), allCities.get(spnCity.getSelectedItemPosition()).getId() + ""),
                 RequestBody.create(MediaType.parse("text/plain"), edtLicenseExpiry.getText().toString()),
                 RequestBody.create(MediaType.parse("text/plain"), prefHelper.getFirebase_TOKEN()),
                 RequestBody.create(MediaType.parse("text/plain"), AppConstants.Device_Type),
+                RequestBody.create(MediaType.parse("text/plain"), prefHelper.getLang()),
                 filePart, attachedFile);
         call.enqueue(new Callback<ResponseWrapper<RegistrationResultEnt>>() {
             @Override
@@ -348,7 +468,7 @@ public class TechSignupFragment extends BaseFragment {
         }
         //  ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity(), android.R.layout.simple_spinner_item, servicesCollection);
         ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity()
-                , android.R.layout.simple_spinner_item, servicesCollection) {
+                , R.layout.row_item_spinner, servicesCollection) {
             @Override
             public boolean isEnabled(int position) {
                 return !(position == 0);
@@ -376,12 +496,17 @@ public class TechSignupFragment extends BaseFragment {
 
         for (CitiesEnt item : citiesEnts
                 ) {
-            citiesCollection.add(item.getLocation());
+            if (prefHelper.isLanguageArabic()){
+                citiesCollection.add(item.getAr_location());
+
+            }else {
+                citiesCollection.add(item.getLocation());
+            }
         }
         //  ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity(), android.R.layout.simple_spinner_item, citiesCollection);
 
         ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity()
-                , android.R.layout.simple_spinner_item, citiesCollection) {
+                , R.layout.row_item_spinner, citiesCollection) {
             @Override
             public boolean isEnabled(int position) {
                 return !(position == 0);
@@ -460,37 +585,7 @@ public class TechSignupFragment extends BaseFragment {
 
     }
 
-    private MainActivity.ImageSetter imageSetter = new MainActivity.ImageSetter() {
-
-        @Override
-        public void setImage(String imagePath) {
-            if (imagePath != null) {
-                profilePic = new File(imagePath);
-                ImageLoader.getInstance().displayImage(
-                        "file:///" + imagePath, btnImage);
-                UserImagePath = imagePath;
-            }
-        }
-
-        @Override
-        public void setFilePath(String filePath) {
-            if (filePath != null) {
-                file = new File(filePath);
-                fileAddress = filePath;
-                edtLicenseAttach.setText(filePath);
-
-            }
-
-        }
-
-        @Override
-        public void setVideo(String videoPath) {
-
-        }
-    };
-
-
-    @OnClick({R.id.btn_image, R.id.edtLicenseExpiry, R.id.btn_signup, R.id.edtLicenseAttach, R.id.edtRegistration_date})
+    @OnClick({R.id.btn_image, R.id.edtLicenseExpiry, R.id.btn_signup, R.id.edtLicenseAttach, R.id.edtRegistration_date, R.id.edtadress})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_image:
@@ -511,6 +606,9 @@ public class TechSignupFragment extends BaseFragment {
                 break;
             case R.id.edtLicenseExpiry:
                 initDatePicker(edtLicenseExpiry);
+                break;
+            case R.id.edtadress:
+                openLocationSelector();
                 break;
             case R.id.edtRegistration_date:
                 initDatePicker(edtRegistrationDate);
@@ -585,7 +683,6 @@ public class TechSignupFragment extends BaseFragment {
         datePickerHelper.setminDate(c.getTime().getTime());
         datePickerHelper.showDate();
     }
-
 
 
 }

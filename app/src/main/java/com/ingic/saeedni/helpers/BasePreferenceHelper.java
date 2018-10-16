@@ -10,7 +10,6 @@ import android.util.Log;
 
 import com.ingic.saeedni.activities.MainActivity;
 import com.ingic.saeedni.entities.RegistrationResultEnt;
-import com.ingic.saeedni.entities.UserEnt;
 import com.ingic.saeedni.retrofit.GsonFactory;
 
 import java.util.Locale;
@@ -91,15 +90,6 @@ public class BasePreferenceHelper extends PreferenceHelper {
         return getStringPreference(context, FILENAME, USERID);
     }
 
-    public UserEnt getUser() {
-        return GsonFactory.getConfiguredGson().fromJson(
-                getStringPreference(context, FILENAME, KEY_USER), UserEnt.class);
-    }
-
-    public void putUser(UserEnt user) {
-        putStringPreference(context, FILENAME, KEY_USER, GsonFactory
-                .getConfiguredGson().toJson(user));
-    }
 
     public RegistrationResultEnt getRegistrationResult() {
         return GsonFactory.getConfiguredGson().fromJson(
@@ -155,18 +145,11 @@ public class BasePreferenceHelper extends PreferenceHelper {
         Configuration conf = resources.getConfiguration();
         conf.setLocale(locale);
         conf.locale = locale;
-//        conf.setLayoutDirection(Locale.ENGLISH);
         resources.updateConfiguration(conf, dm);
-        /*//Resources resources = context.getResources();
-        DisplayMetrics dm = resources.getDisplayMetrics();
-        android.content.res.Configuration conf = resources.getConfiguration();
-//        conf.setLocale(new Locale(lang));
-        conf.locale = new Locale(lang);
-        resources.updateConfiguration(conf, dm);*/
         ((MainActivity) activity).restartActivity();
     }
 
-    public void putLang( String lang) {
+    public void putLang(String lang) {
         putStringPreference(context, FILENAME, KEY_DEFAULT_LANG, lang);
 
     }

@@ -63,7 +63,7 @@
     <string name="settings">Settings</string>
     <string name="search_hint">Search Ads, User or Category</string>
     <string name="password_sent">Your password will be sent to your \nemail address</string>
-    <string name="change_password">CHANGE PASSWORD</string>
+    <string name="change_password">Change Password</string>
     <string name="reason_for_rejection">REASON</string>
     <string name="old_password">Old Password</string>
     <string name="new_password">New Password</string>
@@ -158,7 +158,7 @@
     <string name="submit">Submit</string>
     <string name="incorrect_code">Incorrect Code</string>
     <string name="success">Success</string>
-    <string name="i_have_read_the_term_and_conditions">You agree to our <font fgcolor='#095587'>Term and Conditions</font></string>
+    <string name="i_have_read_the_term_and_conditions">You agree to our</string>
     <string name="valid_email">Enter Valid Email</string>
     <string name="valid_password">Enter valid Password</string>
     <string name="ac">AC</string>
@@ -343,6 +343,28 @@
     <string name="no_inprogress_job">No Inprogress job found</string>
     <string name="no_completed_job">No Completed job found</string>
     <string name="storage_permission">Permission is required to access this feature</string>
-
+    <string name="password_not_equal">New and confirm password does not match.</string>
+    <string name="passwordSuccessMessage">Password has been changed successfully</string>
+    <string name="password_length">Password length should be 6 characters or more</string>
+    <string name="pushNotificationTitle">Turn On/Off Push Notifications</string>
+    <string name="feel_free">Feel free to Contact Us</string>
+    <string name="font_normal">Roboto-Regular.ttf</string>
+    <string name="something_error">Something went wrong..</string>
+    <string name="email_subject">Query Regrading Saeedni</string>
+    <string name="write_your_comments">Type your message here…</string>
+    <string name="contactUs">Contact Us</string>
+    <string name="phoneUpdated">Phone Number Updated!!</string>
+    <string name="changePhoneNumber">Change Phone Number</string>
+    <string name="viewImages">View Images</string>
+    <string name="companyName">Company Name:</string>
+    <string name="status">Status</string>
+    <string name="cancel">Cancelled</string>
+    <string name="complete">Completed</string>
+    <string name="profileUpdated">Profile Updated!!</string>
+    <string name="oldPhoneNumber">Old Phone Number</string>
+    <string name="newPhoneNumer">New Phone Number</string>
+    <string name="add_image_optional">Add Image (Optional)</string>
+    <string name="completeJobs">Are you sure you want to complete Job ?</string>
+    <string name="searchService">Search Categories...</string>
 
 </resources>

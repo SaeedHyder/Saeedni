@@ -20,7 +20,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.1"
-        android:layout_gravity="center_vertical|left"
+        android:layout_gravity="center_vertical|start"
         android:src="@drawable/notification_logo" />
 
     <com.ingic.saeedni.ui.views.AnyTextView
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.8"
         android:layout_gravity="center"
-        android:layout_marginLeft="@dimen/x10"
+        android:layout_marginStart="@dimen/x10"
         android:text="No Electricity in some rooms"
         android:textSize="@dimen/x14"
         android:textColor="@color/app_blue"
@@ -40,7 +40,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.1"
-        android:layout_gravity="center|right"
+        android:layout_gravity="center|end"
         android:src="@drawable/next"
 
      />

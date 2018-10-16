@@ -156,7 +156,7 @@
     <string name="submit">خضع</string>
     <string name="incorrect_code">شفرة خاطئة</string>
     <string name="success">نجحنا</string>
-    <string name="i_have_read_the_term_and_conditions">الموافقة على الشروط</string>
+    <string name="i_have_read_the_term_and_conditions">انت موافق على</string>
     <string name="valid_email">أدخل ايميل صحيح</string>
     <string name="valid_password">أدخل كلمة مرور صحيحة</string>
     <string name="ac">مكيف</string>
@@ -306,7 +306,7 @@
     <string name="unit_makeover">وحدة نقل الأثاث</string>
     <string name="job_description_message">اوصف نوع الخدمة المطلوبة هنا.....</string>
     <string name="new_job">خدمات جديدة</string>
-    <string name="more_jobs">المزيد </string>
+    <string name="more_jobs">المزيد</string>
     <string name="verification">التحقق</string>
     <string name="attention">تنبيه</string>
     <string name="request_now">اطلب الان</string>
@@ -323,7 +323,6 @@
     <string name="trade_license_attach">إرفاق ترخيص تجاري</string>
     <string name="attach_file">اختر الرخصة التجارية</string>
     <string name="select_expiry_date">أدخل تاريخ انتهاء الصلاحية</string>
-    <string name="select_profile_picture">Select Profile Picture</string>
     <string name="enter_company_name">أدخل اسم الشركة</string>
     <string name="enter_first_name">أدخل الاسم الأول</string>
     <string name="enter_last_name">إدخال اسم آخر</string>
@@ -342,7 +341,29 @@
     <string name="no_inprogress_job">لا يوجد وظيفة في التقدم</string>
     <string name="no_completed_job">لم يتم العثور على وظيفة مكتملة</string>
     <string name="storage_permission">هذه الخاصية تتطلب الإذن</string>
-
-
+    <string name="write_your_comments">اكتب رسالتك هنا</string>
+    <string name="contactUs">تواصل معنا</string>
+    <string name="font_normal">Roboto-Regular.ttf</string>
+    <string name="select_profile_picture">اختر صورة الملف الشخصي</string>
+    <string name="password_not_equal">كلمة المرور الجديدة والتأكيد غير متطابقين.</string>
+    <string name="passwordSuccessMessage">تم تغيير كلمة المرور بنجاح</string>
+    <string name="password_length">يجب أن يكون طول كلمة المرور 6 أحرف أو أكثر.</string>
+    <string name="pushNotificationTitle">تشغيل / إيقاف تنبيهات الدفع</string>
+    <string name="feel_free">لا تتردد في الاتصال بنا</string>
+    <string name="something_error">حدث خطأ ما..</string>
+    <string name="email_subject">استفسار بخصوص ساعدني</string>
+    <string name="phoneUpdated">تم تغيير رقم الهاتف بنجاح</string>
+    <string name="viewImages">عرض الصور</string>
+    <string name="companyName">اسم الشركة:</string>
+    <string name="changePhoneNumber">غير رقم الهاتف</string>
+    <string name="status">الحالة</string>
+    <string name="cancel">ألغيت</string>
+    <string name="complete">منجز</string>
+    <string name="profileUpdated">تحديث الملف الشخصي!!</string>
+    <string name="oldPhoneNumber">رقم الهاتف القديم</string>
+    <string name="newPhoneNumer">رقم هاتف جديد</string>
+    <string name="add_image_optional">اضف صورة (اختياري)</string>
+    <string name="completeJobs">هل أنت متأكد من أنك تريد إلغاء المهمة؟</string>
+    <string name="searchService">Search Categories...</string>
 
 </resources>

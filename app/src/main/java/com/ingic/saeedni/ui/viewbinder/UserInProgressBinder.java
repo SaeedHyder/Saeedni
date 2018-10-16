@@ -63,11 +63,13 @@ public class UserInProgressBinder extends ViewBinder<UserInProgressEnt> {
         if (technicianEnt != null && entity.getStatus() == AppConstants.TECH_ACCEPT_ASSIGN_JOB) {
             viewHolder.ivEditBtn.setVisibility(View.GONE);
             viewHolder.txtTechNameText.setText(technicianEnt.getTechnician_details().getFullName());
+            viewHolder.txt_companyNameText.setText(technicianEnt.getTechnician_details().getCompany_name());
             viewHolder.txtNumberText.setText(technicianEnt.getTechnician_details().getPhoneNo());
             viewHolder.btnCallUser.setBackground(context.getResources().getDrawable(R.drawable.button_background));
         } else {
             viewHolder.ivEditBtn.setVisibility(View.VISIBLE);
             viewHolder.txtTechNameText.setText(context.getResources().getString(R.string.no_technician_error));
+            viewHolder.txt_companyNameText.setText(context.getResources().getString(R.string.no_technician_error));
             viewHolder.txtNumberText.setText(context.getResources().getString(R.string.no_number_tech));
             viewHolder.btnCallUser.setBackground(context.getResources().getDrawable(R.drawable.yellow_button_background));
 
@@ -146,7 +148,8 @@ public class UserInProgressBinder extends ViewBinder<UserInProgressEnt> {
         Button btnCancelJob;
         @BindView(R.id.root_layout)
         LinearLayout root_layout;
-
+        @BindView(R.id.txt_companyNameText)
+        AnyTextView txt_companyNameText;
         public InProgressViewHolder(View view) {
             ButterKnife.bind(this, view);
         }

@@ -14,6 +14,7 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.text.TextUtils;
@@ -35,7 +36,7 @@ public class NotificationHelper {
     private static final NotificationHelper notificationHelper = new NotificationHelper();
     private static String TAG = NotificationHelper.class.getSimpleName();
     private Context mContext;
-    static final String CHANNEL = "com.ingic.saeedni.channel";
+    static final String CHANNEL = "112113";
     public static NotificationHelper getInstance() {
         return notificationHelper;
     }
@@ -63,12 +64,14 @@ public class NotificationHelper {
         bigTextStyle.bigText(message);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            int importance = NotificationManager.IMPORTANCE_HIGH;
 
             NotificationChannel mChannel = new NotificationChannel(CHANNEL, mContext.getResources().getString(R.string.app_name), importance);
             mChannel.setDescription(message);
             mChannel.enableLights(true);
             mChannel.setLightColor(Color.BLUE);
+            mChannel.enableVibration(true);
+            mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
             NotificationManager manager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
             if (manager != null)
                 manager.createNotificationChannel(mChannel);
@@ -76,14 +79,14 @@ public class NotificationHelper {
 
             Notification notification = new NotificationCompat.Builder(mContext, CHANNEL)
                     .setSmallIcon(R.drawable.android_icon)
-                    .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.android_icon))
-                    .setContentTitle(title)
+                    .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.android_icon)).setContentTitle(title)
                     .setContentText(message)
                     .setTicker(message)
-                    .setContentIntent(resultPendingIntent)
-                    .setStyle(bigTextStyle)
-                    .setWhen(getTimeMilliSec(timeStamp))
+                    .setAutoCancel(true)
                     .setOnlyAlertOnce(true)
+                    .setChannelId(CHANNEL)
+                    .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
+                    .setContentIntent(resultPendingIntent)
                     .build();
 
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(mContext);
