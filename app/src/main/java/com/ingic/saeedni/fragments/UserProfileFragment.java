@@ -48,6 +48,7 @@ import com.yanzhenjie.permission.Permission;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -85,7 +86,7 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
     @BindView(R.id.btn_submit)
     Button btnsubmit;
     @BindView(R.id.edtPhoneNo)
-    AnyEditTextView edtPhoneNo;
+    AnyTextView edtPhoneNo;
     @BindView(R.id.spnCity)
     AnySpinner spnCity;
     @BindView(R.id.spnCountry)
@@ -285,7 +286,7 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
                 placeholder(R.drawable.camerawithcircle).into(CircularImageSharePop);
         edtname.setText(result.getFullName());
         edtemail.setText(result.getEmail());
-        edtPhoneNo.setText(result.getPhoneNo() + "");
+        edtPhoneNo.setText(String.format(Locale.ENGLISH,"%s", result.getPhoneNo()));
         edtLocationgps.setText(result.getAddress());
         edtLocationspecific.setText(result.getAddress());
 

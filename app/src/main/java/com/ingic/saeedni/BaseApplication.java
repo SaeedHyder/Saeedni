@@ -10,6 +10,8 @@ import android.os.Build;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
+import com.facebook.FacebookSdk;
+import com.google.firebase.FirebaseApp;
 import com.ingic.saeedni.activities.MainActivity;
 import com.ingic.saeedni.helpers.UIHelper;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -28,8 +30,8 @@ public class BaseApplication extends MultiDexApplication {
 		// TODO Auto-generated method stub
 		super.onCreate();
 		MultiDex.install(this);
+		FacebookSdk.sdkInitialize(getApplicationContext());
 		initImageLoader();
-
 	}
 
 	public void initImageLoader() {

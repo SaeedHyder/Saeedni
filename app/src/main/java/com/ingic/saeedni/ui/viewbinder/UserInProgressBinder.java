@@ -74,16 +74,16 @@ public class UserInProgressBinder extends ViewBinder<UserInProgressEnt> {
             viewHolder.btnCallUser.setBackground(context.getResources().getDrawable(R.drawable.yellow_button_background));
 
         }
-        if (entity.getServicsList().size() > 0) {
+
             if (preferenceHelper.isLanguageArabic()) {
 //                viewHolder.txtJobTitleText.setText(entity.getServicsList().get(0).getServiceEnt().getArTitle());
-                viewHolder.txtJobTitleText.setText(entity.getServiceDetail().getTitle()+"");
+                viewHolder.txtJobTitleText.setText(entity.getServiceDetail().getArTitle()+"");
             } else {
                 viewHolder.txtJobTitleText.setText(entity.getServiceDetail().getTitle()+"");
 
 //                viewHolder.txtJobTitleText.setText(entity.getServicsList().get(0).getServiceEnt().getTitle());
             }
-        }
+
         if (!preferenceHelper.isLanguageArabic()) {
             if (entity.getTotal().equals("")) {
 //                viewHolder.txtAmountText.setText(context.getString(R.string.aed) + " " + entity.getEstimateFrom() + " " + activity.getResources().getString(R.string.to) + " " + entity.getEstimateTo());

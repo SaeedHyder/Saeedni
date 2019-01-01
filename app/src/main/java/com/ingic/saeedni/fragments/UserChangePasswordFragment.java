@@ -122,6 +122,13 @@ public class UserChangePasswordFragment extends BaseFragment {
         switch (Tag) {
             case WebServiceConstants.CHANGE_PASSWORD:
                 UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.passwordSuccessMessage));
+                if (prefHelper.getUserType().equals("technician")) {
+                    getDockActivity().popBackStackTillEntry(0);
+                    getDockActivity().replaceDockableFragment(HomeFragment.newInstance(), "UserHomeFragment");
+                } else {
+                    getDockActivity().popBackStackTillEntry(0);
+                    getDockActivity().replaceDockableFragment(UserHomeFragment.newInstance(), "UserHomeFragment");
+                }
                 break;
         }
     }

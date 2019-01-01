@@ -109,6 +109,7 @@
                 android:layout_height="@dimen/x30"
                 android:layoutDirection="ltr"
                 android:gravity="left"
+                android:enabled="false"
                 android:textAlignment="gravity"
                 android:layout_marginBottom="@dimen/x5"/>
 

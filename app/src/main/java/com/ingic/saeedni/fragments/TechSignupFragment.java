@@ -15,12 +15,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
@@ -37,6 +39,8 @@ import com.ingic.saeedni.global.WebServiceConstants;
 import com.ingic.saeedni.helpers.CameraHelper;
 import com.ingic.saeedni.helpers.DatePickerHelper;
 import com.ingic.saeedni.helpers.DialogHelper;
+import com.ingic.saeedni.helpers.FacebookLoginHelper;
+import com.ingic.saeedni.helpers.GoogleHelper;
 import com.ingic.saeedni.helpers.InternetHelper;
 import com.ingic.saeedni.helpers.TokenUpdater;
 import com.ingic.saeedni.helpers.UIHelper;
@@ -147,7 +151,14 @@ public class TechSignupFragment extends BaseFragment {
     @BindView(R.id.spnCountry)
     AnySpinner spnCountry;
     ArrayList<CitiesEnt> allCountries = new ArrayList<>();
+    @BindView(R.id.containerPassword)
+    RelativeLayout containerPassword;
+    private boolean isSocialLogin = false;
     private String selectedDate = "";
+    private FacebookLoginHelper.FacebookLoginEnt facebookLoginEnt;
+    private GoogleHelper.GoogleLoginEnt googleLoginEnt;
+    private LatLng latLng;
+
     private MainActivity.ImageSetter imageSetter = new MainActivity.ImageSetter() {
 
         @Override
@@ -178,7 +189,35 @@ public class TechSignupFragment extends BaseFragment {
     };
 
     public static TechSignupFragment newInstance() {
-        return new TechSignupFragment();
+        TechSignupFragment fragment = new TechSignupFragment();
+        fragment.isSocialLogin = false;
+        return fragment;
+    }
+
+    public static TechSignupFragment newInstance(FacebookLoginHelper.FacebookLoginEnt loginEnt) {
+        TechSignupFragment fragment = new TechSignupFragment();
+        fragment.facebookLoginEnt = null;
+        fragment.googleLoginEnt = null;
+        fragment.isSocialLogin = true;
+        fragment.setFacebookLoginEnt(loginEnt);
+        return fragment;
+    }
+
+    public static TechSignupFragment newInstance(GoogleHelper.GoogleLoginEnt loginEnt) {
+        TechSignupFragment fragment = new TechSignupFragment();
+        fragment.facebookLoginEnt = null;
+        fragment.googleLoginEnt = null;
+        fragment.isSocialLogin = true;
+        fragment.setGoogleLoginEnt(loginEnt);
+        return fragment;
+    }
+
+    public void setFacebookLoginEnt(FacebookLoginHelper.FacebookLoginEnt facebookLoginEnt) {
+        this.facebookLoginEnt = facebookLoginEnt;
+    }
+
+    public void setGoogleLoginEnt(GoogleHelper.GoogleLoginEnt googleLoginEnt) {
+        this.googleLoginEnt = googleLoginEnt;
     }
 
     @Override
@@ -202,6 +241,24 @@ public class TechSignupFragment extends BaseFragment {
         getallCountries();
         getAllServices();
         Countrypicker.registerCarrierNumberEditText(edtnumber);
+        checkAndBindSocialMedia();
+        if (isSocialLogin) {
+            containerPassword.setVisibility(View.GONE);
+        } else {
+            containerPassword.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void checkAndBindSocialMedia() {
+        if (googleLoginEnt != null) {
+            edtfirsname.setText(googleLoginEnt.getGoogleFirstName() == null ? "" : googleLoginEnt.getGoogleFirstName());
+            edtlastname.setText(googleLoginEnt.getGoogleLastName() == null ? "" : googleLoginEnt.getGoogleLastName());
+            edtEmail.setText(googleLoginEnt.getGoogleEmail() == null ? "" : googleLoginEnt.getGoogleEmail());
+        } else if (facebookLoginEnt != null) {
+            edtfirsname.setText(facebookLoginEnt.getFacebookFirstName() == null ? "" : facebookLoginEnt.getFacebookFirstName());
+            edtlastname.setText(facebookLoginEnt.getFacebookLastName() == null ? "" : facebookLoginEnt.getFacebookLastName());
+            edtEmail.setText(facebookLoginEnt.getFacebookEmail() == null ? "" : facebookLoginEnt.getFacebookEmail());
+        }
     }
 
     private void getAllServices() {
@@ -284,10 +341,10 @@ public class TechSignupFragment extends BaseFragment {
 
         for (CitiesEnt item : citiesEnts
                 ) {
-            if (prefHelper.isLanguageArabic()){
+            if (prefHelper.isLanguageArabic()) {
                 citiesCollection.add(item.getAr_location());
 
-            }else {
+            } else {
                 citiesCollection.add(item.getLocation());
             }
         }
@@ -335,6 +392,7 @@ public class TechSignupFragment extends BaseFragment {
                 Place place = PlaceAutocomplete.getPlace(getDockActivity(), data);
                 if (place != null) {
                     edtadress.setText(place.getAddress().toString());
+                    latLng = place.getLatLng();
                     Log.i("Profile", "Place: " + place.getName());
                 }
 
@@ -384,7 +442,20 @@ public class TechSignupFragment extends BaseFragment {
         }
 
         String currentDate = new SimpleDateFormat(AppConstants.DateFormat_YMD, Locale.ENGLISH).format(new Date());
-
+        String socialMediaID;
+        String socialMediaPlatform;
+        if (googleLoginEnt != null) {
+            socialMediaPlatform = AppConstants.SOCIAL_MEDIA_TYPE_GOOGLE;
+            socialMediaID = googleLoginEnt.getGoogleUID();
+        } else if (facebookLoginEnt != null) {
+            socialMediaID = facebookLoginEnt.getFacebookUID();
+            socialMediaPlatform = AppConstants.SOCIAL_MEDIA_TYPE_FACEBOOK;
+        } else {
+            socialMediaID = "";
+            socialMediaPlatform = "";
+        }
+        String latitude = latLng != null ? latLng.latitude + "" : "";
+        String longitude = latLng != null ? latLng.longitude + "" : "";
         Call<ResponseWrapper<RegistrationResultEnt>> call = webService.registerTechnician(
                 RequestBody.create(MediaType.parse("text/plain"), edtCompanyName.getText().toString()),
                 RequestBody.create(MediaType.parse("text/plain"), edtfirsname.getText().toString()),
@@ -397,12 +468,16 @@ public class TechSignupFragment extends BaseFragment {
                 RequestBody.create(MediaType.parse("text/plain"), edtregistrationtype.getText().toString()),
                 RequestBody.create(MediaType.parse("text/plain"), edtRegistrationDate.getText().toString()),
                 RequestBody.create(MediaType.parse("text/plain"), edtadress.getText().toString()),
+                RequestBody.create(MediaType.parse("text/plain"), latitude),
+                RequestBody.create(MediaType.parse("text/plain"), longitude),
                 RequestBody.create(MediaType.parse("text/plain"), allCountries.get(spnCountry.getSelectedItemPosition()).getId() + ""),
                 RequestBody.create(MediaType.parse("text/plain"), allCities.get(spnCity.getSelectedItemPosition()).getId() + ""),
                 RequestBody.create(MediaType.parse("text/plain"), edtLicenseExpiry.getText().toString()),
                 RequestBody.create(MediaType.parse("text/plain"), prefHelper.getFirebase_TOKEN()),
                 RequestBody.create(MediaType.parse("text/plain"), AppConstants.Device_Type),
                 RequestBody.create(MediaType.parse("text/plain"), prefHelper.getLang()),
+                RequestBody.create(MediaType.parse("text/plain"), socialMediaID),
+                RequestBody.create(MediaType.parse("text/plain"), socialMediaPlatform),
                 filePart, attachedFile);
         call.enqueue(new Callback<ResponseWrapper<RegistrationResultEnt>>() {
             @Override
@@ -496,10 +571,10 @@ public class TechSignupFragment extends BaseFragment {
 
         for (CitiesEnt item : citiesEnts
                 ) {
-            if (prefHelper.isLanguageArabic()){
+            if (prefHelper.isLanguageArabic()) {
                 citiesCollection.add(item.getAr_location());
 
-            }else {
+            } else {
                 citiesCollection.add(item.getLocation());
             }
         }
@@ -549,7 +624,7 @@ public class TechSignupFragment extends BaseFragment {
                 (!Patterns.EMAIL_ADDRESS.matcher(edtEmail.getText().toString()).matches())) {
             edtEmail.setError(getDockActivity().getResources().getString(R.string.enter_email));
             return false;
-        } else if (edtpassword.getText() == null || (edtpassword.getText().toString().isEmpty()) || edtpassword.getText().toString().length() < 6) {
+        } else if ((edtpassword.getText() == null || (edtpassword.getText().toString().isEmpty()) || edtpassword.getText().toString().length() < 6) && !isSocialLogin) {
             edtpassword.setError(getDockActivity().getResources().getString(R.string.valid_password));
             return false;
         } else if (spnSpeciality.getSelectedItemPosition() == 0) {

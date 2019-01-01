@@ -82,7 +82,7 @@ public class Util {
 		values.recycle();
 	}
 	public static boolean doubleClickCheck() {
-		if (SystemClock.elapsedRealtime() - lastClickTime < 1000) {
+		if (SystemClock.elapsedRealtime() - lastClickTime < 200) {
 			return false;
 		}
 		lastClickTime = SystemClock.elapsedRealtime();

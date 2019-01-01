@@ -125,7 +125,7 @@
                 android:layout_marginStart="@dimen/x10"
                 android:src="@drawable/contact"/>
 
-            <com.ingic.saeedni.ui.views.AnyEditTextView
+            <com.ingic.saeedni.ui.views.AnyTextView
                 android:id="@+id/edtPhoneNo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -133,6 +133,7 @@
                 android:layout_marginStart="@dimen/x20"
                 android:layout_marginEnd="@dimen/x20"
                 android:gravity="start"
+                android:ellipsize="end"
                 android:textAlignment="gravity"
                 android:layout_toEndOf="@+id/img_phone"
                 android:background="@android:color/transparent"

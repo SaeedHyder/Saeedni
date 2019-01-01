@@ -27,6 +27,8 @@ public class AppConstants {
     public static String DateFormat_DMY = "dd-MM-yyyy";
     public static final String SERVER_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
     public static final String DATE_FORMAT_APP = "MMM dd yyyy";
+    public static final String SOCIAL_MEDIA_TYPE_FACEBOOK = "facebook";
+    public static final String SOCIAL_MEDIA_TYPE_GOOGLE = "google";
 
 
     public static String fixPassword = "123456";

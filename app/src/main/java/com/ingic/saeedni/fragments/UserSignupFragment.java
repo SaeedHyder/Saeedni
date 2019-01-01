@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.common.api.Status;
@@ -37,6 +38,8 @@ import com.ingic.saeedni.global.AppConstants;
 import com.ingic.saeedni.global.WebServiceConstants;
 import com.ingic.saeedni.helpers.CameraHelper;
 import com.ingic.saeedni.helpers.DialogHelper;
+import com.ingic.saeedni.helpers.FacebookLoginHelper;
+import com.ingic.saeedni.helpers.GoogleHelper;
 import com.ingic.saeedni.helpers.InternetHelper;
 import com.ingic.saeedni.helpers.TokenUpdater;
 import com.ingic.saeedni.helpers.UIHelper;
@@ -112,11 +115,17 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
     AnyTextView edtadress;
     @BindView(R.id.Countrypicker)
     CountryCodePicker Countrypicker;
+    @BindView(R.id.containerPassword)
+    RelativeLayout containerPassword;
     int selectCountryIndex = 0;
     int selectCityIndex = 0;
     int newSelectedCountryCode = 0;
     @BindView(R.id.chk_read)
     CheckBox chkRead;
+    String address = "";
+    private boolean isSocialLogin = false;
+    private FacebookLoginHelper.FacebookLoginEnt facebookLoginEnt;
+    private GoogleHelper.GoogleLoginEnt googleLoginEnt;
     private MainActivity.ImageSetter imageSetter = new MainActivity.ImageSetter() {
 
         @Override
@@ -141,7 +150,35 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
     };
 
     public static UserSignupFragment newInstance() {
-        return new UserSignupFragment();
+        UserSignupFragment fragment = new UserSignupFragment();
+        fragment.isSocialLogin = false;
+        return fragment;
+    }
+
+    public static UserSignupFragment newInstance(FacebookLoginHelper.FacebookLoginEnt loginEnt) {
+        UserSignupFragment fragment = new UserSignupFragment();
+        fragment.facebookLoginEnt = null;
+        fragment.googleLoginEnt = null;
+        fragment.isSocialLogin = true;
+        fragment.setFacebookLoginEnt(loginEnt);
+        return fragment;
+    }
+
+    public static UserSignupFragment newInstance(GoogleHelper.GoogleLoginEnt loginEnt) {
+        UserSignupFragment fragment = new UserSignupFragment();
+        fragment.facebookLoginEnt = null;
+        fragment.googleLoginEnt = null;
+        fragment.isSocialLogin = true;
+        fragment.setGoogleLoginEnt(loginEnt);
+        return fragment;
+    }
+
+    public void setFacebookLoginEnt(FacebookLoginHelper.FacebookLoginEnt facebookLoginEnt) {
+        this.facebookLoginEnt = facebookLoginEnt;
+    }
+
+    public void setGoogleLoginEnt(GoogleHelper.GoogleLoginEnt googleLoginEnt) {
+        this.googleLoginEnt = googleLoginEnt;
     }
 
     @Override
@@ -160,11 +197,30 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
         setlistener();
         phoneUtil = PhoneNumberUtil.getInstance();
         getallCountries();
+
         Countrypicker.registerCarrierNumberEditText(edtnumber);
         Countrypicker.setOnCountryChangeListener(() -> {
             newSelectedCountryCode = Countrypicker.getSelectedCountryCodeAsInt();
         });
         Countrypicker.setCountryForPhoneCode(newSelectedCountryCode);
+
+        checkAndBindSocialMedia();
+        if (isSocialLogin) {
+            containerPassword.setVisibility(View.GONE);
+        } else {
+            containerPassword.setVisibility(View.VISIBLE);
+        }
+        edtadress.setText(address + "");
+    }
+
+    private void checkAndBindSocialMedia() {
+        if (googleLoginEnt != null) {
+            edtname.setText(googleLoginEnt.getGoogleFullName() == null ? "" : googleLoginEnt.getGoogleFullName());
+            edtEmail.setText(googleLoginEnt.getGoogleEmail() == null ? "" : googleLoginEnt.getGoogleEmail());
+        } else if (facebookLoginEnt != null) {
+            edtname.setText(facebookLoginEnt.getFacebookFullName() == null ? "" : facebookLoginEnt.getFacebookFullName());
+            edtEmail.setText(facebookLoginEnt.getFacebookEmail() == null ? "" : facebookLoginEnt.getFacebookEmail());
+        }
     }
 
     private void openLocationSelector() {
@@ -194,6 +250,7 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
                 Place place = PlaceAutocomplete.getPlace(getDockActivity(), data);
                 if (place != null) {
                     edtadress.setText(place.getAddress().toString());
+                    address = (place.getAddress().toString());
                     Log.i("Profile", "Place: " + place.getName());
                 }
 
@@ -364,6 +421,7 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
     @Override
     public void onResume() {
         super.onResume();
+        edtadress.setText(address + "");
         if (UserImagePath != null) {
             if (!UserImagePath.isEmpty()) {
                 if (profilePic == null)
@@ -392,6 +450,18 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
             filePart = MultipartBody.Part.createFormData("profile_picture", "",
                     RequestBody.create(MediaType.parse("*/*"), ""));
         }
+        String socialMediaID;
+        String socialMediaPlatform;
+        if (googleLoginEnt != null) {
+            socialMediaPlatform = AppConstants.SOCIAL_MEDIA_TYPE_GOOGLE;
+            socialMediaID = googleLoginEnt.getGoogleUID();
+        } else if (facebookLoginEnt != null) {
+            socialMediaID = facebookLoginEnt.getFacebookUID();
+            socialMediaPlatform = AppConstants.SOCIAL_MEDIA_TYPE_FACEBOOK;
+        } else {
+            socialMediaID = "";
+            socialMediaPlatform = "";
+        }
         Call<ResponseWrapper<RegistrationResultEnt>> call = webService.registerUser(
                 RequestBody.create(MediaType.parse("text/plain"), edtname.getText().toString()),
                 RequestBody.create(MediaType.parse("text/plain"), edtEmail.getText().toString()),
@@ -402,6 +472,8 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
                 RequestBody.create(MediaType.parse("text/plain"), edtpassword.getText().toString()),
                 RequestBody.create(MediaType.parse("text/plain"), edtpassword.getText().toString()),
                 RequestBody.create(MediaType.parse("text/plain"), prefHelper.getLang()),
+                RequestBody.create(MediaType.parse("text/plain"), socialMediaID),
+                RequestBody.create(MediaType.parse("text/plain"), socialMediaPlatform),
                 filePart);
         call.enqueue(new Callback<ResponseWrapper<RegistrationResultEnt>>() {
             @Override
@@ -458,10 +530,10 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
         for (CitiesEnt item : citiesEnts
                 ) {
 
-            if (prefHelper.isLanguageArabic()){
+            if (prefHelper.isLanguageArabic()) {
                 citiesCollection.add(item.getAr_location());
 
-            }else {
+            } else {
                 citiesCollection.add(item.getLocation());
             }
         }
@@ -509,10 +581,10 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
 
         for (CitiesEnt item : citiesEnts
                 ) {
-            if (prefHelper.isLanguageArabic()){
+            if (prefHelper.isLanguageArabic()) {
                 citiesCollection.add(item.getAr_location());
 
-            }else {
+            } else {
                 citiesCollection.add(item.getLocation());
             }
         }
@@ -552,7 +624,7 @@ public class UserSignupFragment extends BaseFragment implements View.OnClickList
                 (!Patterns.EMAIL_ADDRESS.matcher(edtEmail.getText().toString()).matches())) {
             edtEmail.setError(getDockActivity().getResources().getString(R.string.enter_email));
             return false;
-        } else if (edtpassword.getText() == null || (edtpassword.getText().toString().isEmpty()) || edtpassword.getText().toString().length() < 6) {
+        } else if ((edtpassword.getText() == null || (edtpassword.getText().toString().isEmpty()) || edtpassword.getText().toString().length() < 6) && !isSocialLogin) {
             edtpassword.setError(getDockActivity().getResources().getString(R.string.valid_password));
             return false;
         } else if (edtadress.getText().toString().isEmpty()) {

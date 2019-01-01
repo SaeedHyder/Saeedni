@@ -254,6 +254,7 @@
                 android:layout_marginLeft="@dimen/x20"
                 android:layout_marginRight="@dimen/x20"
                 android:layout_marginTop="@dimen/x10"
+                android:id="@+id/containerPassword"
                 android:background="@drawable/boxcentershape">
 
                 <ImageView
@@ -477,7 +478,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_alignParentTop="true"
-                    android:layout_marginStart="@dimen/x10"
+                    android:layout_marginStart="@dimen/x15"
                     android:layout_marginEnd="@dimen/x5"
                     android:layout_toEndOf="@+id/img_address"
                     android:background="@android:color/transparent"

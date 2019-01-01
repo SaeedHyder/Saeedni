@@ -14,4 +14,6 @@ public class WebServiceConstants {
     public static final String VERIFY_FORGOT_PASSWORD = "VERIFY_FORGOT_PASSWORD";
     public static final String GET_ALL_COUNTRIES = "GET_ALL_COUNTRIES";
     public static final String CHANGE_PUSH_STATUS = "CHANGE_PUSH_STATUS";
+    public static final String LOGIN_SOCIAL = "LOGIN_SOCIAL";
+    public static final String GET_ALL_TECHNICIAN = "GET_ALL_TECHNICIAN";
 }

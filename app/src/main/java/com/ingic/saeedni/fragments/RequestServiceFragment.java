@@ -89,6 +89,7 @@ import retrofit2.Response;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
+import static com.ingic.saeedni.R.id.add;
 import static com.ingic.saeedni.R.id.edt_addtional_job;
 
 
@@ -165,11 +166,19 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
     AnyTextView txtJobpaymentmethod;
     ArrayList<CitiesEnt> allCities = new ArrayList<>();
     ArrayList<CitiesEnt> allCountries = new ArrayList<>();
+    ArrayList<RegistrationResultEnt> allTechnician = new ArrayList<>();
     @BindView(R.id.edt_locationspecific)
     AnyTextView edtLocationspecific;
     boolean isOnCall = false;
     @BindView(R.id.spnCountry)
     AnySpinner spnCountry;
+    int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
+    @BindView(R.id.spnTechnician)
+    AnySpinner spnTechnician;
+    @BindView(R.id.edtAddress)
+    AnyEditTextView edtAddress;
+    @BindView(R.id.txtaddImage)
+    AnyTextView txtaddImage;
     private ArrayList<String> images = new ArrayList<>();
     private RecyclerViewAdapterImages mAdapter;
     private ArrayList<ServiceEnt> selectedJobs;
@@ -187,7 +196,6 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
     private Boolean isEdit = false;
     private ArrayList<String> deleteimages;
     private Date DateSelected;
-    int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
     private String TAG = "Request";
 
     public static RequestServiceFragment newInstance() {
@@ -253,7 +261,14 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
 
                 Place place = PlaceAutocomplete.getPlace(getDockActivity(), data);
                 if (place != null) {
+                    edtLocationspecific.setError(null);
                     edtLocationspecific.setText(place.getAddress().toString());
+                    spnCity.setSelection(0);
+                    spnCountry.setSelection(0);
+                    spnCity.setAdapter(null);
+                    String latitude = place.getLatLng() != null ? place.getLatLng().latitude + "" : "";
+                    String longitude = place.getLatLng() != null ? place.getLatLng().longitude + "" : "";
+                    serviceHelper.enqueueCall(webService.getTechniciansByCity(null, null, latitude, longitude), WebServiceConstants.GET_ALL_TECHNICIAN);
                     Log.i(TAG, "Place: " + place.getName());
                 }
 
@@ -287,12 +302,46 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
                 break;
 
             case WebServiceConstants.GET_ALL_COUNTRIES:
+                CitiesEnt countryEnt = new CitiesEnt();
+                countryEnt.setLocation("Select Country");
+                countryEnt.setAr_address("حدد الدولة");
+                allCountries.add(0, countryEnt);
                 allCountries.addAll((ArrayList<CitiesEnt>) result);
                 setCountriesSpinner(allCountries);
 
                 break;
+            case WebServiceConstants.GET_ALL_TECHNICIAN:
+                allTechnician = new ArrayList<>();
+                allTechnician.addAll((ArrayList<RegistrationResultEnt>) result);
+                initTechnicianSpinner(allTechnician);
+
+                break;
 
         }
+    }
+
+    private void initTechnicianSpinner(ArrayList<RegistrationResultEnt> result) {
+        final ArrayList<String> citiesCollection = new ArrayList<String>();
+
+
+        for (RegistrationResultEnt ent : result
+                ) {
+            citiesCollection.add(ent.getFullName());
+        }
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity(), R.layout.row_item_spinner, citiesCollection);
+        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnTechnician.setAdapter(categoryAdapter);
+        spnTechnician.setOnItemSelectedEvenIfUnchangedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     private void setCountriesSpinner(ArrayList<CitiesEnt> citiesEnts) {
@@ -302,20 +351,37 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
 
         for (CitiesEnt ent : citiesEnts
                 ) {
-            if (prefHelper.isLanguageArabic()){
+            if (prefHelper.isLanguageArabic()) {
                 citiesCollection.add(ent.getAr_location());
-
-            }else {
+            } else {
                 citiesCollection.add(ent.getLocation());
             }
         }
-        if (citiesEnts.size() > 0) getAllCities(allCountries.get(0).getId());
-        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity(), R.layout.row_item_spinner, citiesCollection);
+        //if (citiesEnts.size() > 0) getAllCities(allCountries.get(0).getId());
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity()
+                , R.layout.row_item_spinner, citiesCollection) {
+            @Override
+            public boolean isEnabled(int position) {
+                return !(position == 0);
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView,
+                                        ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                tv.setTextColor(position == 0 ? Color.GRAY : Color.BLACK);
+                return view;
+            }
+
+        };
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
         spnCountry.setAdapter(categoryAdapter);
         spnCountry.setOnItemSelectedEvenIfUnchangedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i == 0) return;
                 getAllCities(allCountries.get(i).getId());
             }
 
@@ -366,6 +432,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
     }
 
     private void setCitiesSpinner(ArrayList<CitiesEnt> citiesEnts) {
+        spnTechnician.setAdapter(null);
         final ArrayList<String> citiesCollection = new ArrayList<String>();
         int selectedPosition = 0;
         RegistrationResultEnt userItems = prefHelper.getRegistrationResult();
@@ -375,10 +442,10 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
                     selectedPosition = i;
                 }
             }*/
-            if (prefHelper.isLanguageArabic()){
+            if (prefHelper.isLanguageArabic()) {
                 citiesCollection.add(citiesEnts.get(i).getAr_location());
 
-            }else {
+            } else {
                 citiesCollection.add(citiesEnts.get(i).getLocation());
             }
 
@@ -409,7 +476,14 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         spnCity.setOnItemSelectedEvenIfUnchangedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                if (position == 0) {
+                    spnTechnician.setAdapter(null);
+                    return;
+                }
+                edtLocationspecific.setText("");
+                int cityID = allCities.get(position).getId();
+                int countryID = allCountries.get(spnCountry.getSelectedItemPosition()).getId();
+                serviceHelper.enqueueCall(webService.getTechniciansByCity(countryID, cityID, null, null), WebServiceConstants.GET_ALL_TECHNICIAN);
                 // bindSelectedJobview(selectedJobs);
             }
 
@@ -491,7 +565,6 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
     }
 
 
-
     private void setListener() {
         btnPreferreddate.setOnClickListener(this);
         btnPreferredtime.setOnClickListener(this);
@@ -538,7 +611,8 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
 
                 break;
             case R.id.edt_locationspecific:
-             openLocationSelector();
+
+                openLocationSelector();
                 break;
 
             case R.id.btn_cod:
@@ -546,6 +620,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
                 setCODCheck();
                 break;
             case R.id.btn_request:
+
                 if (!isOnCall) {
                     if (validate()) {
                         if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
@@ -616,14 +691,14 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
                 spnJobtype.setSelection(jobtypearraylist.indexOf(homeSelectedService.getTitle()));
                 jobtype = jobcollection.get(jobtypearraylist.indexOf(homeSelectedService.getTitle()));
                 if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
-                    initJobDescriptionSpinner(jobtype);
+                    // initJobDescriptionSpinner(jobtype);
                     initSubJobDescriptionSpinner(jobtype);
                 }
             } else if (jobtypearraylist.contains(homeSelectedService.getArTitle())) {
                 spnJobtype.setSelection(jobtypearraylist.indexOf(homeSelectedService.getArTitle()));
                 jobtype = jobcollection.get(jobtypearraylist.indexOf(homeSelectedService.getArTitle()));
                 if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
-                    initJobDescriptionSpinner(jobtype);
+                    //  initJobDescriptionSpinner(jobtype);
                     initSubJobDescriptionSpinner(jobtype);
                 }
 
@@ -632,7 +707,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
                 jobtype = jobcollection.get(0);
                 spnJobtype.setEnabled(true);
                 if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
-                    initJobDescriptionSpinner(jobtype);
+                    // initJobDescriptionSpinner(jobtype);
                     initSubJobDescriptionSpinner(jobtype);
                 }
             }
@@ -642,7 +717,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 jobtype = jobcollection.get(position);
-                initJobDescriptionSpinner(jobtype);
+                //initJobDescriptionSpinner(jobtype);
                 initSubJobDescriptionSpinner(jobtype);
                 selectedJobs.clear();
                 refreshListview();
@@ -706,6 +781,8 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         spnSubJobType.setOnItemSelectedEvenIfUnchangedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position < subjobcollection.size())
+                    initJobDescriptionSpinner(subjobcollection.get(position));
 
                 // bindSelectedJobview(selectedJobs);
             }
@@ -909,16 +986,18 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         //MultipartBody.Part[] part = files.toArray();
         Call<ResponseWrapper<RequestEnt>> call;
         if (!isEdit) {
+            String address = edtLocationspecific.getText().toString().isEmpty() ? edtAddress.getText().toString() : edtLocationspecific.getText().toString();
             call = webService.createRequest(
                     RequestBody.create(MediaType.parse("text/plain"), prefHelper.getUserId()),
                     RequestBody.create(MediaType.parse("text/plain"), serviceID),
                     RequestBody.create(MediaType.parse("text/plain"), subServiceID),
-                    RequestBody.create(MediaType.parse("text/plain"), allCountries.get(spnCountry.getSelectedItemPosition()).getId() + ""),
-                    RequestBody.create(MediaType.parse("text/plain"), allCities.get(spnCity.getSelectedItemPosition()).getId() + ""),
+                    RequestBody.create(MediaType.parse("text/plain"), allTechnician.get(spnTechnician.getSelectedItemPosition()).getId() + ""),
+                    RequestBody.create(MediaType.parse("text/plain"), (spnCountry.getSelectedItemPosition() == -1 || spnCountry.getSelectedItemPosition() == 0) ? "" : allCountries.get(spnCountry.getSelectedItemPosition()).getId() + ""),
+                    RequestBody.create(MediaType.parse("text/plain"), (spnCity.getSelectedItemPosition() == -1 || spnCity.getSelectedItemPosition() == 0) ? "" : allCities.get(spnCity.getSelectedItemPosition()).getId() + ""),
                     RequestBody.create(MediaType.parse("text/plain"), serviceIDS),
                     RequestBody.create(MediaType.parse("text/plain"), edtAddtionalJob.getText().toString()),
-                    RequestBody.create(MediaType.parse("text/plain"), edtLocationspecific.getText().toString()),
-                    RequestBody.create(MediaType.parse("text/plain"), edtLocationspecific.getText().toString()),
+                    RequestBody.create(MediaType.parse("text/plain"), address),
+                    RequestBody.create(MediaType.parse("text/plain"), address),
                     RequestBody.create(MediaType.parse("text/plain"), predate),
                     RequestBody.create(MediaType.parse("text/plain"), preTime),
                     RequestBody.create(MediaType.parse("text/plain"), paymentType),
@@ -986,10 +1065,11 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
     }
 
     private boolean validate() {
-        if (edtLocationspecific.getText().toString().isEmpty()) {
-            edtLocationspecific.setError(getDockActivity().getResources().getString(R.string.enter_address));
+        /*if (edtLocationspecific.getText().toString().isEmpty()) {
+            edtLocationspecific.setError(getDockActivity().getResources().getString(R.string.enter_location));
             return false;
-        } else if (btnPreferreddate.getText().toString().isEmpty()) {
+        } else*/
+        if (btnPreferreddate.getText().toString().isEmpty()) {
             UIHelper.showShortToastInCenter(getDockActivity(), getDockActivity().getResources().getString(R.string.select_date));
             return false;
         } else if (btnPreferredtime.getText().toString().isEmpty()) {
@@ -1001,8 +1081,17 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         } else if (selectedJobs.isEmpty()) {
             UIHelper.showShortToastInCenter(getDockActivity(), getDockActivity().getResources().getString(R.string.selectjob));
             return false;
-        } else if (spnCity.getSelectedItemPosition() == 0) {
+        } else if (spnCity.getSelectedItemPosition() == 0 && edtLocationspecific.getText().toString().isEmpty()) {
             UIHelper.showShortToastInCenter(getDockActivity(), getDockActivity().getResources().getString(R.string.select_city));
+            return false;
+        } else if (edtAddress.getText().toString().trim().equals("") && edtLocationspecific.getText().toString().isEmpty()) {
+            edtAddress.setError(getDockActivity().getResources().getString(R.string.enter_location));
+            return false;
+        } else if (spnCountry.getSelectedItemPosition() == 0 && edtLocationspecific.getText().toString().isEmpty()) {
+            UIHelper.showShortToastInCenter(getDockActivity(), getDockActivity().getResources().getString(R.string.select_country));
+            return false;
+        } else if (spnTechnician.getSelectedItemPosition() == -1) {
+            UIHelper.showShortToastInCenter(getDockActivity(), getDockActivity().getResources().getString(R.string.selectTechnician));
             return false;
         } else {
             return true;

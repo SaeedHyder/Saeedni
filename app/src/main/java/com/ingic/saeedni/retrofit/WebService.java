@@ -41,6 +41,8 @@ public interface WebService {
                                                               @Part("password") RequestBody password,
                                                               @Part("password_confirmation") RequestBody password_confirmation,
                                                               @Part("lang") RequestBody lang,
+                                                              @Part("social_media_id") RequestBody socialMediaID,
+                                                              @Part("social_media_platform") RequestBody socialMediaPlatform,
                                                               @Part MultipartBody.Part userprofileImage
     );
 
@@ -58,15 +60,33 @@ public interface WebService {
             @Part("registration_type") RequestBody registration_type,
             @Part("registration_date") RequestBody registration_date,
             @Part("address") RequestBody address,
+            @Part("latitude") RequestBody latitude,
+            @Part("longitude") RequestBody longitude,
             @Part("country_id") RequestBody country_id,
             @Part("city_id") RequestBody city_id,
             @Part("expiry_date") RequestBody expiry_date,
             @Part("device_token") RequestBody device_token,
             @Part("device_type") RequestBody device_type,
             @Part("lang") RequestBody lang,
+            @Part("social_media_id") RequestBody socialMediaID,
+            @Part("social_media_platform") RequestBody socialMediaPlatform,
             @Part MultipartBody.Part profile_picture,
             @Part MultipartBody.Part trade_license
     );
+
+    @FormUrlEncoded
+    @POST("user/facebooklogin")
+    Call<ResponseWrapper<RegistrationResultEnt>> userSocialLogin(@Field("social_media_id") String socialMediaId,
+                                                                 @Field("email") String email,
+                                                                 @Field("social_media_platform") String socialMediaPlatform,
+                                                                 @Field("lang") String lang);
+
+    @FormUrlEncoded
+    @POST("technician/facebooklogin")
+    Call<ResponseWrapper<RegistrationResultEnt>> technicainSocialLogin(@Field("social_media_id") String socialMediaId,
+                                                                       @Field("email") String email,
+                                                                       @Field("social_media_platform") String socialMediaPlatform,
+                                                                       @Field("lang") String lang);
 
     @FormUrlEncoded
     @POST("user/login")
@@ -167,6 +187,7 @@ public interface WebService {
     Call<ResponseWrapper<RequestEnt>> createRequest(@Part("user_id") RequestBody userID,
                                                     @Part("service_id") RequestBody service_id,
                                                     @Part("category_id") RequestBody category_id,
+                                                    @Part("technician_id") RequestBody technician_id,
                                                     @Part("country_id") RequestBody country_id,
                                                     @Part("city_id") RequestBody city_id,
                                                     @Part("services_ids") RequestBody services_ids,
@@ -260,6 +281,12 @@ public interface WebService {
     Call<ResponseWrapper<RegistrationResultEnt>> techProfile(
             @Query("technician_id") Integer technician_id);
 
+    @GET("gettechnician")
+    Call<ResponseWrapper<ArrayList<RegistrationResultEnt>>> getTechniciansByCity(@Query("country_id") Integer country_id,
+                                                                                 @Query("city_id") Integer city_id,
+                                                                                 @Query("latitude") String latitude,
+                                                                                 @Query("longitude") String longitude);
+
 
     @FormUrlEncoded
     @POST("technician/feedback")
@@ -333,4 +360,26 @@ public interface WebService {
 
     @GET("allservice")
     Call<ResponseWrapper<ArrayList<AllServicesEnt>>> getAllServices();
+
+    @FormUrlEncoded
+    @POST("user/OldPhoneNumber")
+    Call<ResponseWrapper> checkOldPhoneNumber(@Field("user_id") String user_id,
+                                              @Field("old_phone_no") String old_phone_no
+    );
+
+    @FormUrlEncoded
+    @POST("user/verifyOldPhoneNumber")
+    Call<ResponseWrapper<RegistrationResultEnt>> verifyOldPhoneNumber(@Field("user_id") String user_id,
+                                                                      @Field("code") String password);
+
+    @FormUrlEncoded
+    @POST("user/NewPhoneNumber")
+    Call<ResponseWrapper> checkNewPhoneNumber(@Field("user_id") String user_id,
+                                              @Field("new_phone_no") String new_phone_no);
+
+    @FormUrlEncoded
+    @POST("user/verifyNewPhoneNumber")
+    Call<ResponseWrapper<RegistrationResultEnt>> verifyNewPhoneNumber(@Field("user_id") String user_id,
+                                                                      @Field("code") String password);
+
 }

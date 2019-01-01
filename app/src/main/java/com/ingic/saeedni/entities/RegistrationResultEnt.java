@@ -83,9 +83,17 @@ public class RegistrationResultEnt {
     @SerializedName("profile_image")
     @Expose
     private String profileImage;
+    @SerializedName("social_media_id")
+    @Expose
+    private String social_media_id;
     @SerializedName("push_notification")
     @Expose
     private int push_notification;
+
+
+    public boolean isSocialLogin() {
+        return social_media_id != null && !social_media_id.trim().equals("") && social_media_id.length() > 5;
+    }
 
     public int getCountry_id() {
         return country_id;

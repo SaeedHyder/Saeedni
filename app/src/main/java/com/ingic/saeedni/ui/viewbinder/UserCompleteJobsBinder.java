@@ -1,5 +1,6 @@
 package com.ingic.saeedni.ui.viewbinder;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.text.Html;
 import android.view.MotionEvent;
@@ -36,6 +37,7 @@ public class UserCompleteJobsBinder extends ViewBinder<UserComleteJobsEnt> {
         return new ViewHolder(view);
     }
 
+    @SuppressLint({"ClickableViewAccessibility", "SetTextI18n"})
     @Override
     public void bindView(UserComleteJobsEnt entity, int position, int grpPosition, View view, Activity activity) {
         final ViewHolder viewHolder = (ViewHolder) view.getTag();
@@ -45,13 +47,11 @@ public class UserCompleteJobsBinder extends ViewBinder<UserComleteJobsEnt> {
             viewHolder.root_layout.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
 
         viewHolder.txtJobNoText.setText(String.valueOf(position + 1));
-        if (entity.getServicsList().size() > 0 && entity.getServicsList().get(0).getServiceEnt() != null) {
             if (preferenceHelper.isLanguageArabic()) {
-                viewHolder.txtJobTitleText.setText(entity.getServicsList().get(0).getServiceEnt().getTitle() + "");
+                viewHolder.txtJobTitleText.setText(entity.getServiceDetail().getArTitle() + "");
             } else {
-                viewHolder.txtJobTitleText.setText(entity.getServicsList().get(0).getServiceEnt().getTitle() + "");
+                viewHolder.txtJobTitleText.setText(entity.getServiceDetail().getTitle() + "");
             }
-        }
         if (!preferenceHelper.isLanguageArabic()) {
             viewHolder.txtJobCompletedText.setText(DateHelper.dateFormat(entity.getDate(), AppConstants.DateFormat_DMY, AppConstants.DateFormat_YMD) + "");
         } else {
@@ -85,12 +85,9 @@ public class UserCompleteJobsBinder extends ViewBinder<UserComleteJobsEnt> {
                 }*/
             }
 
-        viewHolder.rbAddRating.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                viewHolder.rbAddRating.setFocusable(false);
-                return true;
-            }
+        viewHolder.rbAddRating.setOnTouchListener((view1, motionEvent) -> {
+            viewHolder.rbAddRating.setFocusable(false);
+            return true;
         });
 
     }

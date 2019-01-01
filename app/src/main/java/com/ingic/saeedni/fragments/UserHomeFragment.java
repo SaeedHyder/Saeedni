@@ -91,8 +91,7 @@ public class UserHomeFragment extends BaseFragment  {
 
         super.onResume();
         // TokenUpdater.getInstance().UpdateToken(getDockActivity(), prefHelper.getUserId(), "android", prefHelper.getFirebase_TOKEN());
-        edtSearch.setQuery("", false);
-        edtSearch.clearFocus();
+       //clearSearchView();
         LocalBroadcastManager.getInstance(getDockActivity()).registerReceiver(broadcastReceiver,
                 new IntentFilter(AppConstants.REGISTRATION_COMPLETE));
 
@@ -128,10 +127,9 @@ public class UserHomeFragment extends BaseFragment  {
         getMainActivity().titleBar.getImageView().invalidate();
         //mainFrame.setVisibility(View.GONE);
         onNotificationReceived();
-        UIHelper.hideSoftKeyboard(getDockActivity(),edtSearch);
+
         getMainActivity().refreshSideMenuWithnewFragment();
-        edtSearch.setQuery("", false);
-        edtSearch.clearFocus();
+        clearSearchView();
         edtSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String text) {
@@ -149,8 +147,13 @@ public class UserHomeFragment extends BaseFragment  {
             loadingStarted();
             gethomeData();
         }
+        UIHelper.hideSoftKeyboard(getDockActivity(),edtSearch);
 
+    }
 
+    private void clearSearchView() {
+        edtSearch.setQuery("", false);
+        edtSearch.clearFocus();
     }
 
     private void onNotificationReceived() {
@@ -208,7 +211,7 @@ public class UserHomeFragment extends BaseFragment  {
                     jobsCollection = new ArrayList<>();
                     jobsCollection.addAll(response.body().getResult());
                     bindData(jobsCollection);
-
+                    UIHelper.hideSoftKeyboard(getDockActivity(),edtSearch);
                 } else {
                     UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
                 }

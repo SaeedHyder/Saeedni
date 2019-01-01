@@ -23,12 +23,14 @@ public class PhoneVerificationFragment extends BaseFragment {
     @BindView(R.id.btn_submit_code)
     Button btnSubmitCode;
     Unbinder unbinder;
+    private boolean shouldEnterNewPhoneNumber = false;
 
-    public static PhoneVerificationFragment newInstance() {
+    public static PhoneVerificationFragment newInstance(boolean shouldEnterNewPhoneNumber) {
         Bundle args = new Bundle();
 
         PhoneVerificationFragment fragment = new PhoneVerificationFragment();
         fragment.setArguments(args);
+        fragment.shouldEnterNewPhoneNumber = shouldEnterNewPhoneNumber;
         return fragment;
     }
 
@@ -72,14 +74,18 @@ public class PhoneVerificationFragment extends BaseFragment {
     public void ResponseSuccess(Object result, String Tag) {
         switch (Tag) {
             case WebServiceConstants.VERIFY_FORGOT_PASSWORD:
-                UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.phoneUpdated));
-                prefHelper.putRegistrationResult((RegistrationResultEnt) result);
-                if (prefHelper.getUserType().equals("technician")) {
-                    getDockActivity().popBackStackTillEntry(0);
-                    getDockActivity().replaceDockableFragment(HomeFragment.newInstance(), "UserHomeFragment");
-                } else {
-                    getDockActivity().popBackStackTillEntry(0);
-                    getDockActivity().replaceDockableFragment(UserHomeFragment.newInstance(), "UserHomeFragment");
+                if (!shouldEnterNewPhoneNumber){
+                    getDockActivity().replaceDockableFragment(UserChangePhoneFragment.newInstance(!shouldEnterNewPhoneNumber),"UserChangePhoneFragment");
+                }else {
+                    UIHelper.showShortToastInCenter(getDockActivity(), getString(R.string.phoneUpdated));
+                    prefHelper.putRegistrationResult((RegistrationResultEnt) result);
+                    if (prefHelper.getUserType().equals("technician")) {
+                        getDockActivity().popBackStackTillEntry(0);
+                        getDockActivity().replaceDockableFragment(HomeFragment.newInstance(), "UserHomeFragment");
+                    } else {
+                        getDockActivity().popBackStackTillEntry(0);
+                        getDockActivity().replaceDockableFragment(UserHomeFragment.newInstance(), "UserHomeFragment");
+                    }
                 }
                 break;
         }
@@ -88,7 +94,12 @@ public class PhoneVerificationFragment extends BaseFragment {
     @OnClick(R.id.btn_submit_code)
     public void onViewClicked() {
         if (!(txtPinEntry.getText().toString().equals("") && txtPinEntry.getText().toString().length() < 4)) {
-            serviceHelper.enqueueCall(webService.changePhoneVerifyCode(prefHelper.getUserId(), txtPinEntry.getText().toString()), WebServiceConstants.VERIFY_FORGOT_PASSWORD);
+            if (shouldEnterNewPhoneNumber) {
+                serviceHelper.enqueueCall(webService.verifyNewPhoneNumber(prefHelper.getUserId(), txtPinEntry.getText().toString()), WebServiceConstants.VERIFY_FORGOT_PASSWORD);
+            } else {
+                serviceHelper.enqueueCall(webService.verifyOldPhoneNumber(prefHelper.getUserId(), txtPinEntry.getText().toString()), WebServiceConstants.VERIFY_FORGOT_PASSWORD);
+            }
+          //  serviceHelper.enqueueCall(webService.changePhoneVerifyCode(prefHelper.getUserId(), txtPinEntry.getText().toString()), WebServiceConstants.VERIFY_FORGOT_PASSWORD);
         } else {
             UIHelper.showShortToastInCenter(getDockActivity(), getDockActivity().getResources().getString(R.string.valid_code_error));
         }

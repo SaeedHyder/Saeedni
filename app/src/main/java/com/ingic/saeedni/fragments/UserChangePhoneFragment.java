@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.hbb20.CountryCodePicker;
 import com.ingic.saeedni.R;
@@ -37,11 +38,19 @@ public class UserChangePhoneFragment extends BaseFragment {
     LinearLayout parent;
     int oldSelectedCountryCode = 0;
     int newSelectedCountryCode = 0;
-    public static UserChangePhoneFragment newInstance() {
+    @BindView(R.id.containerOldPhone)
+    RelativeLayout containerOldPhone;
+    @BindView(R.id.containerNewPhone)
+    RelativeLayout containerNewPhone;
+
+    private boolean shouldEnterNewPhoneNumber = false;
+
+    public static UserChangePhoneFragment newInstance(boolean shouldEnterNewPhoneNumber) {
         Bundle args = new Bundle();
 
         UserChangePhoneFragment fragment = new UserChangePhoneFragment();
         fragment.setArguments(args);
+        fragment.shouldEnterNewPhoneNumber = shouldEnterNewPhoneNumber;
         return fragment;
     }
 
@@ -72,6 +81,14 @@ public class UserChangePhoneFragment extends BaseFragment {
         });
         oldCountrypicker.setCountryForPhoneCode(oldSelectedCountryCode);
         Countrypicker.setCountryForPhoneCode(newSelectedCountryCode);
+
+        if (shouldEnterNewPhoneNumber) {
+            containerOldPhone.setVisibility(View.GONE);
+            containerNewPhone.setVisibility(View.VISIBLE);
+        } else {
+            containerOldPhone.setVisibility(View.VISIBLE);
+            containerNewPhone.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -83,13 +100,14 @@ public class UserChangePhoneFragment extends BaseFragment {
     }
 
     private boolean isValidated() {
-        if (edtpassword.getText() == null || (edtpassword.getText().toString().isEmpty()) || edtpassword.getText().toString().length() < 6) {
+       /* if (edtpassword.getText() == null || (edtpassword.getText().toString().isEmpty()) || edtpassword.getText().toString().length() < 6) {
             edtpassword.setError(getDockActivity().getResources().getString(R.string.valid_password));
             return false;
-        } else if (!oldCountrypicker.isValidFullNumber()) {
+        } else*/
+        if (!shouldEnterNewPhoneNumber && !oldCountrypicker.isValidFullNumber()) {
             edtOldNumber.setError(getDockActivity().getResources().getString(R.string.enter_valid_number_error));
             return false;
-        } else if (!Countrypicker.isValidFullNumber()) {
+        } else if (shouldEnterNewPhoneNumber && !Countrypicker.isValidFullNumber()) {
             edtnumber.setError(getDockActivity().getResources().getString(R.string.enter_valid_number_error));
             return false;
         }
@@ -114,7 +132,7 @@ public class UserChangePhoneFragment extends BaseFragment {
     public void ResponseSuccess(Object result, String Tag) {
         switch (Tag) {
             case WebServiceConstants.CHANGE_PHONE_NUMBER:
-                getDockActivity().replaceDockableFragment(PhoneVerificationFragment.newInstance(), PhoneVerificationFragment.class.getSimpleName());
+                getDockActivity().replaceDockableFragment(PhoneVerificationFragment.newInstance(shouldEnterNewPhoneNumber), PhoneVerificationFragment.class.getSimpleName());
                 break;
         }
     }
@@ -122,11 +140,18 @@ public class UserChangePhoneFragment extends BaseFragment {
     @OnClick(R.id.btn_submit)
     public void onViewClicked() {
         if (isValidated()) {
-            serviceHelper.enqueueCall(webService.changePhoneNumber(prefHelper.getUserId(),
+            if (shouldEnterNewPhoneNumber) {
+                serviceHelper.enqueueCall(webService.checkNewPhoneNumber(prefHelper.getUserId(), Countrypicker.getFullNumberWithPlus()),
+                        WebServiceConstants.CHANGE_PHONE_NUMBER);
+            } else {
+                serviceHelper.enqueueCall(webService.checkOldPhoneNumber(prefHelper.getUserId(), oldCountrypicker.getFullNumberWithPlus()),
+                        WebServiceConstants.CHANGE_PHONE_NUMBER);
+            }
+           /* serviceHelper.enqueueCall(webService.changePhoneNumber(prefHelper.getUserId(),
                     edtpassword.getText().toString(),
                     oldCountrypicker.getFullNumberWithPlus(),
                     Countrypicker.getFullNumberWithPlus()),
-                    WebServiceConstants.CHANGE_PHONE_NUMBER);
+                    WebServiceConstants.CHANGE_PHONE_NUMBER);*/
         }
     }
 }

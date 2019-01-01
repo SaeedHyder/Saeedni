@@ -12,7 +12,6 @@
     <string name="app_name">Saeedni</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="facebook_app_id">674632155971845</string>
     <string name="facebook_app_id_test">175703936145004</string>
 
     <!-- Error Messages -->
@@ -365,6 +364,17 @@
     <string name="newPhoneNumer">New Phone Number</string>
     <string name="add_image_optional">Add Image (Optional)</string>
     <string name="completeJobs">Are you sure you want to complete Job ?</string>
-    <string name="searchService">Search Categories...</string>
+    <string name="searchService">Search Categories…</string>
+    <string name="please_wait">Please Wait</string>
+    <string name="login_fb">Log In with Facebook</string>
+    <string name="login_google">Log In with Google+</string>
+    <string name="facebook_app_id">2075227735867824</string>
+    <string name="fb_login_protocol_scheme">fb2075227735867824</string>
+    <string name="selectTechnician">Select Technician</string>
+    <string name="or">OR</string>
+    <string name="select_country">Select Country</string>
+    <string name="selectTechnicianMessage">How Would You Like To Get Your Technician</string>
+    <string name="findNearestByLocation">Find The Nearest Technician by Location</string>
+
 
 </resources>

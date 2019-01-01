@@ -12,7 +12,6 @@
     <string name="app_name">Saeedni</string>
     <string name="hello_world">مرحبا الساع</string>
     <string name="action_settings">التضبيط</string>
-    <string name="facebook_app_id">674632155971845</string>
     <string name="facebook_app_id_test">175703936145004</string>
 
     <!-- Error Messages -->
@@ -316,6 +315,7 @@
     <string name="gallery">صالة عرض</string>
     <string name="select_file">أختيار ملف</string>
     <string name="set_file">كيف تريد تعيين الملف الخاص بك؟</string>
+    <string name="select_country">حدد الدولة</string>
 
 
     <string name="comapny_name">اسم الشركة</string>
@@ -364,6 +364,15 @@
     <string name="newPhoneNumer">رقم هاتف جديد</string>
     <string name="add_image_optional">اضف صورة (اختياري)</string>
     <string name="completeJobs">هل أنت متأكد من أنك تريد إلغاء المهمة؟</string>
-    <string name="searchService">Search Categories...</string>
+    <string name="searchService">بحث التصنيفات …</string>
+    <string name="please_wait">الرجاء الانتظار..</string>
+    <string name="login_fb">تسجيل الدخول باستخدام فيسبوك</string>
+    <string name="login_google">تسجيل الدخول باستخدام قوقل بلس</string>
 
+    <string name="facebook_app_id">2075227735867824</string>
+    <string name="fb_login_protocol_scheme">fb2075227735867824</string>
+    <string name="selectTechnician">حدد فني</string>
+    <string name="or">OR</string>
+    <string name="selectTechnicianMessage">كيف ترغب في الحصول على الفني</string>
+    <string name="findNearestByLocation">أقرب فني حسب موقعك الحالي</string>
 </resources>

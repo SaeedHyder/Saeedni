@@ -48,13 +48,10 @@ public class TechNotificationitemBinder extends ViewBinder<NotificationEnt> {
            // view.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
             viewHolder.txt_jobNotification.setText((entity.getMessage() + "").trim());
         }
-        viewHolder.iv_next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch (entity.getActionType()) {
-                    case "job":
-                        break;
-                }
+        viewHolder.iv_next.setOnClickListener(v -> {
+            switch (entity.getActionType()) {
+                case "job":
+                    break;
             }
         });
     }

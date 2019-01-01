@@ -99,21 +99,24 @@ public class UserNotificationitemBinder extends ViewBinder<NotificationEnt> {
     private void openConformationPopup(NotificationEnt entity) {
         final DialogHelper dialogHelper = new DialogHelper(dockActivity);
         dialogHelper.initComformationDialog((View.OnClickListener) yes -> {
-                    //  dialogHelper.hideDialog();
+                      dialogHelper.hideDialog();
                     if (Util.doubleClickCheck()) {
                         if (InternetHelper.CheckInternetConectivityandShowToast(dockActivity)) {
+                            dockActivity.onLoadingStarted();
                             submitConformation(entity, 1, dialogHelper, dockActivity);
                         }
                     }
                 }, no -> {
+                     dialogHelper.hideDialog();
                     if (Util.doubleClickCheck()) {
                         if (InternetHelper.CheckInternetConectivityandShowToast(dockActivity)) {
+                            dockActivity.onLoadingStarted();
                             submitConformation(entity, 2, dialogHelper, dockActivity);
                         }
                     }
                 }
         );
-        dialogHelper.setCancelable(true);
+        dialogHelper.setCancelable(false);
         dialogHelper.showDialog();
     }
 
@@ -137,23 +140,24 @@ public class UserNotificationitemBinder extends ViewBinder<NotificationEnt> {
         dialogHelper.initRatingDialog(R.layout.rating_pop_up_dialog, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //  dialogHelper.hideDialog();
+                          dialogHelper.hideDialog();
                         if (Util.doubleClickCheck()) {
                             if (InternetHelper.CheckInternetConectivityandShowToast(dockActivity)) {
+                                dockActivity.onLoadingStarted();
                                 submitFeedback(entity, dialogHelper, dockActivity);
                             }
                         }
                     }
                 }, title, message, prefhelper
         );
-        dialogHelper.setCancelable(true);
+        dialogHelper.setCancelable(false);
         dialogHelper.showDialog();
     }
 
     private void submitFeedback(NotificationEnt ent, final DialogHelper helper, Context context) {
         if (ent.getRequestDetail().getAssign_technician_details() == null) {
             UIHelper.showShortToastInCenter(context, context.getResources().getString(R.string.something_went_wrong));
-            helper.hideDialog();
+           dockActivity.onLoadingFinished();
             return;
         }
         Call<ResponseWrapper> call = service.sendFeedback(prefhelper.getUserId(),
@@ -166,18 +170,19 @@ public class UserNotificationitemBinder extends ViewBinder<NotificationEnt> {
         call.enqueue(new Callback<ResponseWrapper>() {
             @Override
             public void onResponse(Call<ResponseWrapper> call, Response<ResponseWrapper> response) {
-                helper.hideDialog();
+                dockActivity.onLoadingFinished();
                 if (response.body().getResponse().equals("2000")) {
-                    dockActivity.popBackStackTillEntry(0);
-                    dockActivity.replaceDockableFragment(UserHomeFragment.newInstance(), "UserHomeFragment");
+
                 } else {
                     UIHelper.showShortToastInCenter(dockActivity, dockActivity.getResources().getString(R.string.feedback));
                 }
+                dockActivity.popBackStackTillEntry(0);
+                dockActivity.replaceDockableFragment(UserHomeFragment.newInstance(), "UserHomeFragment");
             }
 
             @Override
             public void onFailure(Call<ResponseWrapper> call, Throwable t) {
-                helper.hideDialog();
+                dockActivity.onLoadingFinished();
                 Log.e("EntryCodeFragment", t.toString());
                 // UIHelper.showShortToastInCenter(dockActivity, t.toString());
             }
@@ -190,12 +195,14 @@ public class UserNotificationitemBinder extends ViewBinder<NotificationEnt> {
         call.enqueue(new Callback<ResponseWrapper>() {
             @Override
             public void onResponse(Call<ResponseWrapper> call, Response<ResponseWrapper> response) {
-                helper.hideDialog();
+                dockActivity.onLoadingFinished();
                 if (response.body().getResponse().equals("2000")) {
                     if (userStatus == 1) {
                         openRatingPopup(ent);
                     } else {
                         UIHelper.showShortToastInCenter(context, context.getResources().getString(R.string.cancel));
+                        dockActivity.popBackStackTillEntry(0);
+                        dockActivity.replaceDockableFragment(UserHomeFragment.newInstance(), "UserHomeFragment");
                     }
 
                 } else {
@@ -205,7 +212,7 @@ public class UserNotificationitemBinder extends ViewBinder<NotificationEnt> {
 
             @Override
             public void onFailure(Call<ResponseWrapper> call, Throwable t) {
-                helper.hideDialog();
+                dockActivity.onLoadingFinished();
                 Log.e("EntryCodeFragment", t.toString());
                 // UIHelper.showShortToastInCenter(dockActivity, t.toString());
             }

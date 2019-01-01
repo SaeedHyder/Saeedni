@@ -83,6 +83,9 @@ public class SettingFragment extends BaseFragment {
             imgPhone.setRotation(360);
             imgTerms.setRotation(360);
         }
+
+        btnChangePassword.setVisibility(prefHelper.getRegistrationResult().isSocialLogin() ? View.GONE : View.VISIBLE);
+
         swtPushNotification.setChecked(prefHelper.getRegistrationResult().isPushNotificationOn());
 
         swtPushNotification.setOnCheckedChangeListener((compoundButton, b) -> {
@@ -117,11 +120,11 @@ public class SettingFragment extends BaseFragment {
     }
 
 
-    @OnClick({R.id.btnChangePhoneNumber, R.id.btnChangePassword, R.id.btnContact, R.id.btnAbout,R.id.btnTermsCondition})
+    @OnClick({R.id.btnChangePhoneNumber, R.id.btnChangePassword, R.id.btnContact, R.id.btnAbout, R.id.btnTermsCondition})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btnChangePhoneNumber:
-                getDockActivity().replaceDockableFragment(UserChangePhoneFragment.newInstance(), "UserChangePhoneFragment");
+                getDockActivity().replaceDockableFragment(UserChangePhoneFragment.newInstance(false), "UserChangePhoneFragment");
 
                 break;
 
@@ -137,7 +140,7 @@ public class SettingFragment extends BaseFragment {
                 getDockActivity().replaceDockableFragment(AboutAppFragment.newInstance(), "AboutAppFragment");
 
                 break;
-                case R.id.btnTermsCondition:
+            case R.id.btnTermsCondition:
                 getDockActivity().replaceDockableFragment(TermAndConditionFragment.newInstance(), "TermAndConditionFragment");
 
                 break;

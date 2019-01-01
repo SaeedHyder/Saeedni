@@ -259,6 +259,7 @@ public class NewJobsFragment extends BaseFragment {
 
     private void getNewJobs() {
         loadingStarted();
+//        Call<ResponseWrapper<ArrayList<NewJobsEnt>>> call = webService.newJobs(Integer.valueOf(prefHelper.getUserId()));
         Call<ResponseWrapper<ArrayList<NewJobsEnt>>> call = webService.newJobs(Integer.valueOf(prefHelper.getUserId()));
 
         call.enqueue(new Callback<ResponseWrapper<ArrayList<NewJobsEnt>>>() {

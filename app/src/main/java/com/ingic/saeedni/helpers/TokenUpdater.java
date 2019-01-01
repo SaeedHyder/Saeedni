@@ -28,17 +28,17 @@ public class TokenUpdater {
     }
 
     public void UpdateToken(Context context, final String userid, String DeviceType, String Token) {
-        if (Token.isEmpty()) {
+        /*if (Token.isEmpty()) {
             Log.e("Token Updater", "Token is Empty");
-        }
+        }*/
         webservice = WebServiceFactory.getWebServiceInstanceWithCustomInterceptor(context,
                 WebServiceConstants.SERVICE_URL);
         Call<ResponseWrapper> call = webservice.updateToken(userid, DeviceType, Token);
         call.enqueue(new Callback<ResponseWrapper>() {
             @Override
             public void onResponse(Call<ResponseWrapper> call, Response<ResponseWrapper> response) {
-                if (response.body() != null)
-                    Log.i("UPDATETOKEN", response.body().getResponse() + "" + userid);
+               /* if (response.body() != null)
+                    Log.i("UPDATETOKEN", response.body().getResponse() + "" + userid);*/
             }
 
             @Override

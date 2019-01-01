@@ -1,5 +1,6 @@
 package com.ingic.saeedni.ui.viewbinder;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.view.View;
 import android.widget.Button;
@@ -40,6 +41,7 @@ public class SaeedniNewJobBinder extends ViewBinder<NewJobsEnt> {
         return new ViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void bindView(NewJobsEnt entity, int position, int grpPosition, View view, Activity activity) {
 
@@ -51,17 +53,16 @@ public class SaeedniNewJobBinder extends ViewBinder<NewJobsEnt> {
 
         }
         if (entity.getRequest_detail().getService_detail() != null) {
-            if (entity.getRequest_detail().getService_detail() != null) {
-                viewHolder.txtEstimatedQuote.setText(activity.getResources().getString(R.string.aed) + " " + entity.getRequest_detail().getEstimate_from() + " " +
-                        "-" + " " + entity.getRequest_detail().getEstimate_to());
-            }
+            viewHolder.txtEstimatedQuote.setText(activity.getResources().getString(R.string.aed) + " " + entity.getRequest_detail().getEstimate_from() + " " +
+                    "-" + " " + entity.getRequest_detail().getEstimate_to());
             viewHolder.txtAddress.setText(entity.getRequest_detail().getAddress());
             viewHolder.txtJobName.setText(entity.getRequest_detail().getId() + "");
             viewHolder.txtPreferredDateTime.setText(entity.getRequest_detail().getDate() + "  " + entity.getRequest_detail().getTime());
-            viewHolder.txtService.setText(entity.getRequest_detail().getService_detail().getTitle() + "");
-           /* if (entity.getRequest_detail().getServics_list().size() > 0)
-                viewHolder.txtService.setText(entity.getRequest_detail().getServics_list().get(0).getService_detail().getTitle() + "");
-                */
+            if (preferenceHelper.isLanguageArabic()) {
+                viewHolder.txtService.setText(entity.getRequest_detail().getService_detail().getAr_title() + "");
+            } else {
+                viewHolder.txtService.setText(entity.getRequest_detail().getService_detail().getTitle() + "");
+            }
             viewHolder.btnAccept.setTag(R.integer.key_recycler_object, entity);
             viewHolder.btnAccept.setTag(R.integer.key_recycler_position, position);
             viewHolder.btnReject.setTag(R.integer.key_recycler_object, entity);
@@ -76,23 +77,8 @@ public class SaeedniNewJobBinder extends ViewBinder<NewJobsEnt> {
                 viewHolder.btnViewImages.setVisibility(View.VISIBLE);
                 viewHolder.btnViewImages.setOnClickListener(onClickListener);
             }
-                /*if (!preferenceHelper.isLanguageArabic()) {
-                    title = entity.getRequest_detail().getService_detail().getTitle() + "";
-                } else {
-                    title = entity.getRequest_detail().getService_detail().getAr_title() + "";
-                }
-                if (entity.getRequest_detail().getServics_list().size() > 0) {
-                    if (!preferenceHelper.isLanguageArabic()) {
-                        title1 = entity.getRequest_detail().getServics_list().get(0).getService_detail().getTitle() + "";
-                    } else {
-                        title1 = entity.getRequest_detail().getServics_list().get(0).getService_detail().getAr_title() + "";
-                    }
 
-                }
-                viewHolder.txt_jobNotification.setText(title + "/" + title1);*/
 
-        } else {
-            // viewHolder.txt_jobNotification.setText("No Title");
         }
 
     }
