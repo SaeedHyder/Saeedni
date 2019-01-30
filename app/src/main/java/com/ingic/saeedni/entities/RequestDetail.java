@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
 public class RequestDetail {
     @SerializedName("id")
     @Expose
@@ -48,15 +47,6 @@ public class RequestDetail {
     @SerializedName("user_id")
     @Expose
     private String user_id;
-
-    public int getCategory_id() {
-        return category_id;
-    }
-
-    public void setCategory_id(int category_id) {
-        this.category_id = category_id;
-    }
-
     @SerializedName("category_id")
     @Expose
     private int category_id;
@@ -86,6 +76,17 @@ public class RequestDetail {
     private List<RequestDetail> subRequest = null;
     private ArrayList<ImageDetailEnt> image_detail;
     private ArrayList<FeedbackDetail> feedbackdetail;
+    @SerializedName("total_amount")
+    @Expose
+    private String total_amount = "";
+
+    public int getCategory_id() {
+        return category_id;
+    }
+
+    public void setCategory_id(int category_id) {
+        this.category_id = category_id;
+    }
 
     public String getTotal_amount() {
         return total_amount;
@@ -94,12 +95,6 @@ public class RequestDetail {
     public void setTotal_amount(String total_amount) {
         this.total_amount = total_amount;
     }
-
-    @SerializedName("total_amount")
-    @Expose
-
-    private String total_amount = "";
-
 
     public List<RequestDetail> getSubRequest() {
         return subRequest;
@@ -207,7 +202,7 @@ public class RequestDetail {
     }
 
     public String getTotal() {
-        return total==null?"":total;
+        return total == null ? "" : total;
     }
 
     public void setTotal(String total) {

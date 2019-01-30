@@ -4,7 +4,9 @@ import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.location.Address;
@@ -22,6 +24,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
+import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -32,13 +35,13 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.firebase.FirebaseApp;
 import com.ingic.saeedni.R;
 import com.ingic.saeedni.entities.LocationModel;
 import com.ingic.saeedni.fragments.HomeFragment;
 import com.ingic.saeedni.fragments.SideMenuFragment;
 import com.ingic.saeedni.fragments.UserHomeFragment;
 import com.ingic.saeedni.fragments.UserSelectionFragment;
-import com.ingic.saeedni.fragments.UserloginFragment;
 import com.ingic.saeedni.fragments.abstracts.BaseFragment;
 import com.ingic.saeedni.helpers.ScreenHelper;
 import com.ingic.saeedni.helpers.UIHelper;
@@ -53,6 +56,8 @@ import com.kbeanie.imagechooser.api.ImageChooserListener;
 import com.kbeanie.imagechooser.api.ImageChooserManager;
 
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Locale;
 
@@ -60,7 +65,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class MainActivity extends DockActivity implements OnClickListener, ImageChooserListener,FileChooserListener {
+public class MainActivity extends DockActivity implements OnClickListener, ImageChooserListener, FileChooserListener {
     private final static String TAG = "ICA";
     public TitleBar titleBar;
     public boolean isNotification;
@@ -95,13 +100,29 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
         return true;
     }
 
+    public void printHashKey(Context pContext) {
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                String hashKey = new String(Base64.encode(md.digest(), 0));
+                Log.i(TAG, "printHashKey() Hash Key: " + hashKey);
+            }
+        } catch (NoSuchAlgorithmException e) {
+            Log.e(TAG, "printHashKey()", e);
+        } catch (Exception e) {
+            Log.e(TAG, "printHashKey()", e);
+        }
+    }
+
     boolean isSystemLanguageArabic() {
         Locale locale;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            locale= getApplicationContext().getResources().getConfiguration().getLocales().get(0);
+            locale = getApplicationContext().getResources().getConfiguration().getLocales().get(0);
         } else {
             //noinspection deprecation
-            locale= getApplicationContext().getResources().getConfiguration().locale;
+            locale = getApplicationContext().getResources().getConfiguration().locale;
         }
         return locale.getLanguage().equalsIgnoreCase("ar");
     }
@@ -240,7 +261,6 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
     }
 
 
-
     public void restartActivity() {
         Intent intent = getIntent();
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -306,6 +326,7 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FirebaseApp.initializeApp(this);
         setContentView(R.layout.activity_dock);
         ButterKnife.bind(this);
         titleBar = header_main;
@@ -315,6 +336,7 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
         Log.i("Screen Density", ScreenHelper.getDensity(this) + "");
         settingSideMenu();
         setCurrentLocale();
+        printHashKey(getApplicationContext());
 
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
@@ -334,7 +356,7 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
             @Override
             public void onClick(View v) {
                 drawerLayout.openDrawer(Gravity.LEFT);
-
+                UIHelper.hideSoftKeyboard(getApplicationContext(), getWindow().getDecorView());
 
             }
         });
@@ -357,7 +379,7 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
         });
 
         //
-            initFragment();
+        initFragment();
 
     }
 
@@ -392,7 +414,9 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
 
     private void notImplemented() {
         UIHelper.showLongToastInCenter(this, "Coming Soon");
-    }    @Override
+    }
+
+    @Override
     public void onClick(View view) {
 
     }
@@ -679,16 +703,6 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
         return null;
     }
 
-    public interface ImageSetter {
-
-        public void setImage(String imagePath);
-
-        public void setFilePath(String filePath);
-
-        public void setVideo(String videoPath);
-
-    }
-
     public void pickFile() {
         fm = new FileChooserManager(this);
         fm.setFileChooserListener(this);
@@ -701,8 +715,15 @@ public class MainActivity extends DockActivity implements OnClickListener, Image
         }
     }
 
+    public interface ImageSetter {
 
+        public void setImage(String imagePath);
 
+        public void setFilePath(String filePath);
+
+        public void setVideo(String videoPath);
+
+    }
 
 
 }

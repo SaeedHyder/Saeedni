@@ -78,12 +78,16 @@ public class TechNotificationsFragment extends BaseFragment {
 
     private void NotificationItemListner() {
 
-        lvTechNotification.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-             //   UIHelper.showShortToastInCenter(getDockActivity(), "Will be implemented in beta version");
-                  getDockActivity().replaceDockableFragment(NewJobsFragment.newInstance(), "NewJobDetail");
+        lvTechNotification.setOnItemClickListener((parent, view, position, id) -> {
+            switch (((NotificationEnt)adapter.getItem(position)).getActionType()) {
+                case "Job":
+                    getDockActivity().replaceDockableFragment(NewJobsFragment.newInstance(), "NewJobDetail");
+                    break;
+                case "complete":
+                    getDockActivity().replaceDockableFragment(OrderHistoryFragment.newInstance(true), "OrderHistoryFragment");
+                    break;
             }
+         //   UIHelper.showShortToastInCenter(getDockActivity(), "Will be implemented in beta version");
         });
 
     }

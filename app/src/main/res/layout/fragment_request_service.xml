@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true"
-            android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:orientation="vertical">
 
     <LinearLayout
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:background="@color/white_dirty"
-                  android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white_dirty"
+        android:orientation="vertical">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -31,7 +31,7 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/x15"
                 android:textStyle="normal"
-                app:typeface="Roboto-Regular.ttf"/>
+                app:typeface="Roboto-Regular.ttf" />
         </FrameLayout>
 
         <LinearLayout
@@ -51,19 +51,22 @@
                 android:textColor="@color/app_blue"
                 android:textSize="@dimen/x15"
                 android:textStyle="normal"
-                app:typeface="Roboto-Regular.ttf"/>
+                app:typeface="Roboto-Regular.ttf" />
 
             <com.ingic.saeedni.ui.views.AnySpinner
                 android:id="@+id/spn_jobtype"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/x40"
-                android:layout_marginBottom="@dimen/x5"/>
+                android:layout_marginBottom="@dimen/x5"
+                android:gravity="left"
+                android:layoutDirection="ltr"
+                android:textAlignment="gravity" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/x1"
                 android:layout_marginBottom="@dimen/x5"
-                android:background="@drawable/line"/>
+                android:background="@drawable/line" />
 
             <com.ingic.saeedni.ui.views.AnyTextView
                 android:id="@+id/txt_subjobtype"
@@ -76,19 +79,22 @@
                 android:textColor="@color/app_blue"
                 android:textSize="@dimen/x15"
                 android:textStyle="normal"
-                app:typeface="Roboto-Regular.ttf"/>
+                app:typeface="Roboto-Regular.ttf" />
 
             <com.ingic.saeedni.ui.views.AnySpinner
                 android:id="@+id/spn_subjobtype"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/x40"
-                android:layout_marginBottom="@dimen/x5"/>
+                android:layout_marginBottom="@dimen/x5"
+                android:gravity="left"
+                android:layoutDirection="ltr"
+                android:textAlignment="gravity" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/x1"
                 android:layout_marginBottom="@dimen/x5"
-                android:background="@drawable/line"/>
+                android:background="@drawable/line" />
 
             <com.ingic.saeedni.ui.views.AnyTextView
                 android:id="@+id/txt_jobdescription"
@@ -101,7 +107,7 @@
                 android:textColor="@color/app_blue"
                 android:textSize="@dimen/x15"
                 android:textStyle="normal"
-                app:typeface="Roboto-Regular.ttf"/>
+                app:typeface="Roboto-Regular.ttf" />
 
             <com.ingic.saeedni.ui.views.AnyEditTextView
                 android:id="@+id/edt_job_description"
@@ -111,25 +117,28 @@
                 android:background="@drawable/boxcentershape"
                 android:ems="10"
                 android:gravity="top"
-                android:textColor="@color/s_font_color_blue"
-                android:textColorHint="@color/s_font_color_blue"
                 android:hint="@string/job_description_message"
                 android:imeOptions="actionDone"
                 android:inputType="textMultiLine"
                 android:maxHeight="@dimen/x100"
-                android:visibility="gone"
                 android:overScrollMode="always"
                 android:padding="@dimen/x10"
                 android:scrollbarStyle="insideInset"
                 android:scrollbars="vertical"
-                app:typeface="Roboto-Regular.ttf"/>
+                android:textColor="@color/s_font_color_blue"
+                android:textColorHint="@color/s_font_color_blue"
+                android:visibility="gone"
+                app:typeface="Roboto-Regular.ttf" />
 
             <com.ingic.saeedni.ui.views.AnySpinner
                 android:id="@+id/spn_jobdescription"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/x40"
                 android:layout_marginBottom="@dimen/x5"
-                android:visibility="visible"/>
+                android:gravity="left"
+                android:layoutDirection="ltr"
+                android:textAlignment="gravity"
+                android:visibility="visible" />
 
 
             <com.ingic.saeedni.ui.views.AnyTextView
@@ -143,13 +152,13 @@
                 android:textColor="@color/app_blue"
                 android:textSize="@dimen/x15"
                 android:textStyle="normal"
-                app:typeface="Roboto-Regular.ttf"/>
+                app:typeface="Roboto-Regular.ttf" />
 
 
             <ListView
                 android:id="@+id/listView_jobselected"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
             <com.ingic.saeedni.ui.views.AnyTextView
                 android:id="@+id/txt_jobadditional"
@@ -162,7 +171,7 @@
                 android:textColor="@color/app_blue"
                 android:textSize="@dimen/x15"
                 android:textStyle="normal"
-                app:typeface="Roboto-Regular.ttf"/>
+                app:typeface="Roboto-Regular.ttf" />
 
             <com.ingic.saeedni.ui.views.AnyEditTextView
                 android:id="@+id/edt_addtional_job"
@@ -177,12 +186,13 @@
                 android:inputType="textMultiLine"
                 android:maxHeight="@dimen/x100"
                 android:overScrollMode="always"
-                android:textColor="@color/s_font_color_blue"
-                android:textColorHint="@color/s_font_color_blue"
                 android:padding="@dimen/x10"
                 android:scrollbarStyle="insideInset"
                 android:scrollbars="vertical"
-                app:typeface="Roboto-Regular.ttf"/>
+                android:textColor="@color/s_font_color_blue"
+                android:textColorHint="@color/s_font_color_blue"
+                android:textSize="@dimen/x15"
+                app:typeface="Roboto-Regular.ttf" />
 
             <com.ingic.saeedni.ui.views.AnyTextView
                 android:id="@+id/txt_joblocation"
@@ -191,61 +201,62 @@
                 android:maxLines="1"
                 android:paddingBottom="@dimen/x10"
                 android:paddingTop="@dimen/x10"
-                android:text="@string/address"
+                android:text="@string/selectTechnicianMessage"
                 android:textColor="@color/app_blue"
                 android:textSize="@dimen/x15"
                 android:textStyle="normal"
-                app:typeface="Roboto-Regular.ttf"/>
+                app:typeface="Roboto-Regular.ttf" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
-
-                android:background="@drawable/boxcentershape"
+                android:layout_height="@dimen/x40"
                 android:layout_marginBottom="@dimen/x5"
-                android:layout_height="@dimen/x40">
+                android:background="@drawable/boxcentershape">
 
                 <ImageView
-                    android:id="@+id/img_location_image"
+                    android:id="@+id/img_address3"
                     android:layout_width="@dimen/x20"
                     android:layout_height="@dimen/x20"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/location"
-                    android:visibility="gone"/>
+                    android:layout_marginStart="@dimen/x20"
+                    android:src="@drawable/address"
+                    android:visibility="gone" />
 
-                <com.jota.autocompletelocation.AutoCompleteLocation
-                    android:id="@+id/edt_locationspecific"
+                <com.ingic.saeedni.ui.views.AnySpinner
+                    android:id="@+id/spnCountry"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@+id/img_location_image"
-                    android:background="@null"
-                    app:hint_text="@string/enter_location"
-                    android:imeOptions="actionDone"
-                    android:maxLength="50"
-                    android:maxLines="1"
-                    android:textColor="@color/s_font_color_blue"
-                    android:textColorHint="@color/s_font_color_blue"
-                    android:singleLine="true"
-                    android:textSize="@dimen/x15"
-                    app:typeface="Roboto-Regular.ttf"/>
-
+                    android:layout_height="@dimen/x40"
+                    android:layout_marginBottom="@dimen/x5"
+                    android:layout_toEndOf="@+id/img_address3"
+                    android:gravity="left"
+                    android:layoutDirection="ltr"
+                    android:paddingStart="@dimen/x5"
+                    android:textAlignment="gravity" />
             </RelativeLayout>
+
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:background="@drawable/boxcentershape"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x5"
+                android:background="@drawable/boxcentershape">
+
                 <com.ingic.saeedni.ui.views.AnySpinner
                     android:id="@+id/spnCity"
                     android:layout_width="match_parent"
-                    android:paddingStart="@dimen/x5"
                     android:layout_height="@dimen/x40"
-                    android:layout_marginBottom="@dimen/x5"/>
+                    android:layout_marginBottom="@dimen/x5"
+                    android:gravity="left"
+                    android:layoutDirection="ltr"
+                    android:paddingStart="@dimen/x5"
+                    android:textAlignment="gravity" />
+
                 <ImageView
                     android:id="@+id/img_location_autocomplete"
                     android:layout_width="@dimen/x20"
                     android:layout_height="@dimen/x20"
                     android:layout_centerVertical="true"
-                    android:visibility="gone"
-                    android:src="@drawable/address"/>
+                    android:src="@drawable/address"
+                    android:visibility="gone" />
 
                 <com.jota.autocompletelocation.AutoCompleteLocation
                     android:id="@+id/edt_locationgps"
@@ -256,31 +267,144 @@
                     android:layout_toRightOf="@+id/img_location_autocomplete"
                     android:layout_toStartOf="@+id/img_gps"
                     android:background="@null"
-                    android:visibility="gone"
                     android:imeOptions="actionNext"
+                    android:maxLines="1"
+                    android:singleLine="true"
                     android:textColor="@color/s_font_color_blue"
                     android:textColorHint="@color/s_font_color_blue"
-                    android:maxLines="1"
-                    app:hint_text_color="@color/s_font_color_blue"
-                    app:text_color="@color/s_font_color_blue"
-                    android:singleLine="true"
                     android:textSize="@dimen/x15"
+                    android:visibility="gone"
                     app:background_layout="@null"
-                    app:hint_text="@string/dummyAddress"/>
+                    app:hint_text="@string/dummyAddress"
+                    app:hint_text_color="@color/s_font_color_blue"
+                    app:text_color="@color/s_font_color_blue" />
 
                 <ImageView
                     android:id="@+id/img_gps"
                     android:layout_width="@dimen/x20"
                     android:layout_height="@dimen/x20"
-                    android:visibility="gone"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="@dimen/x10"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/target"/>
+                    android:layout_marginEnd="@dimen/x10"
+                    android:src="@drawable/target"
+                    android:visibility="gone" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+
+                android:layout_height="@dimen/x40"
+                android:layout_marginBottom="@dimen/x5"
+                android:background="@drawable/boxcentershape">
+
+                <ImageView
+                    android:id="@+id/img_address_image"
+                    android:layout_width="@dimen/x20"
+                    android:layout_height="@dimen/x20"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/location"
+                    android:visibility="gone" />
+
+                <com.ingic.saeedni.ui.views.AnyEditTextView
+                    android:id="@+id/edtAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/img_address_image"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:hint="@string/enter_address"
+                    android:imeOptions="actionDone"
+                    android:maxLength="50"
+                    android:maxLines="1"
+                    android:paddingEnd="10dp"
+                    android:paddingStart="10dp"
+                    android:singleLine="true"
+                    android:inputType="textCapWords"
+                    android:textColor="@color/s_font_color_blue"
+                    android:textColorHint="@color/s_font_color_blue"
+                    android:textSize="@dimen/x15"
+                    app:typeface="Roboto-Regular.ttf" />
+
             </RelativeLayout>
 
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:paddingBottom="@dimen/x10"
+                android:paddingTop="@dimen/x10"
+                android:text="@string/findNearestByLocation"
+                android:gravity="start"
+                android:textColor="@color/app_blue"
+                android:textSize="@dimen/x15"
+                android:textStyle="normal"
+                app:typeface="Roboto-Regular.ttf" />
+            <RelativeLayout
+                android:layout_width="match_parent"
 
+                android:layout_height="@dimen/x40"
+                android:layout_marginBottom="@dimen/x5"
+                android:background="@drawable/boxcentershape">
+
+                <ImageView
+                    android:id="@+id/img_location_image"
+                    android:layout_width="@dimen/x20"
+                    android:layout_height="@dimen/x20"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/location"
+                    android:visibility="gone" />
+
+                <com.ingic.saeedni.ui.views.AnyTextView
+                    android:id="@+id/edt_locationspecific"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/img_location_image"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:hint="@string/enter_location"
+                    android:imeOptions="actionDone"
+                    android:maxLength="50"
+                    android:maxLines="1"
+                    android:paddingEnd="10dp"
+                    android:paddingStart="10dp"
+                    android:singleLine="true"
+                    android:textColor="@color/s_font_color_blue"
+                    android:textColorHint="@color/s_font_color_blue"
+                    android:textSize="@dimen/x15"
+                    app:typeface="Roboto-Regular.ttf" />
+
+            </RelativeLayout>
+
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:paddingBottom="@dimen/x10"
+                android:paddingTop="@dimen/x10"
+                android:text="@string/selectTechnician"
+                android:textColor="@color/app_blue"
+                android:textSize="@dimen/x15"
+                android:textStyle="normal"
+                app:typeface="Roboto-Regular.ttf" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x40"
+                android:layout_marginBottom="@dimen/x5"
+                android:background="@drawable/boxcentershape">
+
+                <com.ingic.saeedni.ui.views.AnySpinner
+                    android:id="@+id/spnTechnician"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/x40"
+                    android:layout_marginBottom="@dimen/x5"
+                    android:gravity="left"
+                    android:layoutDirection="ltr"
+                    android:paddingStart="@dimen/x5"
+                    android:textAlignment="gravity" />
+            </RelativeLayout>
 
             <com.ingic.saeedni.ui.views.AnyTextView
                 android:id="@+id/txt_jobpreferedDate"
@@ -293,23 +417,23 @@
                 android:textColor="@color/app_blue"
                 android:textSize="@dimen/x15"
                 android:textStyle="normal"
-                app:typeface="Roboto-Regular.ttf"/>
+                app:typeface="Roboto-Regular.ttf" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/x90"
-                android:padding="@dimen/x10"
                 android:background="@drawable/boxcentershape"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="@dimen/x10">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/x60"
-                    android:background="@drawable/btn"
-                    android:gravity="center"
                     android:layout_marginEnd="@dimen/x5"
                     android:layout_weight="1"
+                    android:background="@drawable/btn"
+                    android:gravity="center"
                     android:orientation="vertical">
-
 
 
                     <LinearLayout
@@ -322,7 +446,7 @@
                         <ImageView
                             android:layout_width="@dimen/x20"
                             android:layout_height="@dimen/x20"
-                            android:src="@drawable/calender"/>
+                            android:src="@drawable/calender" />
 
                         <com.ingic.saeedni.ui.views.AnyTextView
                             android:id="@+id/btn_preferreddate"
@@ -344,10 +468,10 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/x60"
-                    android:background="@drawable/btn"
-                    android:gravity="center"
                     android:layout_marginStart="@dimen/x5"
                     android:layout_weight="1"
+                    android:background="@drawable/btn"
+                    android:gravity="center"
                     android:orientation="vertical">
 
                     <com.ingic.saeedni.ui.views.AnyTextView
@@ -360,9 +484,9 @@
                         android:text="@string/preferred_time"
                         android:textColor="@color/app_blue"
                         android:textSize="@dimen/x15"
-                        android:visibility="gone"
                         android:textStyle="normal"
-                        app:typeface="Roboto-Regular.ttf"/>
+                        android:visibility="gone"
+                        app:typeface="Roboto-Regular.ttf" />
 
                     <LinearLayout
                         android:id="@+id/ll_btnTime"
@@ -374,7 +498,7 @@
                         <ImageView
                             android:layout_width="@dimen/x20"
                             android:layout_height="@dimen/x20"
-                            android:src="@drawable/time"/>
+                            android:src="@drawable/time" />
 
                         <com.ingic.saeedni.ui.views.AnyTextView
                             android:id="@+id/btn_preferredtime"
@@ -383,24 +507,37 @@
                             android:layout_marginEnd="@dimen/x5"
                             android:layout_marginStart="@dimen/x5"
                             android:gravity="center_vertical"
+                            android:hint="@string/select_time"
                             android:textColor="@color/app_blue"
                             android:textColorHint="@color/app_blue"
-                            android:hint="@string/select_time"
                             android:textSize="@dimen/x15"
-                            app:typeface="Roboto-Regular.ttf"/>
+                            app:typeface="Roboto-Regular.ttf" />
 
                     </LinearLayout>
 
                 </LinearLayout>
             </LinearLayout>
 
+            <com.ingic.saeedni.ui.views.AnyTextView
+                android:id="@+id/txtaddImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:paddingBottom="@dimen/x10"
+                android:paddingTop="@dimen/x10"
+                android:text="@string/add_image_optional"
+                android:textColor="@color/app_blue"
+                android:textSize="@dimen/x15"
+                android:textStyle="normal"
+                app:typeface="Roboto-Regular.ttf" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/x90"
                 android:layout_marginBottom="@dimen/x10"
-                android:padding="@dimen/x10"
                 android:background="@drawable/boxcentershape"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="@dimen/x10">
 
                 <LinearLayout
                     android:id="@+id/btn_addimage"
@@ -413,7 +550,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/cameraicon"/>
+                        android:src="@drawable/cameraicon" />
 
                     <com.ingic.saeedni.ui.views.AnyTextView
                         android:layout_width="match_parent"
@@ -425,9 +562,9 @@
                         android:text="@string/add_photo"
                         android:textColor="@color/white"
                         android:textSize="@dimen/x14"
-                        android:visibility="gone"
                         android:textStyle="normal"
-                        app:typeface="Roboto-Regular.ttf"/>
+                        android:visibility="gone"
+                        app:typeface="Roboto-Regular.ttf" />
                 </LinearLayout>
                 <!--  <include layout="@layout/horizontal_images_items"/>-->
                 <android.support.v7.widget.RecyclerView
@@ -437,7 +574,7 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/x10"
                     android:orientation="horizontal"
-                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
             </LinearLayout>
 
@@ -449,16 +586,16 @@
                 android:paddingBottom="@dimen/x10"
                 android:paddingTop="@dimen/x10"
                 android:text="@string/payment_method"
-                android:visibility="gone"
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/x15"
                 android:textStyle="normal"
-                app:typeface="Roboto-Regular.ttf"/>
+                android:visibility="gone"
+                app:typeface="Roboto-Regular.ttf" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:visibility="gone"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/img_cc_check"
@@ -468,7 +605,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:src="@drawable/tick"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <Button
                     android:id="@+id/btn_cc"
@@ -483,7 +620,7 @@
                     android:text="@string/cc"
                     android:textAllCaps="false"
                     android:textSize="@dimen/x10"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
             </RelativeLayout>
 
             <View
@@ -491,13 +628,13 @@
                 android:layout_height="@dimen/x1"
                 android:layout_marginBottom="@dimen/x5"
                 android:background="@drawable/line"
-                android:visibility="invisible"/>
+                android:visibility="invisible" />
 
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:visibility="gone"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/img_cod_check"
@@ -509,7 +646,7 @@
                     android:layout_marginEnd="@dimen/x15"
                     android:layout_marginStart="@dimen/x15"
                     android:src="@drawable/tick"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <Button
                     android:id="@+id/btn_cod"
@@ -523,15 +660,15 @@
                     android:gravity="start|center_vertical"
                     android:text="@string/cod"
                     android:textAllCaps="false"
-                    android:textSize="@dimen/x10"/>
+                    android:textSize="@dimen/x10" />
             </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/x1"
-                android:visibility="invisible"
                 android:layout_marginBottom="@dimen/x5"
-                android:background="@drawable/line"/>
+                android:background="@drawable/line"
+                android:visibility="invisible" />
 
             <Button
                 android:id="@+id/btn_request"
@@ -545,13 +682,13 @@
                 android:text="@string/request_now"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="@dimen/x20"/>
+                android:textSize="@dimen/x20" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/x1"
                 android:layout_marginBottom="@dimen/x5"
-                android:layout_marginTop="@dimen/x5"/>
+                android:layout_marginTop="@dimen/x5" />
         </LinearLayout>
 
     </LinearLayout>

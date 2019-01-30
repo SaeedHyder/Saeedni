@@ -19,7 +19,7 @@ public class OKHttpClientCreator {
     final static ProgressResponseBody.ProgressListener progressListener = new ProgressResponseBody.ProgressListener() {
         @Override
         public void update(long bytesRead, long contentLength, boolean done) {
-            int percent = (int) ((100 * bytesRead) / contentLength);
+//            int percent = (int) ((100 * bytesRead) / contentLength);
         }
     };
     private static NotificationManager mNotifyManager;

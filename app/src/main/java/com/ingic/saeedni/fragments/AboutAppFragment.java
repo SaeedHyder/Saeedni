@@ -1,5 +1,6 @@
 package com.ingic.saeedni.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.method.ScrollingMovementMethod;
@@ -71,7 +72,7 @@ public class AboutAppFragment extends BaseFragment {
             @Override
             public void onResponse(Call<ResponseWrapper<StaticPageEnt>> call, Response<ResponseWrapper<StaticPageEnt>> response) {
                 if (response.body().getResponse().equals("2000")) {
-                    settitle(response.body().getResult().getBody());
+                    settitle(prefHelper.isLanguageArabic() ? response.body().getResult().getArBody() : response.body().getResult().getBody());
                 } else {
                     UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
                 }
@@ -85,12 +86,13 @@ public class AboutAppFragment extends BaseFragment {
         });
     }
 
+    @SuppressLint("SetTextI18n")
     private void settitle(String response) {
         if (getMainActivity() != null && getMainActivity().titleBar != null) {
             getMainActivity().titleBar.setSubHeading(getDockActivity().getResources().getString(R.string.about_app));
             getMainActivity().titleBar.invalidate();
         }
-        scrollTv1.setText(response);
+        scrollTv1.setText(response + "");
         scrollTv1.setMovementMethod(new ScrollingMovementMethod());
     }
 

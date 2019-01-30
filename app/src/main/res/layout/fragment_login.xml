@@ -8,14 +8,14 @@
     <LinearLayout
         android:id="@+id/scrollview_bigdaddy"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_gravity="center"
-            android:layout_weight="0.55">
+            android:layout_weight="0.45">
 
 
             <ImageView
@@ -244,6 +244,34 @@
                 android:textAllCaps="true"
                 android:textColor="@color/white" />
 
+            <Button
+                android:id="@+id/btnFacebook"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/x15"
+                android:background="@drawable/facebook_background"
+                android:gravity="center"
+                android:text="@string/login_fb"
+                android:textAllCaps="true"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/btnGoogle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/x15"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/google_background"
+                android:gravity="center"
+                android:text="@string/login_google"
+                android:textAllCaps="true"
+                android:textColor="@color/white" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:background="@color/transparent" />
 
         </LinearLayout>
 

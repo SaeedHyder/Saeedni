@@ -32,6 +32,7 @@ import com.ingic.saeedni.ui.views.AnyEditTextView;
 import com.ingic.saeedni.ui.views.AnySpinner;
 import com.ingic.saeedni.ui.views.AnyTextView;
 import com.ingic.saeedni.ui.views.TitleBar;
+import com.ingic.saeedni.ui.views.Util;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -94,7 +95,6 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
     AnyEditTextView mEdtTotal;
     @BindView(R.id.spn_subjobtype)
     AnySpinner spnSubJobType;
-
     private ArrayList<ServiceEnt> selectedJobs;
     private ArrayListAdapter<ServiceEnt> selectedJobsadapter;
     private ServiceEnt jobtype;
@@ -184,10 +184,9 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
         super.setTitleBar(titleBar);
         titleBar.hideButtons();
         getDockActivity().lockDrawer();
-        titleBar.showsaveButton(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+        titleBar.showsaveButton(v -> {
+            if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+                if (Util.doubleClickCheck()) {
                     CreateRequest();
                 }
             }
@@ -288,46 +287,46 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
         final ArrayList<String> jobtypearraylist = new ArrayList<String>();
         for (ServiceEnt item : jobcollection
                 ) {
-            jobtypearraylist.add(prefHelper.isLanguageArabic() ? item.getTitle() : item.getTitle());
+            jobtypearraylist.add(prefHelper.isLanguageArabic() ? item.getArTitle() : item.getTitle());
         }
 
 
-        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity(), android.R.layout.simple_spinner_item, jobtypearraylist);
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity(), R.layout.row_item_spinner, jobtypearraylist);
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spnJobtype.setAdapter(categoryAdapter);
         if (previousData != null) {
             if (jobcollection.size() > 0) {
                 if (previousData.getService_detail() != null) {
-                    if (prefHelper.isLanguageArabic()) {
+                    if (!prefHelper.isLanguageArabic()) {
                         if (jobtypearraylist.contains(previousData.getService_detail().getTitle())) {
                             spnJobtype.setSelection(jobtypearraylist.indexOf(previousData.getService_detail().getTitle()));
                             jobtype = jobcollection.get(jobtypearraylist.indexOf(previousData.getService_detail().getTitle()));
                             if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
-                                initJobDescriptionSpinner(jobtype);
+                                //initJobDescriptionSpinner(jobtype);
                                 initSubJobDescriptionSpinner(jobtype);
                             }
                         } else {
                             spnJobtype.setSelection(0);
                             jobtype = jobcollection.get(0);
                             if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
-                                initJobDescriptionSpinner(jobtype);
+                                // initJobDescriptionSpinner(jobtype);
                                 initSubJobDescriptionSpinner(jobtype);
                             }
                         }
                     } else {
-                        if (jobtypearraylist.contains(previousData.getService_detail().getTitle())) {
-                            spnJobtype.setSelection(jobtypearraylist.indexOf(previousData.getService_detail().getTitle()));
-                            jobtype = jobcollection.get(jobtypearraylist.indexOf(previousData.getService_detail().getTitle()));
+                        if (jobtypearraylist.contains(previousData.getService_detail().getAr_title())) {
+                            spnJobtype.setSelection(jobtypearraylist.indexOf(previousData.getService_detail().getAr_title()));
+                            jobtype = jobcollection.get(jobtypearraylist.indexOf(previousData.getService_detail().getAr_title()));
                             if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
-                                initJobDescriptionSpinner(jobtype);
+                                // initJobDescriptionSpinner(jobtype);
                                 initSubJobDescriptionSpinner(jobtype);
                             }
                         } else {
                             spnJobtype.setSelection(0);
                             jobtype = jobcollection.get(0);
                             if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
-                                initJobDescriptionSpinner(jobtype);
+                                //initJobDescriptionSpinner(jobtype);
                                 initSubJobDescriptionSpinner(jobtype);
                             }
                         }
@@ -338,8 +337,9 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
         } else {
             spnJobtype.setSelection(0);
             jobtype = jobcollection.get(0);
+            spnJobtype.setEnabled(true);
             if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
-                initJobDescriptionSpinner(jobtype);
+                //initJobDescriptionSpinner(jobtype);
                 initSubJobDescriptionSpinner(jobtype);
             }
         }
@@ -352,7 +352,7 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
                     refreshListview();
                     jobtype = jobcollection.get(position);
                     if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
-                        initJobDescriptionSpinner(jobtype);
+                        //initJobDescriptionSpinner(jobtype);
                         initSubJobDescriptionSpinner(jobtype);
                     }
                 }
@@ -406,17 +406,18 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
             if (!prefHelper.isLanguageArabic()) {
                 jobdescriptionarraylist.add(item.getTitle());
             } else {
-                jobdescriptionarraylist.add(item.getTitle());
+                jobdescriptionarraylist.add(item.getArTitle());
             }
         }
-        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity(), android.R.layout.simple_spinner_item, jobdescriptionarraylist);
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity(), R.layout.row_item_spinner, jobdescriptionarraylist);
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnSubJobType.setAdapter(categoryAdapter);
-        spnSubJobType.setSelection(SelectedIndex);
+
         spnSubJobType.setOnItemSelectedEvenIfUnchangedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                if (position < subjobcollection.size())
+                initJobDescriptionSpinner(subjobcollection.get(position));
                 // bindSelectedJobview(selectedJobs);
             }
 
@@ -428,6 +429,7 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
                 refreshListview();*/
             }
         });
+        spnSubJobType.setSelection(SelectedIndex);
     }
 
     private void initJobDescriptionSpinner(ServiceEnt selectedService) {
@@ -472,13 +474,13 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
         final ArrayList<String> jobdescriptionarraylist = new ArrayList<String>();
         for (ServiceEnt item : jobChildcollection
                 ) {
-            jobdescriptionarraylist.add(prefHelper.isLanguageArabic() ? item.getTitle() : item.getTitle());
+            jobdescriptionarraylist.add(prefHelper.isLanguageArabic() ? item.getArTitle() : item.getTitle());
         }
-      //  ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity(), android.R.layout.simple_spinner_item, jobdescriptionarraylist);
-       // categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //  ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity(), android.R.layout.simple_spinner_item, jobdescriptionarraylist);
+        // categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity()
-                , android.R.layout.simple_spinner_item, jobdescriptionarraylist) {
+                , R.layout.row_item_spinner, jobdescriptionarraylist) {
             @Override
             public boolean isEnabled(int position) {
                 return !(position == 0);
@@ -495,14 +497,14 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
 
         };
 
-
+        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnJobdescription.setAdapter(categoryAdapter);
         spnJobdescription.setOnItemSelectedEvenIfUnchangedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (!selectedJobs.contains(jobChildcollection.get(position))) {
                     if (position != 0)
-                    selectedJobs.add(jobChildcollection.get(position));
+                        selectedJobs.add(jobChildcollection.get(position));
                 }
 
 
@@ -594,15 +596,15 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
             public void onResponse(Call<ResponseWrapper> call, Response<ResponseWrapper> response) {
                 loadingFinished();
                 if (response.body().getResponse().equals("2000")) {
-                    getDockActivity().popBackStackTillEntry(0);
                     if (!isEdit) {
                         UIHelper.showShortToastInCenter(getDockActivity(), getDockActivity().getResources().getString(R.string.job_added_successfully));
-                    }
-                    else{
+                    } else {
                         UIHelper.showShortToastInCenter(getDockActivity(), getDockActivity().getResources().getString(R.string.edit_job_successfully));
                     }
-                   // getDockActivity().replaceDockableFragment(HomeFragment.newInstance(), "HomeFragment");
-                    getDockActivity().replaceDockableFragment(OrderHistoryFragment.newInstance(), "OrderHistoryFragment");
+                    // getDockActivity().replaceDockableFragment(HomeFragment.newInstance(), "HomeFragment");
+                    getDockActivity().popFragment();
+                   /* getDockActivity().popBackStackTillEntry(0);
+                    getDockActivity().replaceDockableFragment(HomeFragment.newInstance(), "OrderHistoryFragment");*/
                 } else {
                     UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
                 }
@@ -687,7 +689,7 @@ public class EditJobTechFragment extends BaseFragment implements onDeleteImage {
         if (selectedJobs.size() > position)
             selectedJobs.remove(position);
 
-        if(selectedJobs.size()<=0){
+        if (selectedJobs.size() <= 0) {
             spnJobdescription.setSelection(0);
         }
 

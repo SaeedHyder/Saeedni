@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="ltr"
+    android:orientation="vertical">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -16,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@drawable/s_logo"/>
+            android:src="@drawable/s_logo" />
     </FrameLayout>
 
     <LinearLayout
@@ -49,7 +50,7 @@
                 android:textSize="20sp"
 
                 android:visibility="visible"
-                app:pinLineColors="@color/gray_dark"/>
+                app:pinLineColors="@color/gray_dark" />
 
 
         </LinearLayout>
@@ -68,7 +69,7 @@
                 android:layout_marginTop="@dimen/x15"
                 android:background="@drawable/button_background"
                 android:text="@string/submit"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white" />
 
         </LinearLayout>
 

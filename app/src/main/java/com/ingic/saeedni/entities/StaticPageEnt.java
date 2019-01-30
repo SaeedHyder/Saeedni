@@ -23,6 +23,9 @@ public class StaticPageEnt {
     @SerializedName("body")
     @Expose
     private String body;
+    @SerializedName("ar_body")
+    @Expose
+    private String arBody;
     @SerializedName("created_at")
     @Expose
     private String createdAt;
@@ -32,6 +35,10 @@ public class StaticPageEnt {
     @SerializedName("deleted_at")
     @Expose
     private String deletedAt;
+
+    public String getArBody() {
+        return arBody;
+    }
 
     public Integer getId() {
         return id;

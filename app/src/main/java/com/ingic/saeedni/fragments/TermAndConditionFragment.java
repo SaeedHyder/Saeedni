@@ -1,5 +1,6 @@
 package com.ingic.saeedni.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.method.ScrollingMovementMethod;
@@ -64,7 +65,7 @@ public class TermAndConditionFragment extends BaseFragment {
             @Override
             public void onResponse(Call<ResponseWrapper<StaticPageEnt>> call, Response<ResponseWrapper<StaticPageEnt>> response) {
                 if (response.body().getResponse().equals("2000")) {
-                    settitle(response.body().getResult().getBody());
+                    settitle(prefHelper.isLanguageArabic() ? response.body().getResult().getArBody() : response.body().getResult().getBody());
                 } else {
                     UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
                 }
@@ -78,13 +79,13 @@ public class TermAndConditionFragment extends BaseFragment {
         });
 
     }
-
+    @SuppressLint("SetTextI18n")
     private void settitle(String response) {
         if (getMainActivity() != null && getMainActivity().titleBar != null) {
             getMainActivity().titleBar.setSubHeading(getDockActivity().getResources().getString(R.string.terms_conditons));
             getMainActivity().titleBar.invalidate();
         }
-        txtTermCondition.setText(response);
+        txtTermCondition.setText(response+"");
         txtTermCondition.setMovementMethod(new ScrollingMovementMethod());
     }
 

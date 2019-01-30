@@ -4,7 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@color/white_dirty"
-              android:layoutDirection="ltr"
+              android:id="@+id/parent"
               android:orientation="vertical">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -28,8 +28,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/x40"
-            android:layout_marginLeft="@dimen/x20"
-            android:layout_marginRight="@dimen/x20"
+            android:layout_marginStart="@dimen/x20"
+            android:layout_marginEnd="@dimen/x20"
             android:background="@drawable/boxcentershape">
 
             <ImageView
@@ -45,10 +45,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/x20"
-                android:layout_marginRight="@dimen/x20"
+                android:layout_marginStart="@dimen/x20"
+                android:layout_marginEnd="@dimen/x20"
                 android:layout_toEndOf="@+id/img_profile"
-                android:layout_toRightOf="@+id/img_profile"
                 android:background="@android:color/transparent"
                 android:drawablePadding="@dimen/x10"
                 android:hint="@string/enter_full_name"
@@ -58,7 +57,7 @@
                 android:maxLines="1"
                 android:singleLine="true"
                 android:gravity="left"
-                android:textAlignment="gravity"
+                android:textAlignment="viewStart"
                 android:textColor="@color/dark_grey"
                 android:textSize="@dimen/x14"
                 app:testType="email"
@@ -69,8 +68,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/x40"
-            android:layout_marginLeft="@dimen/x20"
-            android:layout_marginRight="@dimen/x20"
+            android:layout_marginStart="@dimen/x20"
+            android:layout_marginEnd="@dimen/x20"
             android:layout_marginTop="@dimen/x10"
             android:background="@drawable/boxcentershape">
 
@@ -88,15 +87,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/x20"
-                android:layout_marginRight="@dimen/x20"
+                android:layout_marginStart="@dimen/x20"
+                android:layout_marginEnd="@dimen/x20"
                 android:layout_toEndOf="@+id/img_email"
                 android:layout_toRightOf="@+id/img_email"
                 android:background="@android:color/transparent"
                 android:drawablePadding="@dimen/x10"
                 android:hint="@string/email"
-                android:gravity="left"
-                android:textAlignment="gravity"
+                android:gravity="start"
+                android:textAlignment="viewStart"
                 android:imeOptions="actionNext"
                 android:inputType="textEmailAddress"
                 android:maxLength="50"
@@ -111,9 +110,10 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/x40"
-            android:layout_marginLeft="@dimen/x20"
-            android:layout_marginRight="@dimen/x20"
+            android:layout_marginStart="@dimen/x20"
+            android:layout_marginEnd="@dimen/x20"
             android:layout_marginTop="@dimen/x10"
+            android:visibility="visible"
             android:background="@drawable/boxcentershape">
 
             <ImageView
@@ -125,14 +125,15 @@
                 android:layout_marginStart="@dimen/x10"
                 android:src="@drawable/contact"/>
 
-            <com.ingic.saeedni.ui.views.AnyEditTextView
+            <com.ingic.saeedni.ui.views.AnyTextView
                 android:id="@+id/edtPhoneNo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/x20"
-                android:layout_marginRight="@dimen/x20"
-                android:gravity="left"
+                android:layout_marginStart="@dimen/x20"
+                android:layout_marginEnd="@dimen/x20"
+                android:gravity="start"
+                android:ellipsize="end"
                 android:textAlignment="gravity"
                 android:layout_toEndOf="@+id/img_phone"
                 android:background="@android:color/transparent"
@@ -151,8 +152,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/x20"
-            android:layout_marginRight="@dimen/x20"
+            android:layout_marginStart="@dimen/x20"
+            android:layout_marginEnd="@dimen/x20"
             android:visibility="gone">
 
             <ImageView
@@ -193,12 +194,70 @@
         </RelativeLayout>
 
 
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/x40"
             android:layout_marginLeft="@dimen/x20"
             android:layout_marginRight="@dimen/x20"
             android:layout_marginTop="@dimen/x10"
+            android:background="@drawable/boxcentershape">
+
+            <ImageView
+                android:id="@+id/img_address3"
+                android:layout_width="@dimen/x20"
+                android:layout_height="@dimen/x20"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/x10"
+                android:src="@drawable/address" />
+
+            <com.ingic.saeedni.ui.views.AnySpinner
+                android:id="@+id/spnCountry"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x40"
+                android:layoutDirection="ltr"
+                android:gravity="left"
+                android:textAlignment="gravity"
+                android:layout_marginBottom="@dimen/x5"
+                android:layout_marginStart="@dimen/x13"
+                android:layout_marginEnd="@dimen/x5"
+                android:layout_toEndOf="@+id/img_address3" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x40"
+            android:layout_marginStart="@dimen/x20"
+            android:layout_marginEnd="@dimen/x20"
+            android:layout_marginTop="@dimen/x10"
+            android:background="@drawable/boxcentershape">
+
+            <ImageView
+                android:id="@+id/img_address2"
+                android:layout_width="@dimen/x20"
+                android:layout_height="@dimen/x20"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/x10"
+                android:src="@drawable/address" />
+
+            <com.ingic.saeedni.ui.views.AnySpinner
+                android:id="@+id/spnCity"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x40"
+                android:layout_marginBottom="@dimen/x5"
+                android:layout_marginStart="@dimen/x13"
+                android:layoutDirection="ltr"
+                android:gravity="left"
+                android:textAlignment="gravity"
+                android:layout_marginEnd="@dimen/x5"
+                android:layout_toEndOf="@+id/img_address2" />
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x40"
+            android:layout_marginStart="@dimen/x20"
+            android:layout_marginEnd="@dimen/x20"
+            android:layout_marginTop="@dimen/x10"
+            android:gravity="center_vertical"
             android:background="@drawable/boxcentershape">
 
             <ImageView
@@ -211,35 +270,31 @@
                 android:src="@drawable/address"
                 android:visibility="visible"/>
 
-            <com.jota.autocompletelocation.AutoCompleteLocation
+            <com.ingic.saeedni.ui.views.AnyTextView
                 android:id="@+id/edt_locationspecific"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/x10"
-                android:layout_marginRight="@dimen/x5"
-                android:gravity="left"
-                android:textAlignment="gravity"
-                android:layout_toEndOf="@+id/img_location_image"
+                android:layout_marginStart="@dimen/x20"
+                android:layout_marginEnd="@dimen/x5"
+                android:gravity="start"
+                android:textAlignment="viewStart"
                 android:background="@null"
-                app:hint_text="@string/address_"
+                android:hint="@string/address_"
                 android:imeOptions="actionDone"
                 android:maxLines="1"
                 android:singleLine="true"
                 android:textSize="@dimen/x14"
                 app:typeface="Roboto-Regular.ttf"/>
 
-        </RelativeLayout>
-
-
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/x20"
-        android:layout_marginLeft="@dimen/x20"
-        android:layout_marginRight="@dimen/x20"
+        android:layout_marginStart="@dimen/x20"
+        android:layout_marginEnd="@dimen/x20"
         android:layout_weight="0.3"
         android:orientation="vertical">
 

@@ -1,5 +1,6 @@
 package com.ingic.saeedni.ui.viewbinder;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.view.View;
 import android.widget.Button;
@@ -20,13 +21,13 @@ import butterknife.ButterKnife;
  */
 public class SaeedniNewJobBinder extends ViewBinder<NewJobsEnt> {
 
-    private ImageLoader imageLoader;
     String title = "";
     String title1 = "";
     BasePreferenceHelper preferenceHelper;
     View.OnClickListener onClickListener;
+    private ImageLoader imageLoader;
 
-    public SaeedniNewJobBinder(BasePreferenceHelper preferenceHelper,View.OnClickListener onClickListener) {
+    public SaeedniNewJobBinder(BasePreferenceHelper preferenceHelper, View.OnClickListener onClickListener) {
         super(R.layout.row_item_new_jobs);
         this.preferenceHelper = preferenceHelper;
 
@@ -40,54 +41,49 @@ public class SaeedniNewJobBinder extends ViewBinder<NewJobsEnt> {
         return new ViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void bindView(NewJobsEnt entity, int position, int grpPosition, View view, Activity activity) {
 
         ViewHolder viewHolder = (ViewHolder) view.getTag();
-        if (preferenceHelper.isLanguageArabic()){
+        if (preferenceHelper.isLanguageArabic()) {
             view.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-        }else {
+        } else {
             view.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
 
         }
         if (entity.getRequest_detail().getService_detail() != null) {
-            if (entity.getRequest_detail().getService_detail() != null) {
-                viewHolder.txtEstimatedQuote.setText(activity.getResources().getString(R.string.aed) +" "+entity.getRequest_detail().getEstimate_from() +" "+
-                        "-" +" "+entity.getRequest_detail().getEstimate_to());}
-            viewHolder. txtAddress.setText(entity.getRequest_detail().getAddress());
-            viewHolder. txtJobName.setText(entity.getRequest_detail().getService_detail().getTitle());
-            viewHolder. txtPreferredDateTime.setText(entity.getRequest_detail().getDate() + "  " + entity.getRequest_detail().getTime());
-            if (entity.getRequest_detail().getServics_list().size() > 0)
-                viewHolder. txtService.setText(entity.getRequest_detail().getServics_list().get(0).getService_detail().getTitle() + "");
-
+            viewHolder.txtEstimatedQuote.setText(activity.getResources().getString(R.string.aed) + " " + entity.getRequest_detail().getEstimate_from() + " " +
+                    "-" + " " + entity.getRequest_detail().getEstimate_to());
+            viewHolder.txtAddress.setText(entity.getRequest_detail().getAddress());
+            viewHolder.txtJobName.setText(entity.getRequest_detail().getId() + "");
+            viewHolder.txtPreferredDateTime.setText(entity.getRequest_detail().getDate() + "  " + entity.getRequest_detail().getTime());
+            if (preferenceHelper.isLanguageArabic()) {
+                viewHolder.txtService.setText(entity.getRequest_detail().getService_detail().getAr_title() + "");
+            } else {
+                viewHolder.txtService.setText(entity.getRequest_detail().getService_detail().getTitle() + "");
+            }
             viewHolder.btnAccept.setTag(R.integer.key_recycler_object, entity);
             viewHolder.btnAccept.setTag(R.integer.key_recycler_position, position);
             viewHolder.btnReject.setTag(R.integer.key_recycler_object, entity);
             viewHolder.btnReject.setTag(R.integer.key_recycler_position, position);
             viewHolder.btnAccept.setOnClickListener(onClickListener);
             viewHolder.btnReject.setOnClickListener(onClickListener);
-                /*if (!preferenceHelper.isLanguageArabic()) {
-                    title = entity.getRequest_detail().getService_detail().getTitle() + "";
-                } else {
-                    title = entity.getRequest_detail().getService_detail().getAr_title() + "";
-                }
-                if (entity.getRequest_detail().getServics_list().size() > 0) {
-                    if (!preferenceHelper.isLanguageArabic()) {
-                        title1 = entity.getRequest_detail().getServics_list().get(0).getService_detail().getTitle() + "";
-                    } else {
-                        title1 = entity.getRequest_detail().getServics_list().get(0).getService_detail().getAr_title() + "";
-                    }
+            viewHolder.btnViewImages.setTag(R.integer.key_recycler_object, entity);
+            viewHolder.btnViewImages.setTag(R.integer.key_recycler_position, position);
+            if (entity.getRequest_detail().getImage_detail().size() <= 0) {
+                viewHolder.btnViewImages.setVisibility(View.GONE);
+            } else {
+                viewHolder.btnViewImages.setVisibility(View.VISIBLE);
+                viewHolder.btnViewImages.setOnClickListener(onClickListener);
+            }
 
-                }
-                viewHolder.txt_jobNotification.setText(title + "/" + title1);*/
 
-        } else {
-           // viewHolder.txt_jobNotification.setText("No Title");
         }
 
     }
 
-    static class ViewHolder extends BaseViewHolder{
+    static class ViewHolder extends BaseViewHolder {
         @BindView(R.id.txt_jobNameHeading)
         AnyTextView txtJobNameHeading;
         @BindView(R.id.txt_jobName)
@@ -122,6 +118,8 @@ public class SaeedniNewJobBinder extends ViewBinder<NewJobsEnt> {
         Button btnAccept;
         @BindView(R.id.btn_reject)
         Button btnReject;
+        @BindView(R.id.btnViewImages)
+        Button btnViewImages;
         @BindView(R.id.ll_buttons)
         LinearLayout llButtons;
         @BindView(R.id.ll_JobDetail)

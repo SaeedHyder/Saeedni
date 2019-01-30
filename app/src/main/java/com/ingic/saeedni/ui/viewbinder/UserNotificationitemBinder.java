@@ -21,11 +21,13 @@ import com.ingic.saeedni.helpers.UIHelper;
 import com.ingic.saeedni.retrofit.WebService;
 import com.ingic.saeedni.ui.viewbinders.abstracts.ViewBinder;
 import com.ingic.saeedni.ui.views.AnyTextView;
+import com.ingic.saeedni.ui.views.Util;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
 
 /**
  * Created by  on 5/24/2017.
@@ -56,19 +58,19 @@ public class UserNotificationitemBinder extends ViewBinder<NotificationEnt> {
     public void bindView(final NotificationEnt entity, int position, int grpPosition, View view, Activity activity) {
 
         UserNotificationitemBinder.ViewHolder viewHolder = (UserNotificationitemBinder.ViewHolder) view.getTag();
-        if (prefhelper.isLanguageArabic()){
+        if (prefhelper.isLanguageArabic()) {
             view.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
             viewHolder.iv_next.setScaleX(-1);
-        }else {
+        } else {
             view.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
             viewHolder.iv_next.setScaleX(1);
 
         }
         if (prefhelper.isLanguageArabic()) {
-           // view.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+            // view.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
             viewHolder.txt_jobNotification.setText((entity.getArmessage() + "").trim());
         } else {
-          //  view.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+            //  view.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
             viewHolder.txt_jobNotification.setText((entity.getMessage() + "").trim());
         }
         viewHolder.mainFrame.setOnClickListener(new View.OnClickListener() {
@@ -85,10 +87,39 @@ public class UserNotificationitemBinder extends ViewBinder<NotificationEnt> {
                     case "feedback":
                         openRatingPopup(entity);
                         break;
+                    case "completed":
+                        openConformationPopup(entity);
+
+                        break;
                 }
             }
         });
     }
+
+    private void openConformationPopup(NotificationEnt entity) {
+        final DialogHelper dialogHelper = new DialogHelper(dockActivity);
+        dialogHelper.initComformationDialog((View.OnClickListener) yes -> {
+                      dialogHelper.hideDialog();
+                    if (Util.doubleClickCheck()) {
+                        if (InternetHelper.CheckInternetConectivityandShowToast(dockActivity)) {
+                            dockActivity.onLoadingStarted();
+                            submitConformation(entity, 1, dialogHelper, dockActivity);
+                        }
+                    }
+                }, no -> {
+                     dialogHelper.hideDialog();
+                    if (Util.doubleClickCheck()) {
+                        if (InternetHelper.CheckInternetConectivityandShowToast(dockActivity)) {
+                            dockActivity.onLoadingStarted();
+                            submitConformation(entity, 2, dialogHelper, dockActivity);
+                        }
+                    }
+                }
+        );
+        dialogHelper.setCancelable(false);
+        dialogHelper.showDialog();
+    }
+
 
     private void openRatingPopup(final NotificationEnt entity) {
         String message = "";
@@ -109,21 +140,24 @@ public class UserNotificationitemBinder extends ViewBinder<NotificationEnt> {
         dialogHelper.initRatingDialog(R.layout.rating_pop_up_dialog, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //  dialogHelper.hideDialog();
-                        if (InternetHelper.CheckInternetConectivityandShowToast(dockActivity)) {
-                            submitFeedback(entity, dialogHelper,dockActivity);
+                          dialogHelper.hideDialog();
+                        if (Util.doubleClickCheck()) {
+                            if (InternetHelper.CheckInternetConectivityandShowToast(dockActivity)) {
+                                dockActivity.onLoadingStarted();
+                                submitFeedback(entity, dialogHelper, dockActivity);
+                            }
                         }
                     }
-                }, title, message,prefhelper
+                }, title, message, prefhelper
         );
-        dialogHelper.setCancelable(true);
+        dialogHelper.setCancelable(false);
         dialogHelper.showDialog();
     }
 
     private void submitFeedback(NotificationEnt ent, final DialogHelper helper, Context context) {
-        if (ent.getRequestDetail().getAssign_technician_details()==null){
-            UIHelper.showShortToastInCenter(context,context.getResources().getString(R.string.something_went_wrong));
-            helper.hideDialog();
+        if (ent.getRequestDetail().getAssign_technician_details() == null) {
+            UIHelper.showShortToastInCenter(context, context.getResources().getString(R.string.something_went_wrong));
+           dockActivity.onLoadingFinished();
             return;
         }
         Call<ResponseWrapper> call = service.sendFeedback(prefhelper.getUserId(),
@@ -136,18 +170,49 @@ public class UserNotificationitemBinder extends ViewBinder<NotificationEnt> {
         call.enqueue(new Callback<ResponseWrapper>() {
             @Override
             public void onResponse(Call<ResponseWrapper> call, Response<ResponseWrapper> response) {
-                helper.hideDialog();
+                dockActivity.onLoadingFinished();
                 if (response.body().getResponse().equals("2000")) {
-                    dockActivity.popBackStackTillEntry(0);
-                    dockActivity.replaceDockableFragment(UserHomeFragment.newInstance(), "UserHomeFragment");
+
                 } else {
-                    UIHelper.showShortToastInCenter(dockActivity,dockActivity.getResources().getString(R.string.feedback));
+                    UIHelper.showShortToastInCenter(dockActivity, dockActivity.getResources().getString(R.string.feedback));
+                }
+                dockActivity.popBackStackTillEntry(0);
+                dockActivity.replaceDockableFragment(UserHomeFragment.newInstance(), "UserHomeFragment");
+            }
+
+            @Override
+            public void onFailure(Call<ResponseWrapper> call, Throwable t) {
+                dockActivity.onLoadingFinished();
+                Log.e("EntryCodeFragment", t.toString());
+                // UIHelper.showShortToastInCenter(dockActivity, t.toString());
+            }
+        });
+    }
+
+    private void submitConformation(NotificationEnt ent, int userStatus, final DialogHelper helper, Context context) {
+        Call<ResponseWrapper> call = service.userMarkComplete(ent.getActionId() + "", userStatus);
+
+        call.enqueue(new Callback<ResponseWrapper>() {
+            @Override
+            public void onResponse(Call<ResponseWrapper> call, Response<ResponseWrapper> response) {
+                dockActivity.onLoadingFinished();
+                if (response.body().getResponse().equals("2000")) {
+                    if (userStatus == 1) {
+                        openRatingPopup(ent);
+                    } else {
+                        UIHelper.showShortToastInCenter(context, context.getResources().getString(R.string.cancel));
+                        dockActivity.popBackStackTillEntry(0);
+                        dockActivity.replaceDockableFragment(UserHomeFragment.newInstance(), "UserHomeFragment");
+                    }
+
+                } else {
+                    UIHelper.showShortToastInCenter(dockActivity, dockActivity.getResources().getString(R.string.feedback));
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseWrapper> call, Throwable t) {
-                helper.hideDialog();
+                dockActivity.onLoadingFinished();
                 Log.e("EntryCodeFragment", t.toString());
                 // UIHelper.showShortToastInCenter(dockActivity, t.toString());
             }

@@ -107,6 +107,10 @@
                 android:id="@+id/spn_jobtype"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/x30"
+                android:layoutDirection="ltr"
+                android:gravity="left"
+                android:enabled="false"
+                android:textAlignment="gravity"
                 android:layout_marginBottom="@dimen/x5"/>
 
             <View
@@ -132,6 +136,9 @@
                 android:id="@+id/spn_subjobtype"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/x40"
+                android:layoutDirection="ltr"
+                android:gravity="left"
+                android:textAlignment="gravity"
                 android:layout_marginBottom="@dimen/x5"/>
 
             <View
@@ -157,6 +164,9 @@
                 android:id="@+id/spn_jobdescription"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/x30"
+                android:layoutDirection="ltr"
+                android:gravity="left"
+                android:textAlignment="gravity"
                 android:layout_marginBottom="@dimen/x5"/>
 
             <View
@@ -212,6 +222,7 @@
                 android:padding="@dimen/x10"
                 android:scrollbarStyle="insideInset"
                 android:scrollbars="vertical"
+                android:textSize="@dimen/x15"
                 android:textColor="@color/s_font_color_blue"
                 android:textColorHint="@color/s_font_color_blue"
                 app:typeface="Roboto-Regular.ttf"/>

@@ -1,5 +1,6 @@
 package com.ingic.saeedni.ui.viewbinder;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Typeface;
 import android.support.v7.widget.CardView;
@@ -58,13 +59,14 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDeta
         return new childViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void bindGroupView(final RequestDetail entity, final int position, int grpPosition, int childCount, View view, Activity activity) {
 
         parentViewHolder parentViewHolder = (InprogressExpandBinder.parentViewHolder) view.getTag();
-        if (preferenceHelper.isLanguageArabic()){
+        if (preferenceHelper.isLanguageArabic()) {
             parentViewHolder.root_layout_parent.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-        }else {
+        } else {
             parentViewHolder.root_layout_parent.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
         }
         if (childCount <= 0) {
@@ -76,38 +78,36 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDeta
             parentViewHolder.llEstimatedQuotation.setVisibility(View.GONE);
             parentViewHolder.llBottomBtns.setVisibility(View.GONE);
         }
-        parentViewHolder.txtJobNoText.setText(String.valueOf(position + 1));
+        parentViewHolder.txtJobNoText.setText(entity.getId() + "");
         //parentViewHolder.txtJobPostedText.setText(entity.getDate()+"");
         if (!preferenceHelper.isLanguageArabic()) {
             parentViewHolder.txtJobPostedText.setText(DateHelper.dateFormat(entity.getDate(), AppConstants.DateFormat_DMY, AppConstants.DateFormat_YMD) + "");
         } else {
             parentViewHolder.txtJobPostedText.setText(entity.getDate() + "");
         }
-        if(entity.getUser_detail()!=null)
-        parentViewHolder.txtClientNameText.setText(entity.getUser_detail().getFull_name()+"");
-        if(!preferenceHelper.isLanguageArabic()){
-        parentViewHolder.txtEstimatedQuotationText.setText(context.getResources().getString(R.string.between_aed) +" "+ entity.getEstimate_from() +" "+ view.getContext().getResources().getString(R.string.to) +" "+ entity.getEstimate_to());}
-        else
-        {
-            parentViewHolder.txtEstimatedQuotationText.setText(context.getResources().getString(R.string.between) +" "+ entity.getEstimate_from() +" "+ view.getContext().getResources().getString(R.string.to) +" "+ entity.getEstimate_to()+" "+context.getResources().getString(R.string.aed));
-    }
+        if (entity.getUser_detail() != null)
+            parentViewHolder.txtClientNameText.setText(entity.getUser_detail().getFull_name() + "");
+        if (!preferenceHelper.isLanguageArabic()) {
+            parentViewHolder.txtEstimatedQuotationText.setText(context.getResources().getString(R.string.between_aed) + " " + entity.getEstimate_from() + " " + view.getContext().getResources().getString(R.string.to) + " " + entity.getEstimate_to());
+        } else {
+            parentViewHolder.txtEstimatedQuotationText.setText(context.getResources().getString(R.string.between) + " " + entity.getEstimate_from() + " " + view.getContext().getResources().getString(R.string.to) + " " + entity.getEstimate_to() + " " + context.getResources().getString(R.string.aed));
+        }
         if (entity.getService_detail() != null) {
-            if(preferenceHelper.isLanguageArabic()){
-                parentViewHolder.txtJobTitleText.setText(entity.getService_detail().getAr_title()+"");
-            }
-            else {
-                parentViewHolder.txtJobTitleText.setText(entity.getService_detail().getTitle()+"");
+            if (preferenceHelper.isLanguageArabic()) {
+                parentViewHolder.txtJobTitleText.setText(entity.getService_detail().getAr_title() + "");
+            } else {
+                parentViewHolder.txtJobTitleText.setText(entity.getService_detail().getTitle() + "");
             }
 
         } else {
             parentViewHolder.txtJobTitleText.setText("");
         }
         if (entity.getTotal().equals("")) {
-            parentViewHolder.txtEarningText.setText(context.getResources().getString(R.string.aed) +" "+ " 0");
+            parentViewHolder.txtEarningText.setText(context.getResources().getString(R.string.aed) + " " + " 0");
         } else {
-            parentViewHolder.txtEarningText.setText(context.getResources().getString(R.string.aed) +" "+ entity.getTotal());
+            parentViewHolder.txtEarningText.setText(context.getResources().getString(R.string.aed) + " " + entity.getTotal());
         }
-        parentViewHolder.txtAddressText.setText(entity.getAddress()+"");
+        parentViewHolder.txtAddressText.setText(entity.getAddress() + "");
 
         setTextStyle(parentViewHolder);
 
@@ -158,10 +158,9 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDeta
     public void bindChildView(final RequestDetail entity, final int position, final int grpPosition, int childCount, View view, Activity activity) {
 
         childViewHolder childViewHolder = (InprogressExpandBinder.childViewHolder) view.getTag();
-        if (preferenceHelper.isLanguageArabic()){
+        if (preferenceHelper.isLanguageArabic()) {
             childViewHolder.root_layout_child.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-        }
-        else {
+        } else {
             childViewHolder.root_layout_child.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
         }
         ArrayList<String> subFieldTitles = new ArrayList<>();
@@ -173,13 +172,13 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDeta
         }
         StringBuilder stringBuilder = new StringBuilder();
         for (serviceList item : entity.getServics_list()) {
-            if (preferenceHelper.isLanguageArabic()){
-                if (item.getService_detail().getTitle() != null) {
-                    stringBuilder.append(item.getService_detail().getTitle() + System.getProperty("line.separator"));
-                    subFieldTitles.add(item.getService_detail().getTitle());
+            if (preferenceHelper.isLanguageArabic()) {
+                if (item.getService_detail() != null && item.getService_detail().getAr_title() != null) {
+                    stringBuilder.append(item.getService_detail().getAr_title() + System.getProperty("line.separator"));
+                    subFieldTitles.add(item.getService_detail().getAr_title());
                 }
-            }else {
-                if (item.getService_detail().getTitle() != null) {
+            } else {
+                if (item.getService_detail() != null && item.getService_detail().getTitle() != null) {
                     stringBuilder.append(item.getService_detail().getTitle() + System.getProperty("line.separator"));
                     subFieldTitles.add(item.getService_detail().getTitle());
                 }
@@ -187,8 +186,8 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDeta
         }
 
         childViewHolder.txtJob1.setText(stringBuilder.toString());
-        childViewHolder.txtAddEarningText.setText(context.getResources().getString(R.string.aed)+" "+ entity.getTotal()  );
-        childViewHolder.txtTotalEarningText.setText(context.getResources().getString(R.string.aed) +" " + entity.getTotal_amount());
+        childViewHolder.txtAddEarningText.setText(context.getResources().getString(R.string.aed) + " " + entity.getTotal());
+        childViewHolder.txtTotalEarningText.setText(context.getResources().getString(R.string.aed) + " " + entity.getTotal_amount());
 
         childViewHolder.btnMarkAsCompleteBottom.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -285,6 +284,7 @@ public class InprogressExpandBinder extends ExpandableListViewBinder<RequestDeta
         LinearLayout llEstimatedQuotation;
         @BindView(R.id.root_layout_parent)
         CardView root_layout_parent;
+
         parentViewHolder(View view) {
             ButterKnife.bind(this, view);
         }

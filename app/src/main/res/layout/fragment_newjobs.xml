@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <com.ingic.saeedni.ui.views.AnyTextView
         android:id="@+id/txt_no_data"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
+        android:layout_gravity="center"
         android:gravity="center"
         android:text="@string/no_data"
         android:textColor="@color/dark_grey"
-        android:layout_gravity="center"
-        app:typeface="Roboto-Regular.ttf"
         android:textSize="@dimen/x15"
+        android:visibility="gone"
+        app:typeface="Roboto-Regular.ttf"
 
         />
 
@@ -29,4 +29,41 @@
 
     </ListView>
 
-</LinearLayout>
+    <RelativeLayout
+        android:id="@+id/containerImageSlider"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="match_parent"
+        android:background="@color/black">
+
+        <ImageView
+            android:id="@+id/btnClose"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="top|end"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_close_cross" />
+
+        <com.daimajia.slider.library.SliderLayout
+            android:id="@+id/slider"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center" />
+
+        <com.daimajia.slider.library.Indicators.PagerIndicator
+            android:id="@+id/custom_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="25dp"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            app:selected_color="@color/app_blue"
+            app:unselected_color="@color/app_yellow" />
+    </RelativeLayout>
+</RelativeLayout>

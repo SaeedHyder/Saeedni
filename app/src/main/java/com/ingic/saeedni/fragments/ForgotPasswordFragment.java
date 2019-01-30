@@ -14,9 +14,7 @@ import com.ingic.saeedni.R;
 import com.ingic.saeedni.entities.RegistrationResultEnt;
 import com.ingic.saeedni.entities.ResponseWrapper;
 import com.ingic.saeedni.fragments.abstracts.BaseFragment;
-import com.ingic.saeedni.global.AppConstants;
 import com.ingic.saeedni.helpers.InternetHelper;
-import com.ingic.saeedni.helpers.TokenUpdater;
 import com.ingic.saeedni.helpers.UIHelper;
 import com.ingic.saeedni.ui.views.AnyEditTextView;
 import com.ingic.saeedni.ui.views.TitleBar;
@@ -45,6 +43,8 @@ public class ForgotPasswordFragment extends BaseFragment {
     LinearLayout llEmail;
     @BindView(R.id.btn_login)
     Button btnLogin;
+    @BindView(R.id.parent)
+    LinearLayout parent;
 
     public static ForgotPasswordFragment newInstance() {
         Bundle args = new Bundle();
@@ -85,6 +85,7 @@ public class ForgotPasswordFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        parent.setLayoutDirection(prefHelper.isLanguageArabic() ? View.LAYOUT_DIRECTION_RTL : View.LAYOUT_DIRECTION_LTR);
 
     }
 
@@ -111,15 +112,20 @@ public class ForgotPasswordFragment extends BaseFragment {
     }
 
     private void CallforgotPassword() {
-        Call<ResponseWrapper> call = webService.forgotPassword(edtEmail.getText().toString());
-        call.enqueue(new Callback<ResponseWrapper>() {
+        Call<ResponseWrapper<RegistrationResultEnt>> call = webService.forgotPassword(edtEmail.getText().toString(),prefHelper.getLang());
+        call.enqueue(new Callback<ResponseWrapper<RegistrationResultEnt>>() {
             @Override
-            public void onResponse(Call<ResponseWrapper> call, Response<ResponseWrapper> response) {
+            public void onResponse(Call<ResponseWrapper<RegistrationResultEnt>> call, Response<ResponseWrapper<RegistrationResultEnt>> response) {
                 if (response.body().getResponse().equals("2000")) {
                     loadingFinished();
-                    UIHelper.showShortToastInCenter(getDockActivity(),getDockActivity().getResources().getString(R.string.forgor_password_message));
-                    getDockActivity().popBackStackTillEntry(1);
-                    getDockActivity().replaceDockableFragment(UserloginFragment.newInstance(), "UserloginFragment");
+                    //UIHelper.showShortToastInCenter(getDockActivity(),getDockActivity().getResources().getString(R.string.forgor_password_message));
+                    prefHelper.putRegistrationResult(response.body().getResult());
+                    prefHelper.setUserType("user");
+                    prefHelper.setUsrId(String.valueOf(response.body().getResult().getId()));
+                    prefHelper.setUsrName(response.body().getResult().getFullName());
+                    prefHelper.setPhonenumber(response.body().getResult().getPhoneNo());
+                    UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
+                    getDockActivity().replaceDockableFragment(ForgotPasswordVerifcationFragment.newInstance(), "ForgotPasswordVerifcationFragment");
                 } else {
                     loadingFinished();
                     UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
@@ -127,11 +133,13 @@ public class ForgotPasswordFragment extends BaseFragment {
             }
 
             @Override
-            public void onFailure(Call<ResponseWrapper> call, Throwable t) {
+            public void onFailure(Call<ResponseWrapper<RegistrationResultEnt>> call, Throwable t) {
                 loadingFinished();
                 Log.e("UserSignupFragment", t.toString());
                 //  UIHelper.showShortToastInCenter(getDockActivity(), t.toString());
             }
         });
     }
+
+
 }

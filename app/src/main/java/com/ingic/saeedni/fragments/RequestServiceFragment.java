@@ -1,7 +1,9 @@
 package com.ingic.saeedni.fragments;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -25,7 +27,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.gson.Gson;
 import com.ingic.saeedni.R;
 import com.ingic.saeedni.activities.MainActivity;
@@ -70,7 +75,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -83,6 +87,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.app.Activity.RESULT_CANCELED;
+import static android.app.Activity.RESULT_OK;
+import static com.ingic.saeedni.R.id.add;
 import static com.ingic.saeedni.R.id.edt_addtional_job;
 
 
@@ -158,9 +165,20 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
     @BindView(R.id.txt_jobpaymentmethod)
     AnyTextView txtJobpaymentmethod;
     ArrayList<CitiesEnt> allCities = new ArrayList<>();
+    ArrayList<CitiesEnt> allCountries = new ArrayList<>();
+    ArrayList<RegistrationResultEnt> allTechnician = new ArrayList<>();
     @BindView(R.id.edt_locationspecific)
-    AutoCompleteLocation edtLocationspecific;
+    AnyTextView edtLocationspecific;
     boolean isOnCall = false;
+    @BindView(R.id.spnCountry)
+    AnySpinner spnCountry;
+    int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
+    @BindView(R.id.spnTechnician)
+    AnySpinner spnTechnician;
+    @BindView(R.id.edtAddress)
+    AnyEditTextView edtAddress;
+    @BindView(R.id.txtaddImage)
+    AnyTextView txtaddImage;
     private ArrayList<String> images = new ArrayList<>();
     private RecyclerViewAdapterImages mAdapter;
     private ArrayList<ServiceEnt> selectedJobs;
@@ -178,6 +196,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
     private Boolean isEdit = false;
     private ArrayList<String> deleteimages;
     private Date DateSelected;
+    private String TAG = "Request";
 
     public static RequestServiceFragment newInstance() {
         return new RequestServiceFragment();
@@ -216,21 +235,161 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         listView.setLayoutParams(params);
     }
 
-    private void getAllCities() {
-        serviceHelper.enqueueCall(webService.getAllCities(), WebServiceConstants.GET_ALL_CITIES);
+    private void openLocationSelector() {
+
+        try {
+           /* Intent intent =
+                    new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
+                            .build(getDockActivity());*/
+            PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+
+            getDockActivity().startActivityForResult(builder.build(getDockActivity()), PLACE_AUTOCOMPLETE_REQUEST_CODE);
+            //this.startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+
+                Place place = PlaceAutocomplete.getPlace(getDockActivity(), data);
+                if (place != null) {
+                    edtLocationspecific.setError(null);
+                    edtLocationspecific.setText(place.getAddress().toString());
+                    spnCity.setSelection(0);
+                    spnCountry.setSelection(0);
+                    spnCity.setAdapter(null);
+                    String latitude = place.getLatLng() != null ? place.getLatLng().latitude + "" : "";
+                    String longitude = place.getLatLng() != null ? place.getLatLng().longitude + "" : "";
+                    serviceHelper.enqueueCall(webService.getTechniciansByCity(null, null, latitude, longitude), WebServiceConstants.GET_ALL_TECHNICIAN);
+                    Log.i(TAG, "Place: " + place.getName());
+                }
+
+            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
+                Status status = PlaceAutocomplete.getStatus(getDockActivity(), data);
+                // TODO: Handle the error.
+                Log.i(TAG, status.getStatusMessage());
+
+            } else if (resultCode == RESULT_CANCELED) {
+                // The user canceled the operation.
+            }
+        }
+
+    }
+
+    private void getAllCities(int countryID) {
+        serviceHelper.enqueueCall(webService.getAllCities(countryID), WebServiceConstants.GET_ALL_CITIES);
     }
 
     @Override
     public void ResponseSuccess(Object result, String Tag) {
         switch (Tag) {
             case WebServiceConstants.GET_ALL_CITIES:
+                allCities = new ArrayList<>();
                 CitiesEnt citiesEnt = new CitiesEnt();
-                citiesEnt.setLocation(getDockActivity().getResources().getString(R.string.select_city));
+                citiesEnt.setLocation("Select City");
+                citiesEnt.setAr_address("اختر مدينة");
                 allCities.add(citiesEnt);
                 allCities.addAll((ArrayList<CitiesEnt>) result);
                 setCitiesSpinner(allCities);
                 break;
+
+            case WebServiceConstants.GET_ALL_COUNTRIES:
+                CitiesEnt countryEnt = new CitiesEnt();
+                countryEnt.setLocation("Select Country");
+                countryEnt.setAr_address("حدد الدولة");
+                allCountries.add(0, countryEnt);
+                allCountries.addAll((ArrayList<CitiesEnt>) result);
+                setCountriesSpinner(allCountries);
+
+                break;
+            case WebServiceConstants.GET_ALL_TECHNICIAN:
+                allTechnician = new ArrayList<>();
+                allTechnician.addAll((ArrayList<RegistrationResultEnt>) result);
+                initTechnicianSpinner(allTechnician);
+
+                break;
+
         }
+    }
+
+    private void initTechnicianSpinner(ArrayList<RegistrationResultEnt> result) {
+        final ArrayList<String> citiesCollection = new ArrayList<String>();
+
+
+        for (RegistrationResultEnt ent : result
+                ) {
+            citiesCollection.add(ent.getFullName());
+        }
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity(), R.layout.row_item_spinner, citiesCollection);
+        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnTechnician.setAdapter(categoryAdapter);
+        spnTechnician.setOnItemSelectedEvenIfUnchangedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
+    private void setCountriesSpinner(ArrayList<CitiesEnt> citiesEnts) {
+
+        final ArrayList<String> citiesCollection = new ArrayList<String>();
+
+
+        for (CitiesEnt ent : citiesEnts
+                ) {
+            if (prefHelper.isLanguageArabic()) {
+                citiesCollection.add(ent.getAr_location());
+            } else {
+                citiesCollection.add(ent.getLocation());
+            }
+        }
+        //if (citiesEnts.size() > 0) getAllCities(allCountries.get(0).getId());
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity()
+                , R.layout.row_item_spinner, citiesCollection) {
+            @Override
+            public boolean isEnabled(int position) {
+                return !(position == 0);
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView,
+                                        ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                tv.setTextColor(position == 0 ? Color.GRAY : Color.BLACK);
+                return view;
+            }
+
+        };
+        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spnCountry.setAdapter(categoryAdapter);
+        spnCountry.setOnItemSelectedEvenIfUnchangedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i == 0) return;
+                getAllCities(allCountries.get(i).getId());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     @Override
@@ -273,22 +432,29 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
     }
 
     private void setCitiesSpinner(ArrayList<CitiesEnt> citiesEnts) {
+        spnTechnician.setAdapter(null);
         final ArrayList<String> citiesCollection = new ArrayList<String>();
         int selectedPosition = 0;
         RegistrationResultEnt userItems = prefHelper.getRegistrationResult();
         for (int i = 0; i < citiesEnts.size(); i++) {
-            if (userItems.getCity_id() != null) {
+          /*  if (userItems.getCity_id() != null) {
                 if (Objects.equals(userItems.getCity_id(), citiesEnts.get(i).getId())) {
                     selectedPosition = i;
                 }
+            }*/
+            if (prefHelper.isLanguageArabic()) {
+                citiesCollection.add(citiesEnts.get(i).getAr_location());
+
+            } else {
+                citiesCollection.add(citiesEnts.get(i).getLocation());
             }
-            citiesCollection.add(citiesEnts.get(i).getLocation());
+
         }
         // ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity(), android.R.layout.simple_spinner_item, citiesCollection);
         // categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity()
-                , android.R.layout.simple_spinner_item, citiesCollection) {
+                , R.layout.row_item_spinner, citiesCollection) {
             @Override
             public boolean isEnabled(int position) {
                 return !(position == 0);
@@ -304,13 +470,20 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
             }
 
         };
-
+        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnCity.setAdapter(categoryAdapter);
         //spnCity.setSelection(selectedPosition);
         spnCity.setOnItemSelectedEvenIfUnchangedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                if (position == 0) {
+                    spnTechnician.setAdapter(null);
+                    return;
+                }
+                edtLocationspecific.setText("");
+                int cityID = allCities.get(position).getId();
+                int countryID = allCountries.get(spnCountry.getSelectedItemPosition()).getId();
+                serviceHelper.enqueueCall(webService.getTechniciansByCity(countryID, cityID, null, null), WebServiceConstants.GET_ALL_TECHNICIAN);
                 // bindSelectedJobview(selectedJobs);
             }
 
@@ -329,7 +502,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         super.onViewCreated(view, savedInstanceState);
         selectedJobs = new ArrayList<>();
         deleteimages = new ArrayList<>();
-        getAllCities();
+        getAllCountries();
         if (prefHelper.isLanguageArabic()) {
             view.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         } else {
@@ -354,6 +527,10 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
 
     }
 
+    private void getAllCountries() {
+        serviceHelper.enqueueCall(webService.getAllCountries(), WebServiceConstants.GET_ALL_COUNTRIES);
+    }
+
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
@@ -372,32 +549,21 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
 
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void setListners() {
 
-        edtAddtionalJob.setOnTouchListener(new View.OnTouchListener() {
+        edtAddtionalJob.setOnTouchListener((v, event) -> {
 
-            public boolean onTouch(View v, MotionEvent event) {
-
-                v.getParent().requestDisallowInterceptTouchEvent(true);
-                switch (event.getAction() & MotionEvent.ACTION_MASK) {
-                    case MotionEvent.ACTION_UP:
-                        v.getParent().requestDisallowInterceptTouchEvent(false);
-                        break;
-                }
-                return false;
+            v.getParent().requestDisallowInterceptTouchEvent(true);
+            switch (event.getAction() & MotionEvent.ACTION_MASK) {
+                case MotionEvent.ACTION_UP:
+                    v.getParent().requestDisallowInterceptTouchEvent(false);
+                    break;
             }
+            return false;
         });
     }
 
-    private void initListViewAdapter() {
-      /*
-        selectedJobs.add("Total Electricity Failure/Break down");
-        selectedJobs.add("No Electricity in some Room");
-        selectedJobs.add("Repair Ac");
-        selectedJobs.add("Ac Not Working");*/
-
-        bindSelectedJobview(selectedJobs);
-    }
 
     private void setListener() {
         btnPreferreddate.setOnClickListener(this);
@@ -411,17 +577,12 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         imgGps.setOnClickListener(this);
         btnPreferreddate.setOnClickListener(this);
         btnPreferredtime.setOnClickListener(this);
+        edtLocationspecific.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            /*case R.id.btn_preferreddate:
-                initDatePicker(btnPreferreddate);
-                break;
-            case R.id.btn_preferredtime:
-                initTimePicker(btnPreferredtime);
-                break;*/
             case R.id.btn_preferreddate:
                 initDatePicker(btnPreferreddate);
                 break;
@@ -449,12 +610,9 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
                 }
 
                 break;
-            case R.id.btn_cc:
-              /*  paymentType = "credit";
-                setCCCheck();
-                CreditCardFragment fragment = CreditCardFragment.newInstance();
-                getDockActivity().addDockableFragment(fragment, "CreditCardFragment");*/
-                UIHelper.showShortToastInCenter(getDockActivity(), "Will be Implemented Later");
+            case R.id.edt_locationspecific:
+
+                openLocationSelector();
                 break;
 
             case R.id.btn_cod:
@@ -462,6 +620,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
                 setCODCheck();
                 break;
             case R.id.btn_request:
+
                 if (!isOnCall) {
                     if (validate()) {
                         if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
@@ -518,12 +677,12 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
             if (!prefHelper.isLanguageArabic()) {
                 jobtypearraylist.add(item.getTitle());
             } else {
-                jobtypearraylist.add(item.getTitle());
+                jobtypearraylist.add(item.getArTitle());
             }
         }
 
 
-        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity(), android.R.layout.simple_spinner_item, jobtypearraylist);
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity(), R.layout.row_item_spinner, jobtypearraylist);
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnJobtype.setAdapter(categoryAdapter);
         spnJobtype.setEnabled(false);
@@ -532,14 +691,14 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
                 spnJobtype.setSelection(jobtypearraylist.indexOf(homeSelectedService.getTitle()));
                 jobtype = jobcollection.get(jobtypearraylist.indexOf(homeSelectedService.getTitle()));
                 if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
-                    initJobDescriptionSpinner(jobtype);
+                    // initJobDescriptionSpinner(jobtype);
                     initSubJobDescriptionSpinner(jobtype);
                 }
-            } else if (jobtypearraylist.contains(homeSelectedService.getTitle())) {
-                spnJobtype.setSelection(jobtypearraylist.indexOf(homeSelectedService.getTitle()));
-                jobtype = jobcollection.get(jobtypearraylist.indexOf(homeSelectedService.getTitle()));
+            } else if (jobtypearraylist.contains(homeSelectedService.getArTitle())) {
+                spnJobtype.setSelection(jobtypearraylist.indexOf(homeSelectedService.getArTitle()));
+                jobtype = jobcollection.get(jobtypearraylist.indexOf(homeSelectedService.getArTitle()));
                 if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
-                    initJobDescriptionSpinner(jobtype);
+                    //  initJobDescriptionSpinner(jobtype);
                     initSubJobDescriptionSpinner(jobtype);
                 }
 
@@ -548,7 +707,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
                 jobtype = jobcollection.get(0);
                 spnJobtype.setEnabled(true);
                 if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
-                    initJobDescriptionSpinner(jobtype);
+                    // initJobDescriptionSpinner(jobtype);
                     initSubJobDescriptionSpinner(jobtype);
                 }
             }
@@ -558,7 +717,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 jobtype = jobcollection.get(position);
-                initJobDescriptionSpinner(jobtype);
+                //initJobDescriptionSpinner(jobtype);
                 initSubJobDescriptionSpinner(jobtype);
                 selectedJobs.clear();
                 refreshListview();
@@ -612,16 +771,18 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
             if (!prefHelper.isLanguageArabic()) {
                 jobdescriptionarraylist.add(item.getTitle());
             } else {
-                jobdescriptionarraylist.add(item.getTitle());
+                jobdescriptionarraylist.add(item.getArTitle());
             }
         }
-        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity(), android.R.layout.simple_spinner_item, jobdescriptionarraylist);
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity(), R.layout.row_item_spinner, jobdescriptionarraylist);
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnSubJobType.setAdapter(categoryAdapter);
         spnSubJobType.setSelection(SelectedIndex);
         spnSubJobType.setOnItemSelectedEvenIfUnchangedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position < subjobcollection.size())
+                    initJobDescriptionSpinner(subjobcollection.get(position));
 
                 // bindSelectedJobview(selectedJobs);
             }
@@ -717,12 +878,6 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
     }
 
 
-
-
-
-
-
-
     private void setJobDescriptionSpinner() {
         final ArrayList<String> jobdescriptionarraylist = new ArrayList<String>();
         for (ServiceEnt item : jobChildcollection
@@ -739,7 +894,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
 
 
         ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity()
-                , android.R.layout.simple_spinner_item, jobdescriptionarraylist) {
+                , R.layout.row_item_spinner, jobdescriptionarraylist) {
             @Override
             public boolean isEnabled(int position) {
                 return !(position == 0);
@@ -755,7 +910,7 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
             }
 
         };
-
+        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnJobdescription.setAdapter(categoryAdapter);
 
         spnJobdescription.setOnItemSelectedEvenIfUnchangedListener(new AdapterView.OnItemSelectedListener() {
@@ -831,15 +986,18 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
         //MultipartBody.Part[] part = files.toArray();
         Call<ResponseWrapper<RequestEnt>> call;
         if (!isEdit) {
+            String address = edtLocationspecific.getText().toString().isEmpty() ? edtAddress.getText().toString() : edtLocationspecific.getText().toString();
             call = webService.createRequest(
                     RequestBody.create(MediaType.parse("text/plain"), prefHelper.getUserId()),
                     RequestBody.create(MediaType.parse("text/plain"), serviceID),
                     RequestBody.create(MediaType.parse("text/plain"), subServiceID),
-                    RequestBody.create(MediaType.parse("text/plain"), allCities.get(spnCity.getSelectedItemPosition()).getId() + ""),
+                    RequestBody.create(MediaType.parse("text/plain"), allTechnician.get(spnTechnician.getSelectedItemPosition()).getId() + ""),
+                    RequestBody.create(MediaType.parse("text/plain"), (spnCountry.getSelectedItemPosition() == -1 || spnCountry.getSelectedItemPosition() == 0) ? "" : allCountries.get(spnCountry.getSelectedItemPosition()).getId() + ""),
+                    RequestBody.create(MediaType.parse("text/plain"), (spnCity.getSelectedItemPosition() == -1 || spnCity.getSelectedItemPosition() == 0) ? "" : allCities.get(spnCity.getSelectedItemPosition()).getId() + ""),
                     RequestBody.create(MediaType.parse("text/plain"), serviceIDS),
                     RequestBody.create(MediaType.parse("text/plain"), edtAddtionalJob.getText().toString()),
-                    RequestBody.create(MediaType.parse("text/plain"), edtLocationspecific.getText().toString()),
-                    RequestBody.create(MediaType.parse("text/plain"), edtLocationspecific.getText().toString()),
+                    RequestBody.create(MediaType.parse("text/plain"), address),
+                    RequestBody.create(MediaType.parse("text/plain"), address),
                     RequestBody.create(MediaType.parse("text/plain"), predate),
                     RequestBody.create(MediaType.parse("text/plain"), preTime),
                     RequestBody.create(MediaType.parse("text/plain"), paymentType),
@@ -907,10 +1065,11 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
     }
 
     private boolean validate() {
-        if (edtLocationspecific.getText().toString().isEmpty()) {
-            edtLocationspecific.setError(getDockActivity().getResources().getString(R.string.enter_address));
+        /*if (edtLocationspecific.getText().toString().isEmpty()) {
+            edtLocationspecific.setError(getDockActivity().getResources().getString(R.string.enter_location));
             return false;
-        } else if (btnPreferreddate.getText().toString().isEmpty()) {
+        } else*/
+        if (btnPreferreddate.getText().toString().isEmpty()) {
             UIHelper.showShortToastInCenter(getDockActivity(), getDockActivity().getResources().getString(R.string.select_date));
             return false;
         } else if (btnPreferredtime.getText().toString().isEmpty()) {
@@ -921,6 +1080,18 @@ public class RequestServiceFragment extends BaseFragment implements View.OnClick
             return false;
         } else if (selectedJobs.isEmpty()) {
             UIHelper.showShortToastInCenter(getDockActivity(), getDockActivity().getResources().getString(R.string.selectjob));
+            return false;
+        } else if (spnCity.getSelectedItemPosition() == 0 && edtLocationspecific.getText().toString().isEmpty()) {
+            UIHelper.showShortToastInCenter(getDockActivity(), getDockActivity().getResources().getString(R.string.select_city));
+            return false;
+        } else if (edtAddress.getText().toString().trim().equals("") && edtLocationspecific.getText().toString().isEmpty()) {
+            edtAddress.setError(getDockActivity().getResources().getString(R.string.enter_location));
+            return false;
+        } else if (spnCountry.getSelectedItemPosition() == 0 && edtLocationspecific.getText().toString().isEmpty()) {
+            UIHelper.showShortToastInCenter(getDockActivity(), getDockActivity().getResources().getString(R.string.select_country));
+            return false;
+        } else if (spnTechnician.getSelectedItemPosition() == -1) {
+            UIHelper.showShortToastInCenter(getDockActivity(), getDockActivity().getResources().getString(R.string.selectTechnician));
             return false;
         } else {
             return true;

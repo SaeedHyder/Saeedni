@@ -23,7 +23,7 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceBuffer;
 import com.google.android.gms.location.places.Places;
 
-public class AutoCompleteLocation extends AutoCompleteTextView {
+public class AutoCompleteLocation extends android.support.v7.widget.AppCompatAutoCompleteTextView {
 
   private Drawable mCloseIcon;
   private GoogleApiClient mGoogleApiClient;

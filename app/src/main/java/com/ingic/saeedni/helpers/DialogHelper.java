@@ -134,6 +134,18 @@ public class DialogHelper {
         cancelbutton.setOnClickListener(oncancelclicklistener);
         return this.dialog;
     }
+    public Dialog initComformationDialog(View.OnClickListener onokclicklistener, View.OnClickListener oncancelclicklistener) {
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        this.dialog.setContentView(R.layout.cancle_job_dialog);
+        AnyTextView textView = dialog.findViewById(R.id.txt_recive_req);
+        textView.setText(R.string.completeJobs);
+        Button okbutton = (Button) dialog.findViewById(R.id.btn_ok);
+        okbutton.setOnClickListener(onokclicklistener);
+        Button cancelbutton = (Button) dialog.findViewById(R.id.btn_cancle);
+        cancelbutton.setOnClickListener(oncancelclicklistener);
+        return this.dialog;
+    }
 
     public Dialog initRequestSendDialog(int layoutID, View.OnClickListener onclicklistener) {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);

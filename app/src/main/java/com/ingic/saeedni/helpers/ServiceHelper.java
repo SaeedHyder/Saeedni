@@ -32,6 +32,8 @@ public class ServiceHelper<T> {
                 public void onResponse(Call<ResponseWrapper<T>> call, Response<ResponseWrapper<T>> response) {
                     context.onLoadingFinished();
                     if (response.body().getResponse().equals(WebServiceConstants.SUCCESS_RESPONSE_CODE)) {
+                        if (tag.equalsIgnoreCase(WebServiceConstants.CHANGE_PHONE_NUMBER))
+                            UIHelper.showShortToastInCenter(context, response.body().getMessage());
                         serviceResponseLisener.ResponseSuccess(response.body().getResult(), tag);
                     } else {
                         UIHelper.showShortToastInCenter(context, response.body().getMessage());

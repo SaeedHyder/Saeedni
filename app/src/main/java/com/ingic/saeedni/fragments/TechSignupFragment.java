@@ -1,6 +1,7 @@
 package com.ingic.saeedni.fragments;
 
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,12 +10,19 @@ import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
@@ -31,6 +39,8 @@ import com.ingic.saeedni.global.WebServiceConstants;
 import com.ingic.saeedni.helpers.CameraHelper;
 import com.ingic.saeedni.helpers.DatePickerHelper;
 import com.ingic.saeedni.helpers.DialogHelper;
+import com.ingic.saeedni.helpers.FacebookLoginHelper;
+import com.ingic.saeedni.helpers.GoogleHelper;
 import com.ingic.saeedni.helpers.InternetHelper;
 import com.ingic.saeedni.helpers.TokenUpdater;
 import com.ingic.saeedni.helpers.UIHelper;
@@ -38,7 +48,6 @@ import com.ingic.saeedni.ui.views.AnyEditTextView;
 import com.ingic.saeedni.ui.views.AnySpinner;
 import com.ingic.saeedni.ui.views.AnyTextView;
 import com.ingic.saeedni.ui.views.TitleBar;
-import com.jota.autocompletelocation.AutoCompleteLocation;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
@@ -64,11 +73,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.app.Activity.RESULT_CANCELED;
+import static android.app.Activity.RESULT_OK;
+
 public class TechSignupFragment extends BaseFragment {
 
 
+    private static final int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
     public File profilePic;
     public String UserImagePath;
+    public File file;
+    public String fileAddress;
     PhoneNumberUtil phoneUtil;
     ArrayList<CitiesEnt> allCities = new ArrayList<>();
     ArrayList<AllServicesEnt> allServices = new ArrayList<>();
@@ -105,7 +120,7 @@ public class TechSignupFragment extends BaseFragment {
     @BindView(R.id.img_address)
     ImageView imgAddress;
     @BindView(R.id.edtadress)
-    AutoCompleteLocation edtadress;
+    AnyTextView edtadress;
     @BindView(R.id.img_address2)
     ImageView imgAddress2;
     @BindView(R.id.spnCity)
@@ -125,9 +140,6 @@ public class TechSignupFragment extends BaseFragment {
     @BindView(R.id.ll_textFields)
     LinearLayout llTextFields;
     Unbinder unbinder;
-
-    public File file;
-    public String fileAddress;
     @BindView(R.id.img_registration_type)
     ImageView imgRegistrationType;
     @BindView(R.id.edtregistrationtype)
@@ -136,13 +148,77 @@ public class TechSignupFragment extends BaseFragment {
     AnyTextView edtRegistrationDate;
     @BindView(R.id.Countrypicker)
     CountryCodePicker Countrypicker;
+    @BindView(R.id.spnCountry)
+    AnySpinner spnCountry;
+    ArrayList<CitiesEnt> allCountries = new ArrayList<>();
+    @BindView(R.id.containerPassword)
+    RelativeLayout containerPassword;
+    private boolean isSocialLogin = false;
     private String selectedDate = "";
+    private FacebookLoginHelper.FacebookLoginEnt facebookLoginEnt;
+    private GoogleHelper.GoogleLoginEnt googleLoginEnt;
+    private LatLng latLng;
 
+    private MainActivity.ImageSetter imageSetter = new MainActivity.ImageSetter() {
+
+        @Override
+        public void setImage(String imagePath) {
+            if (imagePath != null) {
+                profilePic = new File(imagePath);
+                ImageLoader.getInstance().displayImage(
+                        "file:///" + imagePath, btnImage);
+                UserImagePath = imagePath;
+            }
+        }
+
+        @Override
+        public void setFilePath(String filePath) {
+            if (filePath != null) {
+                file = new File(filePath);
+                fileAddress = filePath;
+                edtLicenseAttach.setText(filePath);
+
+            }
+
+        }
+
+        @Override
+        public void setVideo(String videoPath) {
+
+        }
+    };
 
     public static TechSignupFragment newInstance() {
-        return new TechSignupFragment();
+        TechSignupFragment fragment = new TechSignupFragment();
+        fragment.isSocialLogin = false;
+        return fragment;
     }
 
+    public static TechSignupFragment newInstance(FacebookLoginHelper.FacebookLoginEnt loginEnt) {
+        TechSignupFragment fragment = new TechSignupFragment();
+        fragment.facebookLoginEnt = null;
+        fragment.googleLoginEnt = null;
+        fragment.isSocialLogin = true;
+        fragment.setFacebookLoginEnt(loginEnt);
+        return fragment;
+    }
+
+    public static TechSignupFragment newInstance(GoogleHelper.GoogleLoginEnt loginEnt) {
+        TechSignupFragment fragment = new TechSignupFragment();
+        fragment.facebookLoginEnt = null;
+        fragment.googleLoginEnt = null;
+        fragment.isSocialLogin = true;
+        fragment.setGoogleLoginEnt(loginEnt);
+        return fragment;
+    }
+
+    public void setFacebookLoginEnt(FacebookLoginHelper.FacebookLoginEnt facebookLoginEnt) {
+        this.facebookLoginEnt = facebookLoginEnt;
+    }
+
+    public void setGoogleLoginEnt(GoogleHelper.GoogleLoginEnt googleLoginEnt) {
+        this.googleLoginEnt = googleLoginEnt;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -151,7 +227,6 @@ public class TechSignupFragment extends BaseFragment {
         unbinder = ButterKnife.bind(this, rootView);
         return rootView;
     }
-
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -163,9 +238,27 @@ public class TechSignupFragment extends BaseFragment {
         }
         getMainActivity().setImageSetter(imageSetter);
         phoneUtil = PhoneNumberUtil.getInstance();
-        getAllCities();
+        getallCountries();
         getAllServices();
         Countrypicker.registerCarrierNumberEditText(edtnumber);
+        checkAndBindSocialMedia();
+        if (isSocialLogin) {
+            containerPassword.setVisibility(View.GONE);
+        } else {
+            containerPassword.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void checkAndBindSocialMedia() {
+        if (googleLoginEnt != null) {
+            edtfirsname.setText(googleLoginEnt.getGoogleFirstName() == null ? "" : googleLoginEnt.getGoogleFirstName());
+            edtlastname.setText(googleLoginEnt.getGoogleLastName() == null ? "" : googleLoginEnt.getGoogleLastName());
+            edtEmail.setText(googleLoginEnt.getGoogleEmail() == null ? "" : googleLoginEnt.getGoogleEmail());
+        } else if (facebookLoginEnt != null) {
+            edtfirsname.setText(facebookLoginEnt.getFacebookFirstName() == null ? "" : facebookLoginEnt.getFacebookFirstName());
+            edtlastname.setText(facebookLoginEnt.getFacebookLastName() == null ? "" : facebookLoginEnt.getFacebookLastName());
+            edtEmail.setText(facebookLoginEnt.getFacebookEmail() == null ? "" : facebookLoginEnt.getFacebookEmail());
+        }
     }
 
     private void getAllServices() {
@@ -180,13 +273,17 @@ public class TechSignupFragment extends BaseFragment {
         return R.layout.fragment_tech_signup;
     }
 
-
-    private void getAllCities() {
-        if (allCities.isEmpty())
-            serviceHelper.enqueueCall(webService.getAllCities(), WebServiceConstants.GET_ALL_CITIES);
-        else setCitiesSpinner(allCities);
+    private void getallCountries() {
+        if (allCountries.isEmpty()) {
+            serviceHelper.enqueueCall(webService.getAllCountries(), WebServiceConstants.GET_ALL_COUNTRIES);
+        } else {
+            setCountriesSpinner(allCountries);
+        }
     }
 
+    private void getAllCities(int countryID) {
+        serviceHelper.enqueueCall(webService.getAllCities(countryID), WebServiceConstants.GET_ALL_CITIES);
+    }
 
     private boolean isPhoneNumberValid() {
 
@@ -210,11 +307,18 @@ public class TechSignupFragment extends BaseFragment {
     public void ResponseSuccess(Object result, String Tag) {
         switch (Tag) {
             case WebServiceConstants.GET_ALL_CITIES:
+                allCities = new ArrayList<>();
                 CitiesEnt citiesEnt = new CitiesEnt();
-                citiesEnt.setLocation(getDockActivity().getResources().getString(R.string.select_city));
+                citiesEnt.setLocation("Select City");
+                citiesEnt.setAr_address("اختر مدينة");
                 allCities.add(citiesEnt);
                 allCities.addAll((ArrayList<CitiesEnt>) result);
                 setCitiesSpinner(allCities);
+                break;
+            case WebServiceConstants.GET_ALL_COUNTRIES:
+                allCountries.addAll((ArrayList<CitiesEnt>) result);
+                setCountriesSpinner(allCountries);
+
                 break;
 
             case WebServiceConstants.GET_ALL_SERVICES:
@@ -230,6 +334,79 @@ public class TechSignupFragment extends BaseFragment {
         }
     }
 
+    private void setCountriesSpinner(ArrayList<CitiesEnt> citiesEnts) {
+
+        final ArrayList<String> citiesCollection = new ArrayList<String>();
+
+
+        for (CitiesEnt item : citiesEnts
+                ) {
+            if (prefHelper.isLanguageArabic()) {
+                citiesCollection.add(item.getAr_location());
+
+            } else {
+                citiesCollection.add(item.getLocation());
+            }
+        }
+        if (citiesEnts.size() > 0) getAllCities(allCountries.get(0).getId());
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity(), R.layout.row_item_spinner, citiesCollection);
+        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnCountry.setAdapter(categoryAdapter);
+        spnCountry.setOnItemSelectedEvenIfUnchangedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                getAllCities(allCountries.get(i).getId());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
+    private void openLocationSelector() {
+
+        try {
+           /* Intent intent =
+                    new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
+                            .build(getDockActivity());*/
+            PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+
+            getDockActivity().startActivityForResult(builder.build(getDockActivity()), PLACE_AUTOCOMPLETE_REQUEST_CODE);
+            //this.startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+
+                Place place = PlaceAutocomplete.getPlace(getDockActivity(), data);
+                if (place != null) {
+                    edtadress.setText(place.getAddress().toString());
+                    latLng = place.getLatLng();
+                    Log.i("Profile", "Place: " + place.getName());
+                }
+
+            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
+                Status status = PlaceAutocomplete.getStatus(getDockActivity(), data);
+                // TODO: Handle the error.
+                Log.i("Profile", status.getStatusMessage());
+
+            } else if (resultCode == RESULT_CANCELED) {
+                // The user canceled the operation.
+            }
+        }
+
+    }
 
     @Override
     public void onResume() {
@@ -243,7 +420,6 @@ public class TechSignupFragment extends BaseFragment {
             }
         }
     }
-
 
     private void registerUser(String number) {
         MultipartBody.Part filePart;
@@ -266,7 +442,20 @@ public class TechSignupFragment extends BaseFragment {
         }
 
         String currentDate = new SimpleDateFormat(AppConstants.DateFormat_YMD, Locale.ENGLISH).format(new Date());
-
+        String socialMediaID;
+        String socialMediaPlatform;
+        if (googleLoginEnt != null) {
+            socialMediaPlatform = AppConstants.SOCIAL_MEDIA_TYPE_GOOGLE;
+            socialMediaID = googleLoginEnt.getGoogleUID();
+        } else if (facebookLoginEnt != null) {
+            socialMediaID = facebookLoginEnt.getFacebookUID();
+            socialMediaPlatform = AppConstants.SOCIAL_MEDIA_TYPE_FACEBOOK;
+        } else {
+            socialMediaID = "";
+            socialMediaPlatform = "";
+        }
+        String latitude = latLng != null ? latLng.latitude + "" : "";
+        String longitude = latLng != null ? latLng.longitude + "" : "";
         Call<ResponseWrapper<RegistrationResultEnt>> call = webService.registerTechnician(
                 RequestBody.create(MediaType.parse("text/plain"), edtCompanyName.getText().toString()),
                 RequestBody.create(MediaType.parse("text/plain"), edtfirsname.getText().toString()),
@@ -279,10 +468,16 @@ public class TechSignupFragment extends BaseFragment {
                 RequestBody.create(MediaType.parse("text/plain"), edtregistrationtype.getText().toString()),
                 RequestBody.create(MediaType.parse("text/plain"), edtRegistrationDate.getText().toString()),
                 RequestBody.create(MediaType.parse("text/plain"), edtadress.getText().toString()),
+                RequestBody.create(MediaType.parse("text/plain"), latitude),
+                RequestBody.create(MediaType.parse("text/plain"), longitude),
+                RequestBody.create(MediaType.parse("text/plain"), allCountries.get(spnCountry.getSelectedItemPosition()).getId() + ""),
                 RequestBody.create(MediaType.parse("text/plain"), allCities.get(spnCity.getSelectedItemPosition()).getId() + ""),
                 RequestBody.create(MediaType.parse("text/plain"), edtLicenseExpiry.getText().toString()),
                 RequestBody.create(MediaType.parse("text/plain"), prefHelper.getFirebase_TOKEN()),
                 RequestBody.create(MediaType.parse("text/plain"), AppConstants.Device_Type),
+                RequestBody.create(MediaType.parse("text/plain"), prefHelper.getLang()),
+                RequestBody.create(MediaType.parse("text/plain"), socialMediaID),
+                RequestBody.create(MediaType.parse("text/plain"), socialMediaPlatform),
                 filePart, attachedFile);
         call.enqueue(new Callback<ResponseWrapper<RegistrationResultEnt>>() {
             @Override
@@ -348,7 +543,7 @@ public class TechSignupFragment extends BaseFragment {
         }
         //  ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity(), android.R.layout.simple_spinner_item, servicesCollection);
         ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity()
-                , android.R.layout.simple_spinner_item, servicesCollection) {
+                , R.layout.row_item_spinner, servicesCollection) {
             @Override
             public boolean isEnabled(int position) {
                 return !(position == 0);
@@ -376,12 +571,17 @@ public class TechSignupFragment extends BaseFragment {
 
         for (CitiesEnt item : citiesEnts
                 ) {
-            citiesCollection.add(item.getLocation());
+            if (prefHelper.isLanguageArabic()) {
+                citiesCollection.add(item.getAr_location());
+
+            } else {
+                citiesCollection.add(item.getLocation());
+            }
         }
         //  ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity(), android.R.layout.simple_spinner_item, citiesCollection);
 
         ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getDockActivity()
-                , android.R.layout.simple_spinner_item, citiesCollection) {
+                , R.layout.row_item_spinner, citiesCollection) {
             @Override
             public boolean isEnabled(int position) {
                 return !(position == 0);
@@ -424,7 +624,7 @@ public class TechSignupFragment extends BaseFragment {
                 (!Patterns.EMAIL_ADDRESS.matcher(edtEmail.getText().toString()).matches())) {
             edtEmail.setError(getDockActivity().getResources().getString(R.string.enter_email));
             return false;
-        } else if (edtpassword.getText() == null || (edtpassword.getText().toString().isEmpty()) || edtpassword.getText().toString().length() < 6) {
+        } else if ((edtpassword.getText() == null || (edtpassword.getText().toString().isEmpty()) || edtpassword.getText().toString().length() < 6) && !isSocialLogin) {
             edtpassword.setError(getDockActivity().getResources().getString(R.string.valid_password));
             return false;
         } else if (spnSpeciality.getSelectedItemPosition() == 0) {
@@ -460,37 +660,7 @@ public class TechSignupFragment extends BaseFragment {
 
     }
 
-    private MainActivity.ImageSetter imageSetter = new MainActivity.ImageSetter() {
-
-        @Override
-        public void setImage(String imagePath) {
-            if (imagePath != null) {
-                profilePic = new File(imagePath);
-                ImageLoader.getInstance().displayImage(
-                        "file:///" + imagePath, btnImage);
-                UserImagePath = imagePath;
-            }
-        }
-
-        @Override
-        public void setFilePath(String filePath) {
-            if (filePath != null) {
-                file = new File(filePath);
-                fileAddress = filePath;
-                edtLicenseAttach.setText(filePath);
-
-            }
-
-        }
-
-        @Override
-        public void setVideo(String videoPath) {
-
-        }
-    };
-
-
-    @OnClick({R.id.btn_image, R.id.edtLicenseExpiry, R.id.btn_signup, R.id.edtLicenseAttach, R.id.edtRegistration_date})
+    @OnClick({R.id.btn_image, R.id.edtLicenseExpiry, R.id.btn_signup, R.id.edtLicenseAttach, R.id.edtRegistration_date, R.id.edtadress})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_image:
@@ -511,6 +681,9 @@ public class TechSignupFragment extends BaseFragment {
                 break;
             case R.id.edtLicenseExpiry:
                 initDatePicker(edtLicenseExpiry);
+                break;
+            case R.id.edtadress:
+                openLocationSelector();
                 break;
             case R.id.edtRegistration_date:
                 initDatePicker(edtRegistrationDate);
@@ -585,7 +758,6 @@ public class TechSignupFragment extends BaseFragment {
         datePickerHelper.setminDate(c.getTime().getTime());
         datePickerHelper.showDate();
     }
-
 
 
 }

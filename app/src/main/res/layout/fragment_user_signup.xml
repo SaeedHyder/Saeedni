@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true"
-            android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="@dimen/x25"
             android:layout_marginTop="@dimen/x25"
-            android:src="@drawable/camerawithcircle"/>
+            android:src="@drawable/camerawithcircle" />
 
         <LinearLayout
             android:id="@+id/ll_textFields"
@@ -39,7 +39,7 @@
                     android:layout_height="@dimen/x20"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/x20"
-                    android:src="@drawable/name"/>
+                    android:src="@drawable/name" />
 
                 <com.ingic.saeedni.ui.views.AnyEditTextView
                     android:id="@+id/edtname"
@@ -63,7 +63,7 @@
                     android:textColor="@color/dark_grey"
                     android:textSize="@dimen/x14"
                     app:testType="email"
-                    app:typeface="Roboto-Regular.ttf"/>
+                    app:typeface="Roboto-Regular.ttf" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -80,24 +80,32 @@
                     android:layout_height="@dimen/x20"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/x20"
-                    android:src="@drawable/contact"/>
+                    android:src="@drawable/contact" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layoutDirection="ltr"
+                    android:layout_toEndOf="@+id/img_phone"
+                    android:orientation="horizontal">
                 <com.hbb20.CountryCodePicker
                     android:id="@+id/Countrypicker"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:ccp_autoDetectCountry="false"
                     android:layout_centerVertical="true"
-                    app:ccp_contentColor="@color/dark_grey"
-                    app:ccp_defaultNameCode="SA"
+                    android:layout_marginStart="@dimen/x10"
                     android:layout_toEndOf="@+id/img_phone"
+                    app:ccp_autoDetectCountry="false"
+                    app:ccp_contentColor="@color/dark_grey"
+                    app:ccp_defaultNameCode="ae"
                     app:ccp_hintExampleNumber="true"
                     app:ccp_hintExampleNumberType="MOBILE"
                     app:ccp_showArrow="false"
                     app:ccp_showFlag="false"
-                    app:ccp_textGravity="LEFT"
-                    android:layout_marginStart="@dimen/x10"
                     app:ccp_showNameCode="false"
-                    app:ccp_textSize="@dimen/x14"/>
+                    app:ccp_textGravity="LEFT"
+                    app:ccp_textSize="@dimen/x14" />
+
                 <com.ingic.saeedni.ui.views.AnyEditTextView
                     android:id="@+id/edtnumber"
                     android:layout_width="match_parent"
@@ -116,7 +124,8 @@
                     android:textAlignment="viewStart"
                     android:textColor="@color/dark_grey"
                     android:textSize="@dimen/x14"
-                    app:typeface="Roboto-Regular.ttf"/>
+                    app:typeface="Roboto-Regular.ttf" />
+                </LinearLayout>
             </RelativeLayout>
 
             <RelativeLayout
@@ -133,7 +142,7 @@
                     android:layout_height="@dimen/x20"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/x20"
-                    android:src="@drawable/email"/>
+                    android:src="@drawable/email" />
 
                 <com.ingic.saeedni.ui.views.AnyEditTextView
                     android:id="@+id/edtEmail"
@@ -156,11 +165,13 @@
                     android:textColor="@color/dark_grey"
                     android:textSize="@dimen/x14"
                     app:testType="email"
-                    app:typeface="Roboto-Regular.ttf"/>
+                    app:typeface="Roboto-Regular.ttf" />
             </RelativeLayout>
 
 
             <RelativeLayout
+                android:id="@+id/containerPassword"
+
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/x40"
                 android:layout_marginLeft="@dimen/x20"
@@ -174,7 +185,7 @@
                     android:layout_height="@dimen/x20"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/x20"
-                    android:src="@drawable/pass"/>
+                    android:src="@drawable/pass" />
 
                 <com.ingic.saeedni.ui.views.AnyEditTextView
                     android:id="@+id/edtpassword"
@@ -198,9 +209,8 @@
                     android:textColor="@color/dark_grey"
                     android:textSize="@dimen/x14"
                     app:testType="email"
-                    app:typeface="Roboto-Regular.ttf"/>
+                    app:typeface="Roboto-Regular.ttf" />
             </RelativeLayout>
-
 
 
             <RelativeLayout
@@ -212,35 +222,24 @@
                 android:background="@drawable/boxcentershape">
 
                 <ImageView
-                    android:id="@+id/img_address"
+                    android:id="@+id/img_address3"
                     android:layout_width="@dimen/x20"
                     android:layout_height="@dimen/x20"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/x20"
-                    android:src="@drawable/address_signup"/>
+                    android:src="@drawable/address" />
 
-                <com.jota.autocompletelocation.AutoCompleteLocation
-                    android:id="@+id/edtadress"
+                <com.ingic.saeedni.ui.views.AnySpinner
+                    android:id="@+id/spnCountry"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginLeft="@dimen/x10"
+                    android:layout_height="@dimen/x40"
+                    android:layout_marginBottom="@dimen/x5"
+                    android:layout_marginLeft="@dimen/x13"
+                    android:layoutDirection="ltr"
+                    android:gravity="left"
+                    android:textAlignment="gravity"
                     android:layout_marginRight="@dimen/x5"
-
-                    android:layout_toEndOf="@+id/img_address"
-                    android:background="@android:color/transparent"
-                    android:drawablePadding="@dimen/x10"
-                    android:gravity="start|center_vertical"
-                    app:hint_text="@string/address_"
-                    android:imeOptions="actionDone"
-                    android:inputType="textCapSentences"
-                    android:maxLength="50"
-                    android:singleLine="true"
-                    android:textAlignment="viewStart"
-                    android:textColor="@color/dark_grey"
-                    android:textSize="@dimen/x14"
-                    app:testType="email"
-                    app:typeface="Roboto-Regular.ttf"/>
+                    android:layout_toEndOf="@+id/img_address3" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -257,41 +256,106 @@
                     android:layout_height="@dimen/x20"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/x20"
-                    android:src="@drawable/address"/>
+                    android:src="@drawable/address" />
+
                 <com.ingic.saeedni.ui.views.AnySpinner
                     android:id="@+id/spnCity"
-                    android:layout_toEndOf="@+id/img_address2"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/x40"
+                    android:layoutDirection="ltr"
+                    android:gravity="left"
+                    android:textAlignment="gravity"
+                    android:layout_marginBottom="@dimen/x5"
                     android:layout_marginLeft="@dimen/x13"
                     android:layout_marginRight="@dimen/x5"
-                    android:layout_marginBottom="@dimen/x5"/>
+                    android:layout_toEndOf="@+id/img_address2" />
             </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x40"
+                android:layout_marginLeft="@dimen/x20"
+                android:layout_marginRight="@dimen/x20"
+                android:layout_marginTop="@dimen/x10"
+                android:background="@drawable/boxcentershape">
+
+                <ImageView
+                    android:id="@+id/img_address"
+                    android:layout_width="@dimen/x20"
+                    android:layout_height="@dimen/x20"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/x20"
+                    android:src="@drawable/address_signup" />
+
+                <com.ingic.saeedni.ui.views.AnyTextView
+                    android:id="@+id/edtadress"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="@dimen/x10"
+                    android:layout_marginEnd="@dimen/x5"
+
+                    android:layout_toEndOf="@+id/img_address"
+                    android:background="@android:color/transparent"
+                    android:drawablePadding="@dimen/x10"
+                    android:gravity="start|center_vertical"
+                    android:imeOptions="actionDone"
+                    android:inputType="textCapSentences"
+                    android:maxLength="50"
+                    android:singleLine="true"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="@dimen/x14"
+                    android:hint="@string/address_"
+                    app:testType="email"
+                    app:typeface="Roboto-Regular.ttf" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/x20"
+                android:layout_marginRight="@dimen/x20"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/x10"
+                android:orientation="horizontal">
+
+
+                <CheckBox
+                    android:id="@+id/chk_read"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:textColor="@color/dark_grey"
+                    android:text="@string/i_have_read_the_term_and_conditions" />
+
+                <com.ingic.saeedni.ui.views.AnyTextView
+                    android:id="@+id/btn_tnc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/terms_conditons"
+                    android:textColor="@color/app_blue"
+                    android:layout_marginStart="4dp"
+                    android:textSize="15sp"
+
+                    app:typeface="Roboto-Regular.ttf"
+                    />
+
+            </LinearLayout>
+
 
             <Button
                 android:id="@+id/btn_signup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x10"
                 android:layout_marginLeft="@dimen/x20"
                 android:layout_marginRight="@dimen/x20"
-                android:layout_marginTop="@dimen/x15"
+                android:layout_marginTop="@dimen/x10"
                 android:background="@drawable/yellow_button_background"
                 android:text="@string/sign_up"
-                android:textColor="@color/white"/>
-
-            <com.ingic.saeedni.ui.views.AnyTextView
-                android:id="@+id/btn_tnc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/x10"
-                android:layout_marginTop="@dimen/x10"
-                android:gravity="center_horizontal"
-                android:text="@string/terms_conditons"
-                android:textColor="@color/app_blue"
-                android:textSize="15sp"
-                app:typeface="Roboto-Regular.ttf"/>
-
+                android:textColor="@color/white" />
         </LinearLayout>
 
 

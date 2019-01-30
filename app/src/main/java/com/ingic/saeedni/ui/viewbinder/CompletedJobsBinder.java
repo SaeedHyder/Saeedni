@@ -1,11 +1,10 @@
 package com.ingic.saeedni.ui.viewbinder;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Typeface;
 import android.support.v7.widget.CardView;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import com.ingic.saeedni.R;
 import com.ingic.saeedni.entities.FeedbackDetail;
@@ -31,6 +30,7 @@ public class CompletedJobsBinder extends ViewBinder<TechInProgressEnt> {
         return new CompletedJobsBinder.ViewHolder(view);
     }
 
+    @SuppressLint({"ClickableViewAccessibility", "SetTextI18n"})
     @Override
     public void bindView(TechInProgressEnt entity, int position, int grpPosition, View view, Activity activity) {
         final CompletedJobsBinder.ViewHolder viewHolder = (CompletedJobsBinder.ViewHolder) view.getTag();
@@ -39,34 +39,31 @@ public class CompletedJobsBinder extends ViewBinder<TechInProgressEnt> {
         } else {
             viewHolder.root_layout.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
         }
-        viewHolder.rbAddRating.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                viewHolder.rbAddRating.setFocusable(false);
-                return true;
-            }
+        viewHolder.rbAddRating.setOnTouchListener((view1, motionEvent) -> {
+            viewHolder.rbAddRating.setFocusable(false);
+            return true;
         });
-        viewHolder.txt_jobNoText.setText(String.valueOf(position + 1));
-       // viewHolder.txt_jobCompletedText.setText(entity.getRequest_detail().getDate());
+        viewHolder.txt_jobNoText.setText(entity.getId() + "");
+        // viewHolder.txt_jobCompletedText.setText(entity.getRequest_detail().getDate());
         if (!prefHelper.isLanguageArabic()) {
             viewHolder.txt_jobCompletedText.setText(DateHelper.dateFormat(entity.getRequest_detail().getDate(), AppConstants.DateFormat_DMY, AppConstants.DateFormat_YMD) + "");
         } else {
             viewHolder.txt_jobCompletedText.setText(entity.getRequest_detail().getDate() + "");
         }
-        if (entity.getRequest_detail().getServics_list().size() > 0) {
+
             if (prefHelper.isLanguageArabic()) {
-                viewHolder.txt_JobTitleText.setText(entity.getRequest_detail().getServics_list().get(0).getService_detail().getAr_title()+"");
+                viewHolder.txt_JobTitleText.setText(entity.getRequest_detail().getService_detail().getAr_title() + "");
             } else {
-                viewHolder.txt_JobTitleText.setText(entity.getRequest_detail().getServics_list().get(0).getService_detail().getTitle()+"");
+                viewHolder.txt_JobTitleText.setText(entity.getRequest_detail().getService_detail().getTitle() + "");
             }
-        }
+
         if (entity.getRequest_detail().getUser_detail() != null) {
-            viewHolder.txt_clientNameText.setText(entity.getRequest_detail().getUser_detail().getFull_name()+"");
+            viewHolder.txt_clientNameText.setText(entity.getRequest_detail().getUser_detail().getFull_name() + "");
         }
         if (entity.getRequest_detail().getFeedbackdetail() != null) {
-            for (FeedbackDetail detail:entity.getRequest_detail().getFeedbackdetail()
-                 ) {
-                if (detail.getType().equals(AppConstants.TECHNICIAN)){
+            for (FeedbackDetail detail : entity.getRequest_detail().getFeedbackdetail()
+                    ) {
+                if (detail.getType().equals(AppConstants.TECHNICIAN)) {
                     viewHolder.rbAddRating.setScore(detail.getRate());
                 }
             }

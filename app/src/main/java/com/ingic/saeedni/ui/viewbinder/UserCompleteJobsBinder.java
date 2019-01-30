@@ -1,5 +1,6 @@
 package com.ingic.saeedni.ui.viewbinder;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.text.Html;
 import android.view.MotionEvent;
@@ -36,6 +37,7 @@ public class UserCompleteJobsBinder extends ViewBinder<UserComleteJobsEnt> {
         return new ViewHolder(view);
     }
 
+    @SuppressLint({"ClickableViewAccessibility", "SetTextI18n"})
     @Override
     public void bindView(UserComleteJobsEnt entity, int position, int grpPosition, View view, Activity activity) {
         final ViewHolder viewHolder = (ViewHolder) view.getTag();
@@ -45,36 +47,47 @@ public class UserCompleteJobsBinder extends ViewBinder<UserComleteJobsEnt> {
             viewHolder.root_layout.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
 
         viewHolder.txtJobNoText.setText(String.valueOf(position + 1));
-        if (entity.getServicsList().size() > 0) {
             if (preferenceHelper.isLanguageArabic()) {
-                viewHolder.txtJobTitleText.setText(entity.getServicsList().get(0).getServiceEnt().getTitle() + "");
+                viewHolder.txtJobTitleText.setText(entity.getServiceDetail().getArTitle() + "");
             } else {
-                viewHolder.txtJobTitleText.setText(entity.getServicsList().get(0).getServiceEnt().getTitle() + "");
+                viewHolder.txtJobTitleText.setText(entity.getServiceDetail().getTitle() + "");
             }
-        }
         if (!preferenceHelper.isLanguageArabic()) {
             viewHolder.txtJobCompletedText.setText(DateHelper.dateFormat(entity.getDate(), AppConstants.DateFormat_DMY, AppConstants.DateFormat_YMD) + "");
         } else {
             viewHolder.txtJobCompletedText.setText(entity.getDate() + "");
         }
-        if (entity.getAssign_technician_details() != null)
+        if (entity.getStatus() == AppConstants.STATUS_COMPLETED) {
+            viewHolder.txt_StatusText.setText(R.string.complete);
+            viewHolder.txt_StatusText.setTextColor(activity.getResources().getColor(R.color.dark_green));
+        } else if (entity.getStatus() == AppConstants.STATUS_CANCEL) {
+            viewHolder.txt_StatusText.setText(R.string.cancel);
+            viewHolder.txt_StatusText.setTextColor(activity.getResources().getColor(R.color.forgot_pass_color));
+        }
+        if (entity.getAssign_technician_details() != null) {
             viewHolder.txtClientNameText.setText(entity.getAssign_technician_details().getTechnician_details().getFullName());
+            viewHolder.txt_companyNameText.setText(entity.getAssign_technician_details().getTechnician_details().getCompany_name());
+        } else {
+            viewHolder.txtClientNameText.setText(R.string.no_technician_error);
+            viewHolder.txt_companyNameText.setText(R.string.no_technician_error);
+        }
         viewHolder.txtEarningText.setText(entity.getTotal_amount());
         String sourceString = "<b>" + "<font color=#095587>" + view.getContext().getResources().getString(R.string.description) + "</font>" + "</b> " + "   " + entity.getDiscription();
         viewHolder.txtDescriptionText.setText(Html.fromHtml(sourceString));
         if (entity.getFeedbackdetail() != null)
             for (FeedBackEnt ent : entity.getFeedbackdetail()) {
-                if (ent.getType().equals(AppConstants.USER)) {
+                if (ent.getType().equals(AppConstants.TECHNICIAN)) {
                     viewHolder.rbAddRating.setScore(ent.getRate());
                 }
+                //Uncomment this if you wanted to show User Rating that is given by Technician
+                /*if (ent.getType().equals(AppConstants.USER)) {
+                    viewHolder.rbAddRating.setScore(ent.getRate());
+                }*/
             }
 
-        viewHolder.rbAddRating.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                viewHolder.rbAddRating.setFocusable(false);
-                return true;
-            }
+        viewHolder.rbAddRating.setOnTouchListener((view1, motionEvent) -> {
+            viewHolder.rbAddRating.setFocusable(false);
+            return true;
         });
 
     }
@@ -94,6 +107,10 @@ public class UserCompleteJobsBinder extends ViewBinder<UserComleteJobsEnt> {
         AnyTextView txtEarningText;
         @BindView(R.id.txt_description_text)
         AnyTextView txtDescriptionText;
+        @BindView(R.id.txt_companyNameText)
+        AnyTextView txt_companyNameText;
+        @BindView(R.id.txt_StatusText)
+        AnyTextView txt_StatusText;
         @BindView(R.id.root_layout)
         LinearLayout root_layout;
 

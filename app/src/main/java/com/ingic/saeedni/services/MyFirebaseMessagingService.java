@@ -53,9 +53,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 Log.e(TAG, "DATA: " + json);*/
             getNotificationCount();
 
-            if (remoteMessage.getData().get("type")==null) {
+          //  if (remoteMessage.getData().get("type")==null) {
                 buildNotification(remoteMessage);
-            } else {
+            /*} else {
                 String message = remoteMessage.getData().get("en_message");
                 String Type = remoteMessage.getData().get("type");
 
@@ -63,7 +63,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 pushNotification.putExtra("message", message);
                 pushNotification.putExtra("pushtype", Type);
                 LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(pushNotification);
-            }
+            }*/
         }
         else if(remoteMessage.getNotification()!=null){
             String title = getString(R.string.app_name);

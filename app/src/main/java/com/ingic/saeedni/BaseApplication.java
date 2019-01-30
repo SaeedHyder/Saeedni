@@ -10,6 +10,8 @@ import android.os.Build;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
+import com.facebook.FacebookSdk;
+import com.google.firebase.FirebaseApp;
 import com.ingic.saeedni.activities.MainActivity;
 import com.ingic.saeedni.helpers.UIHelper;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -28,25 +30,10 @@ public class BaseApplication extends MultiDexApplication {
 		// TODO Auto-generated method stub
 		super.onCreate();
 		MultiDex.install(this);
+		FacebookSdk.sdkInitialize(getApplicationContext());
 		initImageLoader();
-
 	}
-	public static final String CHANNEL = "channel";
 
-	private void createNotificationChannels() {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-			NotificationChannel channel1 = new NotificationChannel(
-					CHANNEL,
-					"Auditex",
-					NotificationManager.IMPORTANCE_HIGH
-			);
-			channel1.setDescription("Auditex");
-
-			NotificationManager manager = getSystemService(NotificationManager.class);
-			manager.createNotificationChannel(channel1);
-
-		}
-	}
 	public void initImageLoader() {
 		
 		DisplayImageOptions options = new DisplayImageOptions.Builder()

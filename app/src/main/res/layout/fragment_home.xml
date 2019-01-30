@@ -190,7 +190,7 @@
                     android:layout_height="@dimen/x50"
                     android:layout_gravity="center"
 
-                    android:src="@drawable/s_notifications"/>
+                    android:src="@drawable/ic_settings_app_blue"/>
 
                 <com.ingic.saeedni.ui.views.AnyTextView
                     android:layout_width="wrap_content"
@@ -198,7 +198,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="0.4"
                     android:paddingTop="@dimen/x5"
-                    android:text="@string/notifications"
+                    android:text="@string/settings"
                     android:textColor="@color/s_font_color_blue"
                     android:textSize="@dimen/x14"
                     app:typeface="Roboto-Regular.ttf"/>

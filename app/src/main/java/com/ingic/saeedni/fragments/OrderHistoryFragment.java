@@ -1,6 +1,7 @@
 package com.ingic.saeedni.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
@@ -22,7 +23,6 @@ import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.ingic.saeedni.activities.DockActivity.KEY_FRAG_FIRST;
-
 
 
 public class OrderHistoryFragment extends BaseFragment implements View.OnClickListener, SetOrderCounts {
@@ -59,17 +59,27 @@ public class OrderHistoryFragment extends BaseFragment implements View.OnClickLi
     @BindView(R.id.ll_buttons)
     LinearLayout mLlButtons;
     ImageLoader imageloader;
+    private boolean canShowCompleteJobs = false;
 
+    public static OrderHistoryFragment newInstance(boolean canShowCompleteJobs) {
+        OrderHistoryFragment fragment = new OrderHistoryFragment();
+        fragment.setCanShowCompleteJobs(canShowCompleteJobs);
+        return fragment;
+    }
 
     public static OrderHistoryFragment newInstance() {
         return new OrderHistoryFragment();
+    }
+
+    public void setCanShowCompleteJobs(boolean canShowCompleteJobs) {
+        this.canShowCompleteJobs = canShowCompleteJobs;
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_orderhistory, container, false);
-    ButterKnife.bind(this, view);
+        ButterKnife.bind(this, view);
         return view;
     }
 
@@ -79,24 +89,25 @@ public class OrderHistoryFragment extends BaseFragment implements View.OnClickLi
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        imageloader=ImageLoader.getInstance();
-
-        mainFrame.setVisibility(View.GONE);
+        imageloader = ImageLoader.getInstance();
         setListners();
         ReplaceListView2Fragment(CompletedJobsFragment.newInstance());
         ReplaceListViewFragment(InProgressExpendFragment.newInstance());
 
-
+        if (canShowCompleteJobs) {
+            showCompleteJobsFragment();
+        } else {
+            showInprogressJobsFragment();
+        }
         getTechData();
 
 
     }
 
     private void getTechData() {
-        imageloader.displayImage(prefHelper.getRegistrationResult().getProfileImage(),mCircularImageSharePop);
+        imageloader.displayImage(prefHelper.getRegistrationResult().getProfileImage(), mCircularImageSharePop);
         mTxtUserName.setText(prefHelper.getRegistrationResult().getFullName());
         mTxtUserProfession.setText(prefHelper.getRegistrationResult().getRegistrationType());
 
@@ -123,30 +134,38 @@ public class OrderHistoryFragment extends BaseFragment implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_CompletedJobs:
-                selectedArrowCompletedJobs.setVisibility(View.GONE);
-                selectedArrowInProgress.setVisibility(View.VISIBLE);
-                llCompletedJobs.setBackgroundColor(getResources().getColor(R.color.app_blue));
-                txtJobCount.setTextColor(ContextCompat.getColor(getDockActivity(), R.color.white));
-                mTxtCompletedjob.setTextColor(ContextCompat.getColor(getDockActivity(), R.color.white));
-                llInProgess.setBackgroundColor(getResources().getColor(R.color.white));
-                txtInProgressCount.setTextColor(ContextCompat.getColor(getDockActivity(), R.color.app_blue));
-                mTxtInProgress.setTextColor(ContextCompat.getColor(getDockActivity(), R.color.app_blue));
-                ReplaceListViewFragment(CompletedJobsFragment.newInstance());
+                showCompleteJobsFragment();
                 break;
 
             case R.id.ll_InProgess:
-                selectedArrowCompletedJobs.setVisibility(View.VISIBLE);
-                selectedArrowInProgress.setVisibility(View.GONE);
-                llCompletedJobs.setBackgroundColor(getResources().getColor(R.color.white));
-                txtJobCount.setTextColor(ContextCompat.getColor(getDockActivity(), R.color.app_blue));
-                mTxtCompletedjob.setTextColor(ContextCompat.getColor(getDockActivity(), R.color.app_blue));
-                llInProgess.setBackgroundColor(getResources().getColor(R.color.app_blue));
-                txtInProgressCount.setTextColor(ContextCompat.getColor(getDockActivity(), R.color.white));
-                mTxtInProgress.setTextColor(ContextCompat.getColor(getDockActivity(), R.color.white));
-                ReplaceListViewFragment(InProgressExpendFragment.newInstance());
+                showInprogressJobsFragment();
                 break;
         }
 
+    }
+
+    private void showInprogressJobsFragment() {
+        selectedArrowCompletedJobs.setVisibility(View.VISIBLE);
+        selectedArrowInProgress.setVisibility(View.GONE);
+        llCompletedJobs.setBackgroundColor(getResources().getColor(R.color.white));
+        txtJobCount.setTextColor(ContextCompat.getColor(getDockActivity(), R.color.app_blue));
+        mTxtCompletedjob.setTextColor(ContextCompat.getColor(getDockActivity(), R.color.app_blue));
+        llInProgess.setBackgroundColor(getResources().getColor(R.color.app_blue));
+        txtInProgressCount.setTextColor(ContextCompat.getColor(getDockActivity(), R.color.white));
+        mTxtInProgress.setTextColor(ContextCompat.getColor(getDockActivity(), R.color.white));
+        ReplaceListViewFragment(InProgressExpendFragment.newInstance());
+    }
+
+    private void showCompleteJobsFragment() {
+        selectedArrowCompletedJobs.setVisibility(View.GONE);
+        selectedArrowInProgress.setVisibility(View.VISIBLE);
+        llCompletedJobs.setBackgroundColor(getResources().getColor(R.color.app_blue));
+        txtJobCount.setTextColor(ContextCompat.getColor(getDockActivity(), R.color.white));
+        mTxtCompletedjob.setTextColor(ContextCompat.getColor(getDockActivity(), R.color.white));
+        llInProgess.setBackgroundColor(getResources().getColor(R.color.white));
+        txtInProgressCount.setTextColor(ContextCompat.getColor(getDockActivity(), R.color.app_blue));
+        mTxtInProgress.setTextColor(ContextCompat.getColor(getDockActivity(), R.color.app_blue));
+        ReplaceListViewFragment(CompletedJobsFragment.newInstance());
     }
 
     private void ReplaceListViewFragment(CompletedJobsFragment frag) {
@@ -203,6 +222,6 @@ public class OrderHistoryFragment extends BaseFragment implements View.OnClickLi
     public void setInprogressCount(int count) {
 
         txtInProgressCount.setText(String.valueOf(count));
-        mainFrame.setVisibility(View.VISIBLE);
+
     }
 }

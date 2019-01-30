@@ -12,9 +12,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.Indicators.PagerIndicator;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.ingic.saeedni.R;
+import com.ingic.saeedni.entities.ImageDetailEnt;
 import com.ingic.saeedni.entities.JobRequestEnt;
 import com.ingic.saeedni.entities.NewJobsEnt;
 import com.ingic.saeedni.entities.ResponseWrapper;
@@ -32,6 +40,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -39,50 +48,84 @@ import retrofit2.Response;
 
 public class NewJobsFragment extends BaseFragment {
 
+    protected BroadcastReceiver broadcastReceiver;
     @BindView(R.id.lv_NewJobs)
     ListView lv_NewJobs;
-
     @BindView(R.id.txt_no_data)
     AnyTextView txtNoData;
-
-    protected BroadcastReceiver broadcastReceiver;
+    @BindView(R.id.btnClose)
+    ImageView btnClose;
+    @BindView(R.id.slider)
+    SliderLayout slider;
+    @BindView(R.id.custom_indicator)
+    PagerIndicator customIndicator;
+    @BindView(R.id.containerImageSlider)
+    RelativeLayout containerImageSlider;
 
     private ArrayListAdapter<NewJobsEnt> adapter;
     private ArrayList<NewJobsEnt> userCollection;
-    private View.OnClickListener jobsClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            final NewJobsEnt ent = (NewJobsEnt) v.getTag(R.integer.key_recycler_object);
-            int position = (int) v.getTag(R.integer.key_recycler_position);
-            switch (v.getId()) {
-                case R.id.btn_accept:
-                    jobAccept(ent);
-                    break;
-                case R.id.btn_reject:
-                    final DialogHelper RefusalDialog = new DialogHelper(getDockActivity());
-                    RefusalDialog.initJobRefusalDialog(R.layout.job_refusal_dialog, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
-                                if (RefusalDialog.getEditTextView(R.id.ed_msg).getText().toString().trim().equals("")) {
-                                    RefusalDialog.getEditTextView(R.id.ed_msg).setError(getDockActivity().getResources().getString(R.string.enter_message));
-                                } else {
-                                    jobReject(RefusalDialog.getEditText(R.id.ed_msg), RefusalDialog, ent);
-                                }
+    private View.OnClickListener jobsClickListener = v -> {
+        final NewJobsEnt ent = (NewJobsEnt) v.getTag(R.integer.key_recycler_object);
+        int position = (int) v.getTag(R.integer.key_recycler_position);
+        switch (v.getId()) {
+            case R.id.btn_accept:
+                jobAccept(ent);
+                break;
+            case R.id.btnViewImages:
+                initImageSlider(ent);
+                break;
+            case R.id.btn_reject:
+                final DialogHelper RefusalDialog = new DialogHelper(getDockActivity());
+                RefusalDialog.initJobRefusalDialog(R.layout.job_refusal_dialog, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (InternetHelper.CheckInternetConectivityandShowToast(getDockActivity())) {
+                            if (RefusalDialog.getEditTextView(R.id.ed_msg).getText().toString().trim().equals("")) {
+                                RefusalDialog.getEditTextView(R.id.ed_msg).setError(getDockActivity().getResources().getString(R.string.enter_message));
+                            } else {
+                                jobReject(RefusalDialog.getEditText(R.id.ed_msg), RefusalDialog, ent);
                             }
-
-                            //RefusalDialog.hideDialog();
                         }
-                    });
-                    RefusalDialog.setCancelable(true);
-                    RefusalDialog.showDialog();
-                    break;
-            }
+
+                        //RefusalDialog.hideDialog();
+                    }
+                });
+                RefusalDialog.setCancelable(true);
+                RefusalDialog.showDialog();
+                break;
         }
     };
 
     public static NewJobsFragment newInstance() {
         return new NewJobsFragment();
+    }
+
+    private void initImageSlider(NewJobsEnt ent) {
+        slider.removeAllSliders();
+        if (ent.getRequest_detail().getImage_detail() != null) {
+            for (ImageDetailEnt imageDetails :
+                    ent.getRequest_detail().getImage_detail()) {
+                DefaultSliderView textSliderView = new DefaultSliderView(getMainActivity());
+                textSliderView
+                        .setScaleType(BaseSliderView.ScaleType.Fit)
+                        .image(imageDetails.getFileLink());
+                textSliderView.bundle(new Bundle());
+                textSliderView.getBundle()
+                        .putString("extra", imageDetails.getFileLink() + "");
+
+                slider.addSlider(textSliderView);
+            }
+        }
+        /*if (ent.getRequest_detail().getImage_detail().size() > 0){
+            slider.setCurrentPosition(0);
+        }
+        slider.setPresetTransformer(SliderLayout.Transformer.Accordion);
+        slider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+        slider.setCustomAnimation(new DescriptionAnimation());
+        */slider.setCustomIndicator(customIndicator);
+        containerImageSlider.setOnClickListener(v -> {
+        });
+        containerImageSlider.setVisibility(View.VISIBLE);
     }
 
     private void jobReject(String reason, final DialogHelper refusalDialog, NewJobsEnt newJobJson) {
@@ -97,8 +140,8 @@ public class NewJobsFragment extends BaseFragment {
                     getDockActivity().onLoadingFinished();
                     if (response.body().getResponse().equals("2000")) {
                         refusalDialog.hideDialog();
-                        getDockActivity().popBackStackTillEntry(1);
-                        getDockActivity().replaceDockableFragment(NewJobsFragment.newInstance(), "NewJobsFragment");
+                        getDockActivity().popBackStackTillEntry(0);
+                        getDockActivity().replaceDockableFragment(HomeFragment.newInstance(), "NewJobsFragment");
 
                     } else {
                         UIHelper.showShortToastInCenter(getDockActivity(), response.body().getMessage());
@@ -216,6 +259,7 @@ public class NewJobsFragment extends BaseFragment {
 
     private void getNewJobs() {
         loadingStarted();
+//        Call<ResponseWrapper<ArrayList<NewJobsEnt>>> call = webService.newJobs(Integer.valueOf(prefHelper.getUserId()));
         Call<ResponseWrapper<ArrayList<NewJobsEnt>>> call = webService.newJobs(Integer.valueOf(prefHelper.getUserId()));
 
         call.enqueue(new Callback<ResponseWrapper<ArrayList<NewJobsEnt>>>() {
@@ -289,5 +333,11 @@ public class NewJobsFragment extends BaseFragment {
                 new IntentFilter(AppConstants.PUSH_NOTIFICATION));
 
 
+    }
+
+
+    @OnClick(R.id.btnClose)
+    public void onViewClicked() {
+        containerImageSlider.setVisibility(View.GONE);
     }
 }
